@@ -21,7 +21,9 @@ models:
       - name: customer_city
         description: Customer city in lowercase Portuguese, e.g. 'sao paulo', 'rio de janeiro'.
       - name: customer_state
-        description: Two letter Brazilian state code of the customer, e.g. SP, RJ, MG.
+        description: >
+          Two letter Brazilian state code of the customer (region, location, geography),
+          e.g. SP, RJ, MG. Use this column for any question asked "by state" or "which states".
       - name: order_status
         description: >
           Lifecycle status: delivered, shipped, canceled, unavailable, invoiced, processing,
