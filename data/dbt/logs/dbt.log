@@ -1,0 +1,1651 @@
+[0m09:43:02.563500 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001D1277C5AC0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001D1277C6750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001D125F37830>]}
+
+
+============================== 09:43:02.673524 | be5cc4c1-2222-4448-a6fd-e5a60fa48f85 ==============================
+[0m09:43:02.673524 [info ] [MainThread]: Running with dbt=1.12.5
+[0m09:43:02.679371 [debug] [MainThread]: running dbt with arguments {'maximum_seed_size_mib': '1', 'no_print': 'None', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'version_check': 'True', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'C:\\dev\\querypilot\\data\\dbt', 'invocation_command': 'dbt debug', 'hints_enabled': 'True', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'use_colors': 'True', 'log_path': 'C:\\dev\\querypilot\\data\\dbt\\logs'}
+[0m09:43:02.878364 [info ] [MainThread]: dbt version: 1.12.5
+[0m09:43:02.878364 [info ] [MainThread]: python version: 3.12.14
+[0m09:43:02.878364 [info ] [MainThread]: python path: C:\dev\querypilot\data\.venv\Scripts\python.exe
+[0m09:43:02.878364 [info ] [MainThread]: os info: Windows-11-10.0.26200-SP0
+[0m09:43:03.087525 [info ] [MainThread]: Using profiles dir at C:\dev\querypilot\data\dbt
+[0m09:43:03.091100 [info ] [MainThread]: Using profiles.yml file at C:\dev\querypilot\data\dbt\profiles.yml
+[0m09:43:03.093849 [info ] [MainThread]: Using dbt_project.yml file at C:\dev\querypilot\data\dbt\dbt_project.yml
+[0m09:43:03.096255 [info ] [MainThread]: adapter type: postgres
+[0m09:43:03.096255 [info ] [MainThread]: adapter version: 1.11.0
+[0m09:43:03.296096 [info ] [MainThread]: Configuration:
+[0m09:43:03.302629 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m09:43:03.302629 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m09:43:03.302629 [info ] [MainThread]: Required dependencies:
+[0m09:43:03.305787 [debug] [MainThread]: Executing "git --help"
+[0m09:43:03.386649 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   history    EXPERIMENTAL: Rewrite history\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Set `HEAD` or the index to a known state\n   switch     Switch branches\n   tag        Create, list, delete or verify tags\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m09:43:03.387796 [debug] [MainThread]: STDERR: "b''"
+[0m09:43:03.388714 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m09:43:03.388714 [info ] [MainThread]: Connection:
+[0m09:43:03.390730 [info ] [MainThread]:   host: localhost
+[0m09:43:03.392599 [info ] [MainThread]:   port: 5433
+[0m09:43:03.393113 [info ] [MainThread]:   user: qp_admin
+[0m09:43:03.393113 [info ] [MainThread]:   database: warehouse
+[0m09:43:03.394492 [info ] [MainThread]:   schema: staging
+[0m09:43:03.394492 [info ] [MainThread]:   connect_timeout: 10
+[0m09:43:03.394492 [info ] [MainThread]:   role: None
+[0m09:43:03.396012 [info ] [MainThread]:   search_path: None
+[0m09:43:03.397054 [info ] [MainThread]:   keepalives_idle: 0
+[0m09:43:03.397054 [info ] [MainThread]:   sslmode: None
+[0m09:43:03.398081 [info ] [MainThread]:   sslcert: None
+[0m09:43:03.398081 [info ] [MainThread]:   sslkey: None
+[0m09:43:03.398614 [info ] [MainThread]:   sslrootcert: None
+[0m09:43:03.399150 [info ] [MainThread]:   application_name: dbt
+[0m09:43:03.399150 [info ] [MainThread]:   autocommit: False
+[0m09:43:03.400177 [info ] [MainThread]:   retries: 1
+[0m09:43:03.400177 [info ] [MainThread]: Registered adapter: postgres=1.11.0
+[0m09:43:03.766581 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m09:43:03.913156 [debug] [MainThread]: Using postgres connection "debug"
+[0m09:43:03.914898 [debug] [MainThread]: On debug: select 1 as id
+[0m09:43:03.916029 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m09:43:04.031873 [debug] [MainThread]: Postgres adapter: Got a retryable error when attempting to open a postgres connection.
+1 attempts remaining. Retrying in 0 seconds.
+Error:
+connection to server at "localhost" (::1), port 5433 failed: FATAL:  password authentication failed for user "qp_admin"
+
+[0m09:43:04.055685 [debug] [MainThread]: Postgres adapter: Error running SQL: select 1 as id
+[0m09:43:04.055685 [debug] [MainThread]: Postgres adapter: Rolling back transaction.
+[0m09:43:04.055685 [debug] [MainThread]: On debug: No close available on handle
+[0m09:43:04.057644 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m09:43:04.057644 [info ] [MainThread]: [31m1 check failed:[0m
+[0m09:43:04.057644 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Database Error
+  connection to server at "localhost" (::1), port 5433 failed: FATAL:  password authentication failed for user "qp_admin"
+  
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m09:43:04.057644 [debug] [MainThread]: Command `dbt debug` failed at 09:43:04.057644 after 2.12 seconds
+[0m09:43:04.057644 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m09:43:04.057644 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001D125327F20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001D127633950>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001D124CAA2A0>]}
+[0m09:43:04.057644 [debug] [MainThread]: Flushing usage events
+[0m09:43:04.761849 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m09:46:49.676010 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000225E033B4D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000225E26C7830>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000225E26C7800>]}
+
+
+============================== 09:46:49.688805 | 037d0aac-0ef8-4b77-9593-954055dd08d0 ==============================
+[0m09:46:49.688805 [info ] [MainThread]: Running with dbt=1.12.5
+[0m09:46:49.688805 [debug] [MainThread]: running dbt with arguments {'maximum_seed_size_mib': '1', 'no_print': 'None', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'version_check': 'True', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'C:\\dev\\querypilot\\data\\dbt', 'use_colors': 'True', 'hints_enabled': 'True', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'invocation_command': 'dbt debug', 'log_path': 'C:\\dev\\querypilot\\data\\dbt\\logs'}
+[0m09:46:49.741105 [info ] [MainThread]: dbt version: 1.12.5
+[0m09:46:49.741105 [info ] [MainThread]: python version: 3.12.14
+[0m09:46:49.743122 [info ] [MainThread]: python path: C:\dev\querypilot\data\.venv\Scripts\python.exe
+[0m09:46:49.745823 [info ] [MainThread]: os info: Windows-11-10.0.26200-SP0
+[0m09:46:49.875868 [info ] [MainThread]: Using profiles dir at C:\dev\querypilot\data\dbt
+[0m09:46:49.878899 [info ] [MainThread]: Using profiles.yml file at C:\dev\querypilot\data\dbt\profiles.yml
+[0m09:46:49.878899 [info ] [MainThread]: Using dbt_project.yml file at C:\dev\querypilot\data\dbt\dbt_project.yml
+[0m09:46:49.882881 [info ] [MainThread]: adapter type: postgres
+[0m09:46:49.882881 [info ] [MainThread]: adapter version: 1.11.0
+[0m09:46:50.086070 [info ] [MainThread]: Configuration:
+[0m09:46:50.086070 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m09:46:50.086070 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m09:46:50.095881 [info ] [MainThread]: Required dependencies:
+[0m09:46:50.095881 [debug] [MainThread]: Executing "git --help"
+[0m09:46:50.183650 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   history    EXPERIMENTAL: Rewrite history\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Set `HEAD` or the index to a known state\n   switch     Switch branches\n   tag        Create, list, delete or verify tags\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m09:46:50.186157 [debug] [MainThread]: STDERR: "b''"
+[0m09:46:50.186157 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m09:46:50.186157 [info ] [MainThread]: Connection:
+[0m09:46:50.186157 [info ] [MainThread]:   host: localhost
+[0m09:46:50.186157 [info ] [MainThread]:   port: 5433
+[0m09:46:50.186157 [info ] [MainThread]:   user: qp_admin
+[0m09:46:50.186157 [info ] [MainThread]:   database: warehouse
+[0m09:46:50.186157 [info ] [MainThread]:   schema: staging
+[0m09:46:50.186157 [info ] [MainThread]:   connect_timeout: 10
+[0m09:46:50.193742 [info ] [MainThread]:   role: None
+[0m09:46:50.194253 [info ] [MainThread]:   search_path: None
+[0m09:46:50.195787 [info ] [MainThread]:   keepalives_idle: 0
+[0m09:46:50.195787 [info ] [MainThread]:   sslmode: None
+[0m09:46:50.195787 [info ] [MainThread]:   sslcert: None
+[0m09:46:50.197865 [info ] [MainThread]:   sslkey: None
+[0m09:46:50.197865 [info ] [MainThread]:   sslrootcert: None
+[0m09:46:50.197865 [info ] [MainThread]:   application_name: dbt
+[0m09:46:50.197865 [info ] [MainThread]:   autocommit: False
+[0m09:46:50.200599 [info ] [MainThread]:   retries: 1
+[0m09:46:50.202543 [info ] [MainThread]: Registered adapter: postgres=1.11.0
+[0m09:46:50.583638 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m09:46:50.671153 [debug] [MainThread]: Using postgres connection "debug"
+[0m09:46:50.671153 [debug] [MainThread]: On debug: select 1 as id
+[0m09:46:50.671153 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m09:46:50.758003 [debug] [MainThread]: SQL status: SELECT 1 in 0.086 seconds
+[0m09:46:50.758003 [debug] [MainThread]: On debug: Close
+[0m09:46:50.763630 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m09:46:50.766204 [info ] [MainThread]: [32mAll checks passed![0m
+[0m09:46:50.769674 [debug] [MainThread]: Command `cli debug` succeeded at 09:46:50.768311 after 1.62 seconds
+[0m09:46:50.769674 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m09:46:50.771743 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000225E49DDCA0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000225E2E5EA80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000225E218EDE0>]}
+[0m09:46:50.771743 [debug] [MainThread]: Flushing usage events
+[0m09:46:51.106642 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m09:47:28.175765 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000235C564F470>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000235C81BD190>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000235C81BD1C0>]}
+
+
+============================== 09:47:28.194656 | 1380a775-1fb4-460f-b873-040c25ca7b44 ==============================
+[0m09:47:28.194656 [info ] [MainThread]: Running with dbt=1.12.5
+[0m09:47:28.195671 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'maximum_seed_size_mib': '1', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'profiles_dir': 'C:\\dev\\querypilot\\data\\dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'invocation_command': 'dbt deps', 'hints_enabled': 'True', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'use_colors': 'True', 'log_path': 'C:\\dev\\querypilot\\data\\dbt\\logs'}
+[0m09:47:28.449973 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '1380a775-1fb4-460f-b873-040c25ca7b44', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000235CA2AA060>]}
+[0m09:47:28.556596 [debug] [MainThread]: Set downloads directory='C:\Users\kukud\AppData\Local\Temp\dbt-downloads-4govujop'
+[0m09:47:28.558286 [debug] [MainThread]: Making package index registry request: GET https://hub.getdbt.com/api/v1/index.json
+[0m09:47:29.210328 [debug] [MainThread]: Response from registry index: GET https://hub.getdbt.com/api/v1/index.json 200
+[0m09:47:29.215977 [debug] [MainThread]: Making package registry request: GET https://hub.getdbt.com/api/v1/dbt-labs/dbt_utils.json
+[0m09:47:29.339119 [debug] [MainThread]: External call exception: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+[0m09:47:29.339119 [debug] [MainThread]: Retrying external call. Attempt: 0 Max attempts: 5
+[0m09:47:30.343740 [debug] [MainThread]: Making package registry request: GET https://hub.getdbt.com/api/v1/dbt-labs/dbt_utils.json
+[0m09:47:30.419200 [debug] [MainThread]: External call exception: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+[0m09:47:30.420214 [debug] [MainThread]: Retrying external call. Attempt: 1 Max attempts: 5
+[0m09:47:31.421374 [debug] [MainThread]: Making package registry request: GET https://hub.getdbt.com/api/v1/dbt-labs/dbt_utils.json
+[0m09:47:31.492359 [debug] [MainThread]: External call exception: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+[0m09:47:31.492359 [debug] [MainThread]: Retrying external call. Attempt: 2 Max attempts: 5
+[0m09:47:32.495680 [debug] [MainThread]: Making package registry request: GET https://hub.getdbt.com/api/v1/dbt-labs/dbt_utils.json
+[0m09:47:32.650425 [debug] [MainThread]: Response from registry: GET https://hub.getdbt.com/api/v1/dbt-labs/dbt_utils.json 200
+[0m09:47:32.693676 [info ] [MainThread]: Updating lock file in file path: C:\dev\querypilot\data\dbt/package-lock.yml
+[0m09:47:32.734340 [debug] [MainThread]: Set downloads directory='C:\Users\kukud\AppData\Local\Temp\dbt-downloads-_l3lxzzd'
+[0m09:47:32.738783 [info ] [MainThread]: Installing dbt-labs/dbt_utils
+[0m09:47:33.808168 [info ] [MainThread]: Installed from version 1.4.1
+[0m09:47:33.808168 [info ] [MainThread]: Up to date!
+[0m09:47:33.808168 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'package', 'label': '1380a775-1fb4-460f-b873-040c25ca7b44', 'property_': 'install', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000235C9CBFE60>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000235CA2FD640>]}
+[0m09:47:33.817795 [debug] [MainThread]: Command `cli deps` succeeded at 09:47:33.817795 after 5.95 seconds
+[0m09:47:33.818752 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000235C9CD3A10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000235C7EB2F60>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000235C9D441D0>]}
+[0m09:47:33.819767 [debug] [MainThread]: Flushing usage events
+[0m09:47:34.160110 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m09:47:48.173178 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002190557EFC0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021906EE7C20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002190715F4D0>]}
+
+
+============================== 09:47:48.183046 | 4b570850-a041-4ac5-b23e-50d559b14d86 ==============================
+[0m09:47:48.183046 [info ] [MainThread]: Running with dbt=1.12.5
+[0m09:47:48.185854 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'maximum_seed_size_mib': '1', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'static_parser': 'True', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'False', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\dev\\querypilot\\data\\dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'indirect_selection': 'eager', 'hints_enabled': 'True', 'invocation_command': 'dbt build --select staging', 'use_experimental_parser': 'False', 'use_colors': 'True', 'log_path': 'C:\\dev\\querypilot\\data\\dbt\\logs'}
+[0m09:47:48.540752 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '4b570850-a041-4ac5-b23e-50d559b14d86', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000219073FBFB0>]}
+[0m09:47:48.668276 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '4b570850-a041-4ac5-b23e-50d559b14d86', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021905513740>]}
+[0m09:47:48.669922 [info ] [MainThread]: Registered adapter: postgres=1.11.0
+[0m09:47:49.093654 [debug] [MainThread]: checksum: 0237b8ab76927b85037e2879ca8e27c231985de2cb417712530ea03dad166920, vars: {}, profile: querypilot, target: dev, version: 1.12.5
+[0m09:47:49.096954 [info ] [MainThread]: Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m09:47:49.097468 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '4b570850-a041-4ac5-b23e-50d559b14d86', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021907411B20>]}
+[0m09:47:53.705761 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.querypilot.marts
+[0m09:47:53.718904 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '4b570850-a041-4ac5-b23e-50d559b14d86', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021907EF37A0>]}
+[0m09:47:53.918600 [debug] [MainThread]: Wrote artifact WritableManifest to C:\dev\querypilot\data\dbt\target\manifest.json
+[0m09:47:53.925924 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\dev\querypilot\data\dbt\target\semantic_manifest.json
+[0m09:47:54.104326 [debug] [MainThread]: Wrote artifact OsiDocument to C:\dev\querypilot\data\dbt\target\osi_document.json
+[0m09:47:54.485829 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '4b570850-a041-4ac5-b23e-50d559b14d86', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000219080EE240>]}
+[0m09:47:54.487887 [info ] [MainThread]: Found 8 models, 21 data tests, 9 sources, 594 macros
+[0m09:47:54.487887 [info ] [MainThread]: 
+[0m09:47:54.487887 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m09:47:54.487887 [info ] [MainThread]: 
+[0m09:47:54.495917 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m09:47:54.503228 [debug] [ThreadPool]: Acquiring new postgres connection 'list_warehouse'
+[0m09:47:54.605838 [debug] [ThreadPool]: Using postgres connection "list_warehouse"
+[0m09:47:54.605838 [debug] [ThreadPool]: On list_warehouse: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "connection_name": "list_warehouse"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m09:47:54.605838 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m09:47:54.684826 [debug] [ThreadPool]: SQL status: SELECT 8 in 0.075 seconds
+[0m09:47:54.685842 [debug] [ThreadPool]: On list_warehouse: Close
+[0m09:47:54.685842 [debug] [ThreadPool]: Acquiring new postgres connection 'list_warehouse_staging'
+[0m09:47:54.696152 [debug] [ThreadPool]: Using postgres connection "list_warehouse_staging"
+[0m09:47:54.696152 [debug] [ThreadPool]: On list_warehouse_staging: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "connection_name": "list_warehouse_staging"} */
+select
+      'warehouse' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'staging'
+    union all
+    select
+      'warehouse' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'staging'
+    union all
+    select
+      'warehouse' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'staging'
+    union all
+    select distinct
+     'warehouse' as database,
+     proname as name,
+     ns.nspname as schema,
+     'function' as type
+    from pg_proc
+     join pg_namespace as ns on pronamespace = ns.oid
+    where ns.nspname ilike 'staging'
+  
+[0m09:47:54.696152 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m09:47:54.775777 [debug] [ThreadPool]: SQL status: SELECT 0 in 0.077 seconds
+[0m09:47:54.775777 [debug] [ThreadPool]: On list_warehouse_staging: ROLLBACK
+[0m09:47:54.775777 [debug] [ThreadPool]: On list_warehouse_staging: Close
+[0m09:47:54.790301 [debug] [MainThread]: Using postgres connection "master"
+[0m09:47:54.790301 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "connection_name": "master"} */
+select distinct
+        dependent_namespace.nspname as dependent_schema,
+        dependent_class.relname as dependent_name,
+        referenced_namespace.nspname as referenced_schema,
+        referenced_class.relname as referenced_name
+
+    -- Query for views: views are entries in pg_class with an entry in pg_rewrite, but we avoid
+    -- a seq scan on pg_rewrite by leveraging the fact there is an "internal" row in pg_depend for
+    -- the view...
+    from pg_class as dependent_class
+    join pg_namespace as dependent_namespace on dependent_namespace.oid = dependent_class.relnamespace
+    join pg_depend as dependent_depend on dependent_depend.refobjid = dependent_class.oid
+        and dependent_depend.classid = 'pg_rewrite'::regclass
+        and dependent_depend.refclassid = 'pg_class'::regclass
+        and dependent_depend.deptype = 'i'
+
+    -- ... and via pg_depend (that has a row per column, hence the need for "distinct" above, and
+    -- making sure to exclude the internal row to avoid a view appearing to depend on itself)...
+    join pg_depend as joining_depend on joining_depend.objid = dependent_depend.objid
+        and joining_depend.classid = 'pg_rewrite'::regclass
+        and joining_depend.refclassid = 'pg_class'::regclass
+        and joining_depend.refobjid != dependent_depend.refobjid
+
+    -- ... we can find the tables they query from in pg_class, but excluding system tables. Note we
+    -- don't need need to exclude _dependent_ system tables, because they only query from other
+    -- system tables, and so are automatically excluded by excluding _referenced_ system tables
+    join pg_class as referenced_class on referenced_class.oid = joining_depend.refobjid
+    join pg_namespace as referenced_namespace on referenced_namespace.oid = referenced_class.relnamespace
+        and referenced_namespace.nspname != 'information_schema'
+        and referenced_namespace.nspname not like 'pg\_%'
+
+    order by
+        dependent_schema, dependent_name, referenced_schema, referenced_name;
+[0m09:47:54.790301 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m09:47:54.855756 [debug] [MainThread]: SQL status: SELECT 0 in 0.067 seconds
+[0m09:47:54.855756 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '4b570850-a041-4ac5-b23e-50d559b14d86', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021902C845C0>]}
+[0m09:47:54.855756 [debug] [MainThread]: On master: ROLLBACK
+[0m09:47:54.855756 [debug] [MainThread]: On master: COMMIT
+[0m09:47:54.863345 [debug] [MainThread]: Using postgres connection "master"
+[0m09:47:54.863345 [debug] [MainThread]: On master: COMMIT
+[0m09:47:54.865872 [debug] [MainThread]: SQL status: COMMIT in 0.002 seconds
+[0m09:47:54.866967 [debug] [MainThread]: On master: Close
+[0m09:47:54.916521 [debug] [Thread-1 (]: Began running node model.querypilot.stg_customers
+[0m09:47:54.918056 [debug] [Thread-2 (]: Began running node model.querypilot.stg_geolocation
+[0m09:47:54.916521 [info ] [Thread-1 (]: 1 of 29 START sql view model staging.stg_customers ............................. [RUN]
+[0m09:47:54.918615 [debug] [Thread-3 (]: Began running node model.querypilot.stg_order_items
+[0m09:47:54.918615 [debug] [Thread-4 (]: Began running node model.querypilot.stg_order_payments
+[0m09:47:54.918615 [info ] [Thread-2 (]: 2 of 29 START sql view model staging.stg_geolocation ........................... [RUN]
+[0m09:47:54.918615 [debug] [Thread-1 (]: Acquiring new postgres connection 'model.querypilot.stg_customers'
+[0m09:47:54.925276 [debug] [Thread-2 (]: Acquiring new postgres connection 'model.querypilot.stg_geolocation'
+[0m09:47:54.923203 [info ] [Thread-3 (]: 3 of 29 START sql view model staging.stg_order_items ........................... [RUN]
+[0m09:47:54.925839 [debug] [Thread-1 (]: Began compiling node model.querypilot.stg_customers
+[0m09:47:54.926420 [debug] [Thread-2 (]: Began compiling node model.querypilot.stg_geolocation
+[0m09:47:55.105761 [debug] [Thread-3 (]: Acquiring new postgres connection 'model.querypilot.stg_order_items'
+[0m09:47:54.924232 [info ] [Thread-4 (]: 4 of 29 START sql view model staging.stg_order_payments ........................ [RUN]
+[0m09:47:55.117968 [debug] [Thread-1 (]: Writing injected SQL for node "model.querypilot.stg_customers"
+[0m09:47:55.125791 [debug] [Thread-2 (]: Writing injected SQL for node "model.querypilot.stg_geolocation"
+[0m09:47:55.129668 [debug] [Thread-3 (]: Began compiling node model.querypilot.stg_order_items
+[0m09:47:55.138322 [debug] [Thread-4 (]: Acquiring new postgres connection 'model.querypilot.stg_order_payments'
+[0m09:47:55.138322 [debug] [Thread-3 (]: Writing injected SQL for node "model.querypilot.stg_order_items"
+[0m09:47:55.145822 [debug] [Thread-4 (]: Began compiling node model.querypilot.stg_order_payments
+[0m09:47:55.148217 [debug] [Thread-4 (]: Writing injected SQL for node "model.querypilot.stg_order_payments"
+[0m09:47:55.151858 [debug] [Thread-2 (]: Began executing node model.querypilot.stg_geolocation
+[0m09:47:55.161940 [debug] [Thread-3 (]: Began executing node model.querypilot.stg_order_items
+[0m09:47:55.162616 [debug] [Thread-1 (]: Began executing node model.querypilot.stg_customers
+[0m09:47:55.205998 [debug] [Thread-2 (]: Writing runtime sql for node "model.querypilot.stg_geolocation"
+[0m09:47:55.205998 [debug] [Thread-3 (]: Writing runtime sql for node "model.querypilot.stg_order_items"
+[0m09:47:55.205998 [debug] [Thread-4 (]: Began executing node model.querypilot.stg_order_payments
+[0m09:47:55.217930 [debug] [Thread-1 (]: Writing runtime sql for node "model.querypilot.stg_customers"
+[0m09:47:55.222206 [debug] [Thread-4 (]: Writing runtime sql for node "model.querypilot.stg_order_payments"
+[0m09:47:55.225680 [debug] [Thread-3 (]: Using postgres connection "model.querypilot.stg_order_items"
+[0m09:47:55.225680 [debug] [Thread-3 (]: On model.querypilot.stg_order_items: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_order_items"} */
+
+  create view "warehouse"."staging"."stg_order_items__dbt_tmp"
+    
+    
+  as (
+    with source as (
+    select * from "warehouse"."raw"."order_items"
+)
+
+select
+    order_id,
+    order_item_id::int                 as item_number,
+    product_id,
+    seller_id,
+    shipping_limit_date::timestamp     as shipping_limit_at,
+    price::numeric(12, 2)              as price,
+    freight_value::numeric(12, 2)      as freight_value
+from source
+  );
+[0m09:47:55.225680 [debug] [Thread-3 (]: Opening a new connection, currently in state init
+[0m09:47:55.233949 [debug] [Thread-4 (]: Using postgres connection "model.querypilot.stg_order_payments"
+[0m09:47:55.234967 [debug] [Thread-4 (]: On model.querypilot.stg_order_payments: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_order_payments"} */
+
+  create view "warehouse"."staging"."stg_order_payments__dbt_tmp"
+    
+    
+  as (
+    with source as (
+    select * from "warehouse"."raw"."order_payments"
+)
+
+select
+    order_id,
+    payment_sequential::int            as payment_sequence,
+    payment_type,
+    payment_installments::int          as installments,
+    payment_value::numeric(12, 2)      as payment_value
+from source
+  );
+[0m09:47:55.234967 [debug] [Thread-4 (]: Opening a new connection, currently in state init
+[0m09:47:55.235969 [debug] [Thread-2 (]: Using postgres connection "model.querypilot.stg_geolocation"
+[0m09:47:55.235969 [debug] [Thread-1 (]: Using postgres connection "model.querypilot.stg_customers"
+[0m09:47:55.238170 [debug] [Thread-2 (]: On model.querypilot.stg_geolocation: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_geolocation"} */
+
+  create view "warehouse"."staging"."stg_geolocation__dbt_tmp"
+    
+    
+  as (
+    with source as (
+    select * from "warehouse"."raw"."geolocation"
+)
+
+select
+    geolocation_zip_code_prefix                               as zip_prefix,
+    avg(geolocation_lat::numeric)::numeric(9, 6)              as lat,
+    avg(geolocation_lng::numeric)::numeric(9, 6)              as lng,
+    mode() within group (order by geolocation_city)           as city,
+    mode() within group (order by upper(geolocation_state))   as state
+from source
+group by 1
+  );
+[0m09:47:55.238688 [debug] [Thread-1 (]: On model.querypilot.stg_customers: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_customers"} */
+
+  create view "warehouse"."staging"."stg_customers__dbt_tmp"
+    
+    
+  as (
+    with source as (
+    select * from "warehouse"."raw"."customers"
+)
+
+select
+    customer_id,
+    customer_unique_id,
+    customer_zip_code_prefix as zip_prefix,
+    customer_city            as city,
+    upper(customer_state)    as state
+from source
+  );
+[0m09:47:55.238688 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m09:47:55.240733 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m09:47:55.303905 [debug] [Thread-4 (]: SQL status: CREATE VIEW in 0.068 seconds
+[0m09:47:55.316491 [debug] [Thread-4 (]: Using postgres connection "model.querypilot.stg_order_payments"
+[0m09:47:55.317334 [debug] [Thread-4 (]: On model.querypilot.stg_order_payments: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_order_payments"} */
+alter table "warehouse"."staging"."stg_order_payments__dbt_tmp" rename to "stg_order_payments"
+[0m09:47:55.317849 [debug] [Thread-1 (]: SQL status: CREATE VIEW in 0.077 seconds
+[0m09:47:55.320677 [debug] [Thread-1 (]: Using postgres connection "model.querypilot.stg_customers"
+[0m09:47:55.320677 [debug] [Thread-2 (]: SQL status: CREATE VIEW in 0.085 seconds
+[0m09:47:55.320677 [debug] [Thread-3 (]: SQL status: CREATE VIEW in 0.094 seconds
+[0m09:47:55.325987 [debug] [Thread-4 (]: SQL status: ALTER TABLE in 0.009 seconds
+[0m09:47:55.325987 [debug] [Thread-1 (]: On model.querypilot.stg_customers: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_customers"} */
+alter table "warehouse"."staging"."stg_customers__dbt_tmp" rename to "stg_customers"
+[0m09:47:55.328073 [debug] [Thread-2 (]: Using postgres connection "model.querypilot.stg_geolocation"
+[0m09:47:55.331296 [debug] [Thread-3 (]: Using postgres connection "model.querypilot.stg_order_items"
+[0m09:47:55.355685 [debug] [Thread-4 (]: On model.querypilot.stg_order_payments: COMMIT
+[0m09:47:55.355685 [debug] [Thread-2 (]: On model.querypilot.stg_geolocation: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_geolocation"} */
+alter table "warehouse"."staging"."stg_geolocation__dbt_tmp" rename to "stg_geolocation"
+[0m09:47:55.355685 [debug] [Thread-3 (]: On model.querypilot.stg_order_items: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_order_items"} */
+alter table "warehouse"."staging"."stg_order_items__dbt_tmp" rename to "stg_order_items"
+[0m09:47:55.355685 [debug] [Thread-4 (]: Using postgres connection "model.querypilot.stg_order_payments"
+[0m09:47:55.361768 [debug] [Thread-4 (]: On model.querypilot.stg_order_payments: COMMIT
+[0m09:47:55.362499 [debug] [Thread-1 (]: SQL status: ALTER TABLE in 0.004 seconds
+[0m09:47:55.362499 [debug] [Thread-1 (]: On model.querypilot.stg_customers: COMMIT
+[0m09:47:55.362499 [debug] [Thread-3 (]: SQL status: ALTER TABLE in 0.004 seconds
+[0m09:47:55.366425 [debug] [Thread-1 (]: Using postgres connection "model.querypilot.stg_customers"
+[0m09:47:55.366425 [debug] [Thread-2 (]: SQL status: ALTER TABLE in 0.005 seconds
+[0m09:47:55.368938 [debug] [Thread-3 (]: On model.querypilot.stg_order_items: COMMIT
+[0m09:47:55.368938 [debug] [Thread-4 (]: SQL status: COMMIT in 0.008 seconds
+[0m09:47:55.368938 [debug] [Thread-1 (]: On model.querypilot.stg_customers: COMMIT
+[0m09:47:55.368938 [debug] [Thread-2 (]: On model.querypilot.stg_geolocation: COMMIT
+[0m09:47:55.368938 [debug] [Thread-3 (]: Using postgres connection "model.querypilot.stg_order_items"
+[0m09:47:55.382965 [debug] [Thread-4 (]: Applying DROP to: "warehouse"."staging"."stg_order_payments__dbt_backup"
+[0m09:47:55.382965 [debug] [Thread-2 (]: Using postgres connection "model.querypilot.stg_geolocation"
+[0m09:47:55.384980 [debug] [Thread-3 (]: On model.querypilot.stg_order_items: COMMIT
+[0m09:47:55.393402 [debug] [Thread-1 (]: SQL status: COMMIT in 0.010 seconds
+[0m09:47:55.394111 [debug] [Thread-2 (]: On model.querypilot.stg_geolocation: COMMIT
+[0m09:47:55.393402 [debug] [Thread-4 (]: Using postgres connection "model.querypilot.stg_order_payments"
+[0m09:47:55.397726 [debug] [Thread-1 (]: Applying DROP to: "warehouse"."staging"."stg_customers__dbt_backup"
+[0m09:47:55.399746 [debug] [Thread-3 (]: SQL status: COMMIT in 0.005 seconds
+[0m09:47:55.401993 [debug] [Thread-4 (]: On model.querypilot.stg_order_payments: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_order_payments"} */
+drop view if exists "warehouse"."staging"."stg_order_payments__dbt_backup" cascade
+[0m09:47:55.404919 [debug] [Thread-1 (]: Using postgres connection "model.querypilot.stg_customers"
+[0m09:47:55.405983 [debug] [Thread-3 (]: Applying DROP to: "warehouse"."staging"."stg_order_items__dbt_backup"
+[0m09:47:55.405983 [debug] [Thread-2 (]: SQL status: COMMIT in 0.007 seconds
+[0m09:47:55.405983 [debug] [Thread-1 (]: On model.querypilot.stg_customers: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_customers"} */
+drop view if exists "warehouse"."staging"."stg_customers__dbt_backup" cascade
+[0m09:47:55.405983 [debug] [Thread-4 (]: SQL status: DROP VIEW in 0.002 seconds
+[0m09:47:55.405983 [debug] [Thread-3 (]: Using postgres connection "model.querypilot.stg_order_items"
+[0m09:47:55.405983 [debug] [Thread-2 (]: Applying DROP to: "warehouse"."staging"."stg_geolocation__dbt_backup"
+[0m09:47:55.418706 [debug] [Thread-4 (]: On model.querypilot.stg_order_payments: Close
+[0m09:47:55.420725 [debug] [Thread-1 (]: SQL status: DROP VIEW in 0.005 seconds
+[0m09:47:55.420725 [debug] [Thread-3 (]: On model.querypilot.stg_order_items: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_order_items"} */
+drop view if exists "warehouse"."staging"."stg_order_items__dbt_backup" cascade
+[0m09:47:55.420725 [debug] [Thread-2 (]: Using postgres connection "model.querypilot.stg_geolocation"
+[0m09:47:55.425883 [debug] [Thread-1 (]: On model.querypilot.stg_customers: Close
+[0m09:47:55.425883 [debug] [Thread-2 (]: On model.querypilot.stg_geolocation: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_geolocation"} */
+drop view if exists "warehouse"."staging"."stg_geolocation__dbt_backup" cascade
+[0m09:47:55.425883 [debug] [Thread-3 (]: SQL status: DROP VIEW in 0.002 seconds
+[0m09:47:55.437173 [debug] [Thread-3 (]: On model.querypilot.stg_order_items: Close
+[0m09:47:55.437988 [debug] [Thread-2 (]: SQL status: DROP VIEW in 0.007 seconds
+[0m09:47:55.437988 [debug] [Thread-2 (]: On model.querypilot.stg_geolocation: Close
+[0m09:47:55.452006 [debug] [Thread-4 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '4b570850-a041-4ac5-b23e-50d559b14d86', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000219082A7110>]}
+[0m09:47:55.456100 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '4b570850-a041-4ac5-b23e-50d559b14d86', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000219031E07A0>]}
+[0m09:47:55.452006 [info ] [Thread-4 (]: 4 of 29 OK created sql view model staging.stg_order_payments ................... [[32mCREATE VIEW[0m in 0.29s]
+[0m09:47:55.456100 [debug] [Thread-3 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '4b570850-a041-4ac5-b23e-50d559b14d86', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000219080ECD70>]}
+[0m09:47:55.459158 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '4b570850-a041-4ac5-b23e-50d559b14d86', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000219097234A0>]}
+[0m09:47:55.459158 [info ] [Thread-1 (]: 1 of 29 OK created sql view model staging.stg_customers ........................ [[32mCREATE VIEW[0m in 0.51s]
+[0m09:47:55.459158 [debug] [Thread-4 (]: Finished running node model.querypilot.stg_order_payments
+[0m09:47:55.459158 [info ] [Thread-3 (]: 3 of 29 OK created sql view model staging.stg_order_items ...................... [[32mCREATE VIEW[0m in 0.51s]
+[0m09:47:55.459158 [debug] [Thread-1 (]: Finished running node model.querypilot.stg_customers
+[0m09:47:55.466494 [debug] [Thread-3 (]: Finished running node model.querypilot.stg_order_items
+[0m09:47:55.459158 [info ] [Thread-2 (]: 2 of 29 OK created sql view model staging.stg_geolocation ...................... [[32mCREATE VIEW[0m in 0.51s]
+[0m09:47:55.459158 [debug] [Thread-4 (]: Began running node model.querypilot.stg_order_reviews
+[0m09:47:55.468613 [debug] [Thread-1 (]: Began running node model.querypilot.stg_orders
+[0m09:47:55.470630 [debug] [Thread-3 (]: Began running node model.querypilot.stg_products
+[0m09:47:55.470630 [debug] [Thread-2 (]: Finished running node model.querypilot.stg_geolocation
+[0m09:47:55.470630 [info ] [Thread-4 (]: 5 of 29 START sql view model staging.stg_order_reviews ......................... [RUN]
+[0m09:47:55.470630 [debug] [Thread-2 (]: Began running node model.querypilot.stg_sellers
+[0m09:47:55.475958 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly model.querypilot.stg_order_payments, now model.querypilot.stg_order_reviews)
+[0m09:47:55.470630 [info ] [Thread-1 (]: 6 of 29 START sql view model staging.stg_orders ................................ [RUN]
+[0m09:47:55.475958 [debug] [Thread-4 (]: Began compiling node model.querypilot.stg_order_reviews
+[0m09:47:55.470630 [info ] [Thread-3 (]: 7 of 29 START sql view model staging.stg_products .............................. [RUN]
+[0m09:47:55.475958 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.querypilot.stg_customers, now model.querypilot.stg_orders)
+[0m09:47:55.475958 [info ] [Thread-2 (]: 8 of 29 START sql view model staging.stg_sellers ............................... [RUN]
+[0m09:47:55.481720 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly model.querypilot.stg_order_items, now model.querypilot.stg_products)
+[0m09:47:55.482992 [debug] [Thread-1 (]: Began compiling node model.querypilot.stg_orders
+[0m09:47:55.485802 [debug] [Thread-4 (]: Writing injected SQL for node "model.querypilot.stg_order_reviews"
+[0m09:47:55.485802 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly model.querypilot.stg_geolocation, now model.querypilot.stg_sellers)
+[0m09:47:55.485802 [debug] [Thread-3 (]: Began compiling node model.querypilot.stg_products
+[0m09:47:55.485802 [debug] [Thread-1 (]: Writing injected SQL for node "model.querypilot.stg_orders"
+[0m09:47:55.485802 [debug] [Thread-2 (]: Began compiling node model.querypilot.stg_sellers
+[0m09:47:55.495971 [debug] [Thread-3 (]: Writing injected SQL for node "model.querypilot.stg_products"
+[0m09:47:55.499645 [debug] [Thread-4 (]: Began executing node model.querypilot.stg_order_reviews
+[0m09:47:55.505678 [debug] [Thread-2 (]: Writing injected SQL for node "model.querypilot.stg_sellers"
+[0m09:47:55.509827 [debug] [Thread-4 (]: Writing runtime sql for node "model.querypilot.stg_order_reviews"
+[0m09:47:55.509827 [debug] [Thread-1 (]: Began executing node model.querypilot.stg_orders
+[0m09:47:55.514177 [debug] [Thread-3 (]: Began executing node model.querypilot.stg_products
+[0m09:47:55.517741 [debug] [Thread-1 (]: Writing runtime sql for node "model.querypilot.stg_orders"
+[0m09:47:55.521048 [debug] [Thread-3 (]: Writing runtime sql for node "model.querypilot.stg_products"
+[0m09:47:55.521048 [debug] [Thread-2 (]: Began executing node model.querypilot.stg_sellers
+[0m09:47:55.526000 [debug] [Thread-4 (]: Using postgres connection "model.querypilot.stg_order_reviews"
+[0m09:47:55.526000 [debug] [Thread-2 (]: Writing runtime sql for node "model.querypilot.stg_sellers"
+[0m09:47:55.530175 [debug] [Thread-4 (]: On model.querypilot.stg_order_reviews: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_order_reviews"} */
+
+  create view "warehouse"."staging"."stg_order_reviews__dbt_tmp"
+    
+    
+  as (
+    with source as (
+    select * from "warehouse"."raw"."order_reviews"
+),
+
+ranked as (
+    select
+        *,
+        row_number() over (
+            partition by order_id
+            order by review_answer_timestamp::timestamp desc nulls last,
+                     review_creation_date::timestamp desc
+        ) as rn
+    from source
+)
+
+select
+    review_id,
+    order_id,
+    review_score::int                     as review_score,
+    review_comment_title                  as comment_title,
+    review_comment_message                as comment_message,
+    review_creation_date::timestamp       as created_at,
+    review_answer_timestamp::timestamp    as answered_at
+from ranked
+where rn = 1
+  );
+[0m09:47:55.532145 [debug] [Thread-1 (]: Using postgres connection "model.querypilot.stg_orders"
+[0m09:47:55.532764 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m09:47:55.533510 [debug] [Thread-1 (]: On model.querypilot.stg_orders: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_orders"} */
+
+  create view "warehouse"."staging"."stg_orders__dbt_tmp"
+    
+    
+  as (
+    with source as (
+    select * from "warehouse"."raw"."orders"
+)
+
+select
+    order_id,
+    customer_id,
+    order_status,
+    order_purchase_timestamp::timestamp      as purchased_at,
+    order_approved_at::timestamp             as approved_at,
+    order_delivered_carrier_date::timestamp  as shipped_at,
+    order_delivered_customer_date::timestamp as delivered_at,
+    order_estimated_delivery_date::timestamp as estimated_delivery_at
+from source
+  );
+[0m09:47:55.536045 [debug] [Thread-3 (]: Using postgres connection "model.querypilot.stg_products"
+[0m09:47:55.536045 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m09:47:55.536045 [debug] [Thread-2 (]: Using postgres connection "model.querypilot.stg_sellers"
+[0m09:47:55.536045 [debug] [Thread-3 (]: On model.querypilot.stg_products: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_products"} */
+
+  create view "warehouse"."staging"."stg_products__dbt_tmp"
+    
+    
+  as (
+    with products as (
+    select * from "warehouse"."raw"."products"
+),
+
+translation as (
+    select * from "warehouse"."raw"."category_translation"
+)
+
+select
+    p.product_id,
+    coalesce(t.product_category_name_english, p.product_category_name, 'unknown') as category,
+    p.product_category_name                       as category_pt,
+    p.product_name_lenght::numeric::int           as name_length,
+    p.product_description_lenght::numeric::int    as description_length,
+    p.product_photos_qty::numeric::int            as photo_count,
+    p.product_weight_g::numeric                   as weight_g,
+    p.product_length_cm::numeric                  as length_cm,
+    p.product_height_cm::numeric                  as height_cm,
+    p.product_width_cm::numeric                   as width_cm
+from products p
+left join translation t using (product_category_name)
+  );
+[0m09:47:55.536045 [debug] [Thread-2 (]: On model.querypilot.stg_sellers: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_sellers"} */
+
+  create view "warehouse"."staging"."stg_sellers__dbt_tmp"
+    
+    
+  as (
+    with source as (
+    select * from "warehouse"."raw"."sellers"
+)
+
+select
+    seller_id,
+    seller_zip_code_prefix as zip_prefix,
+    seller_city            as city,
+    upper(seller_state)    as state
+from source
+  );
+[0m09:47:55.536045 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m09:47:55.536045 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m09:47:55.575839 [debug] [Thread-4 (]: SQL status: CREATE VIEW in 0.047 seconds
+[0m09:47:55.585753 [debug] [Thread-4 (]: Using postgres connection "model.querypilot.stg_order_reviews"
+[0m09:47:55.585753 [debug] [Thread-4 (]: On model.querypilot.stg_order_reviews: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_order_reviews"} */
+alter table "warehouse"."staging"."stg_order_reviews__dbt_tmp" rename to "stg_order_reviews"
+[0m09:47:55.587802 [debug] [Thread-1 (]: SQL status: CREATE VIEW in 0.051 seconds
+[0m09:47:55.587802 [debug] [Thread-1 (]: Using postgres connection "model.querypilot.stg_orders"
+[0m09:47:55.587802 [debug] [Thread-3 (]: SQL status: CREATE VIEW in 0.051 seconds
+[0m09:47:55.587802 [debug] [Thread-4 (]: SQL status: ALTER TABLE in 0.005 seconds
+[0m09:47:55.587802 [debug] [Thread-1 (]: On model.querypilot.stg_orders: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_orders"} */
+alter table "warehouse"."staging"."stg_orders__dbt_tmp" rename to "stg_orders"
+[0m09:47:55.587802 [debug] [Thread-2 (]: SQL status: CREATE VIEW in 0.052 seconds
+[0m09:47:55.596144 [debug] [Thread-3 (]: Using postgres connection "model.querypilot.stg_products"
+[0m09:47:55.596144 [debug] [Thread-4 (]: On model.querypilot.stg_order_reviews: COMMIT
+[0m09:47:55.603858 [debug] [Thread-2 (]: Using postgres connection "model.querypilot.stg_sellers"
+[0m09:47:55.605173 [debug] [Thread-1 (]: SQL status: ALTER TABLE in 0.006 seconds
+[0m09:47:55.606200 [debug] [Thread-3 (]: On model.querypilot.stg_products: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_products"} */
+alter table "warehouse"."staging"."stg_products__dbt_tmp" rename to "stg_products"
+[0m09:47:55.606200 [debug] [Thread-4 (]: Using postgres connection "model.querypilot.stg_order_reviews"
+[0m09:47:55.606200 [debug] [Thread-2 (]: On model.querypilot.stg_sellers: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_sellers"} */
+alter table "warehouse"."staging"."stg_sellers__dbt_tmp" rename to "stg_sellers"
+[0m09:47:55.606200 [debug] [Thread-1 (]: On model.querypilot.stg_orders: COMMIT
+[0m09:47:55.606200 [debug] [Thread-4 (]: On model.querypilot.stg_order_reviews: COMMIT
+[0m09:47:55.606200 [debug] [Thread-1 (]: Using postgres connection "model.querypilot.stg_orders"
+[0m09:47:55.606200 [debug] [Thread-1 (]: On model.querypilot.stg_orders: COMMIT
+[0m09:47:55.606200 [debug] [Thread-3 (]: SQL status: ALTER TABLE in 0.003 seconds
+[0m09:47:55.606200 [debug] [Thread-2 (]: SQL status: ALTER TABLE in 0.003 seconds
+[0m09:47:55.616506 [debug] [Thread-3 (]: On model.querypilot.stg_products: COMMIT
+[0m09:47:55.618504 [debug] [Thread-4 (]: SQL status: COMMIT in 0.007 seconds
+[0m09:47:55.619022 [debug] [Thread-2 (]: On model.querypilot.stg_sellers: COMMIT
+[0m09:47:55.619022 [debug] [Thread-3 (]: Using postgres connection "model.querypilot.stg_products"
+[0m09:47:55.619022 [debug] [Thread-1 (]: SQL status: COMMIT in 0.009 seconds
+[0m09:47:55.622193 [debug] [Thread-4 (]: Applying DROP to: "warehouse"."staging"."stg_order_reviews__dbt_backup"
+[0m09:47:55.622193 [debug] [Thread-2 (]: Using postgres connection "model.querypilot.stg_sellers"
+[0m09:47:55.622193 [debug] [Thread-3 (]: On model.querypilot.stg_products: COMMIT
+[0m09:47:55.625918 [debug] [Thread-1 (]: Applying DROP to: "warehouse"."staging"."stg_orders__dbt_backup"
+[0m09:47:55.625918 [debug] [Thread-4 (]: Using postgres connection "model.querypilot.stg_order_reviews"
+[0m09:47:55.625918 [debug] [Thread-2 (]: On model.querypilot.stg_sellers: COMMIT
+[0m09:47:55.625918 [debug] [Thread-1 (]: Using postgres connection "model.querypilot.stg_orders"
+[0m09:47:55.625918 [debug] [Thread-4 (]: On model.querypilot.stg_order_reviews: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_order_reviews"} */
+drop view if exists "warehouse"."staging"."stg_order_reviews__dbt_backup" cascade
+[0m09:47:55.630639 [debug] [Thread-1 (]: On model.querypilot.stg_orders: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_orders"} */
+drop view if exists "warehouse"."staging"."stg_orders__dbt_backup" cascade
+[0m09:47:55.632634 [debug] [Thread-3 (]: SQL status: COMMIT in 0.004 seconds
+[0m09:47:55.634839 [debug] [Thread-3 (]: Applying DROP to: "warehouse"."staging"."stg_products__dbt_backup"
+[0m09:47:55.636059 [debug] [Thread-3 (]: Using postgres connection "model.querypilot.stg_products"
+[0m09:47:55.636059 [debug] [Thread-2 (]: SQL status: COMMIT in 0.007 seconds
+[0m09:47:55.636059 [debug] [Thread-3 (]: On model.querypilot.stg_products: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_products"} */
+drop view if exists "warehouse"."staging"."stg_products__dbt_backup" cascade
+[0m09:47:55.636059 [debug] [Thread-4 (]: SQL status: DROP VIEW in 0.007 seconds
+[0m09:47:55.636059 [debug] [Thread-1 (]: SQL status: DROP VIEW in 0.008 seconds
+[0m09:47:55.636059 [debug] [Thread-2 (]: Applying DROP to: "warehouse"."staging"."stg_sellers__dbt_backup"
+[0m09:47:55.636059 [debug] [Thread-4 (]: On model.querypilot.stg_order_reviews: Close
+[0m09:47:55.636059 [debug] [Thread-3 (]: SQL status: DROP VIEW in 0.002 seconds
+[0m09:47:55.636059 [debug] [Thread-1 (]: On model.querypilot.stg_orders: Close
+[0m09:47:55.645834 [debug] [Thread-2 (]: Using postgres connection "model.querypilot.stg_sellers"
+[0m09:47:55.647966 [debug] [Thread-4 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '4b570850-a041-4ac5-b23e-50d559b14d86', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000219080D8F80>]}
+[0m09:47:55.649925 [debug] [Thread-3 (]: On model.querypilot.stg_products: Close
+[0m09:47:55.651944 [debug] [Thread-2 (]: On model.querypilot.stg_sellers: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "model.querypilot.stg_sellers"} */
+drop view if exists "warehouse"."staging"."stg_sellers__dbt_backup" cascade
+[0m09:47:55.651944 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '4b570850-a041-4ac5-b23e-50d559b14d86', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021907E3B7D0>]}
+[0m09:47:55.655826 [debug] [Thread-3 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '4b570850-a041-4ac5-b23e-50d559b14d86', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021907EF10D0>]}
+[0m09:47:55.651944 [info ] [Thread-4 (]: 5 of 29 OK created sql view model staging.stg_order_reviews .................... [[32mCREATE VIEW[0m in 0.17s]
+[0m09:47:55.655826 [debug] [Thread-2 (]: SQL status: DROP VIEW in 0.002 seconds
+[0m09:47:55.655826 [info ] [Thread-1 (]: 6 of 29 OK created sql view model staging.stg_orders ........................... [[32mCREATE VIEW[0m in 0.18s]
+[0m09:47:55.660047 [debug] [Thread-4 (]: Finished running node model.querypilot.stg_order_reviews
+[0m09:47:55.662766 [debug] [Thread-2 (]: On model.querypilot.stg_sellers: Close
+[0m09:47:55.663798 [debug] [Thread-1 (]: Finished running node model.querypilot.stg_orders
+[0m09:47:55.663798 [debug] [Thread-4 (]: Began running node test.querypilot.accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined.5658caf87e
+[0m09:47:55.655826 [info ] [Thread-3 (]: 7 of 29 OK created sql view model staging.stg_products ......................... [[32mCREATE VIEW[0m in 0.17s]
+[0m09:47:55.665885 [debug] [Thread-1 (]: Began running node test.querypilot.dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number.bc8ba6d4ed
+[0m09:47:55.667655 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '4b570850-a041-4ac5-b23e-50d559b14d86', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002190729E240>]}
+[0m09:47:55.670488 [debug] [Thread-3 (]: Finished running node model.querypilot.stg_products
+[0m09:47:55.668740 [info ] [Thread-4 (]: 9 of 29 START test accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined  [RUN]
+[0m09:47:55.673930 [debug] [Thread-3 (]: Began running node test.querypilot.not_null_stg_customers_customer_id.e2cfb1f9aa
+[0m09:47:55.671524 [info ] [Thread-1 (]: 10 of 29 START test dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number  [RUN]
+[0m09:47:55.674980 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly model.querypilot.stg_order_reviews, now test.querypilot.accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined.5658caf87e)
+[0m09:47:55.672884 [info ] [Thread-2 (]: 8 of 29 OK created sql view model staging.stg_sellers .......................... [[32mCREATE VIEW[0m in 0.18s]
+[0m09:47:55.677068 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.querypilot.stg_orders, now test.querypilot.dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number.bc8ba6d4ed)
+[0m09:47:55.676020 [info ] [Thread-3 (]: 11 of 29 START test not_null_stg_customers_customer_id ......................... [RUN]
+[0m09:47:55.678102 [debug] [Thread-4 (]: Began compiling node test.querypilot.accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined.5658caf87e
+[0m09:47:55.679153 [debug] [Thread-2 (]: Finished running node model.querypilot.stg_sellers
+[0m09:47:55.680190 [debug] [Thread-1 (]: Began compiling node test.querypilot.dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number.bc8ba6d4ed
+[0m09:47:55.681227 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly model.querypilot.stg_products, now test.querypilot.not_null_stg_customers_customer_id.e2cfb1f9aa)
+[0m09:47:55.688090 [debug] [Thread-4 (]: Writing injected SQL for node "test.querypilot.accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined.5658caf87e"
+[0m09:47:55.695972 [debug] [Thread-2 (]: Began running node test.querypilot.unique_stg_customers_customer_id.c7614daada
+[0m09:47:55.707692 [debug] [Thread-1 (]: Writing injected SQL for node "test.querypilot.dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number.bc8ba6d4ed"
+[0m09:47:55.709731 [debug] [Thread-3 (]: Began compiling node test.querypilot.not_null_stg_customers_customer_id.e2cfb1f9aa
+[0m09:47:55.709731 [info ] [Thread-2 (]: 12 of 29 START test unique_stg_customers_customer_id ........................... [RUN]
+[0m09:47:55.725806 [debug] [Thread-3 (]: Writing injected SQL for node "test.querypilot.not_null_stg_customers_customer_id.e2cfb1f9aa"
+[0m09:47:55.725806 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly model.querypilot.stg_sellers, now test.querypilot.unique_stg_customers_customer_id.c7614daada)
+[0m09:47:55.725806 [debug] [Thread-2 (]: Began compiling node test.querypilot.unique_stg_customers_customer_id.c7614daada
+[0m09:47:55.730885 [debug] [Thread-4 (]: Began executing node test.querypilot.accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined.5658caf87e
+[0m09:47:55.735660 [debug] [Thread-2 (]: Writing injected SQL for node "test.querypilot.unique_stg_customers_customer_id.c7614daada"
+[0m09:47:55.768492 [debug] [Thread-4 (]: Writing runtime sql for node "test.querypilot.accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined.5658caf87e"
+[0m09:47:55.768492 [debug] [Thread-1 (]: Began executing node test.querypilot.dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number.bc8ba6d4ed
+[0m09:47:55.768492 [debug] [Thread-3 (]: Began executing node test.querypilot.not_null_stg_customers_customer_id.e2cfb1f9aa
+[0m09:47:55.774744 [debug] [Thread-1 (]: Writing runtime sql for node "test.querypilot.dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number.bc8ba6d4ed"
+[0m09:47:55.775803 [debug] [Thread-3 (]: Writing runtime sql for node "test.querypilot.not_null_stg_customers_customer_id.e2cfb1f9aa"
+[0m09:47:55.775803 [debug] [Thread-2 (]: Began executing node test.querypilot.unique_stg_customers_customer_id.c7614daada
+[0m09:47:55.782945 [debug] [Thread-2 (]: Writing runtime sql for node "test.querypilot.unique_stg_customers_customer_id.c7614daada"
+[0m09:47:55.782945 [debug] [Thread-4 (]: Using postgres connection "test.querypilot.accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined.5658caf87e"
+[0m09:47:55.785531 [debug] [Thread-4 (]: On test.querypilot.accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined.5658caf87e: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined.5658caf87e"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+with all_values as (
+
+    select
+        payment_type as value_field,
+        count(*) as n_records
+
+    from "warehouse"."staging"."stg_order_payments"
+    group by payment_type
+
+)
+
+select *
+from all_values
+where value_field not in (
+    'credit_card','boleto','voucher','debit_card','not_defined'
+)
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:55.786051 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m09:47:55.786051 [debug] [Thread-1 (]: Using postgres connection "test.querypilot.dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number.bc8ba6d4ed"
+[0m09:47:55.786051 [debug] [Thread-1 (]: On test.querypilot.dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number.bc8ba6d4ed: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number.bc8ba6d4ed"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+
+
+
+
+
+with validation_errors as (
+
+    select
+        order_id, item_number
+    from "warehouse"."staging"."stg_order_items"
+    group by order_id, item_number
+    having count(*) > 1
+
+)
+
+select *
+from validation_errors
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:55.786051 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m09:47:55.786051 [debug] [Thread-2 (]: Using postgres connection "test.querypilot.unique_stg_customers_customer_id.c7614daada"
+[0m09:47:55.786051 [debug] [Thread-3 (]: Using postgres connection "test.querypilot.not_null_stg_customers_customer_id.e2cfb1f9aa"
+[0m09:47:55.786051 [debug] [Thread-2 (]: On test.querypilot.unique_stg_customers_customer_id.c7614daada: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.unique_stg_customers_customer_id.c7614daada"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+select
+    customer_id as unique_field,
+    count(*) as n_records
+
+from "warehouse"."staging"."stg_customers"
+where customer_id is not null
+group by customer_id
+having count(*) > 1
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:55.786051 [debug] [Thread-3 (]: On test.querypilot.not_null_stg_customers_customer_id.e2cfb1f9aa: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.not_null_stg_customers_customer_id.e2cfb1f9aa"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select customer_id
+from "warehouse"."staging"."stg_customers"
+where customer_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:55.786051 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m09:47:55.786051 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m09:47:55.925703 [debug] [Thread-4 (]: SQL status: SELECT 1 in 0.141 seconds
+[0m09:47:55.933843 [debug] [Thread-4 (]: On test.querypilot.accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined.5658caf87e: ROLLBACK
+[0m09:47:55.936022 [debug] [Thread-4 (]: On test.querypilot.accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined.5658caf87e: Close
+[0m09:47:55.938082 [info ] [Thread-4 (]: 9 of 29 PASS accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined  [[32mPASS[0m in 0.26s]
+[0m09:47:55.939184 [debug] [Thread-4 (]: Finished running node test.querypilot.accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined.5658caf87e
+[0m09:47:55.939184 [debug] [Thread-4 (]: Began running node test.querypilot.not_null_stg_geolocation_zip_prefix.1541960c7e
+[0m09:47:55.939184 [info ] [Thread-4 (]: 13 of 29 START test not_null_stg_geolocation_zip_prefix ........................ [RUN]
+[0m09:47:55.939184 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly test.querypilot.accepted_values_stg_order_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined.5658caf87e, now test.querypilot.not_null_stg_geolocation_zip_prefix.1541960c7e)
+[0m09:47:55.939184 [debug] [Thread-4 (]: Began compiling node test.querypilot.not_null_stg_geolocation_zip_prefix.1541960c7e
+[0m09:47:55.954304 [debug] [Thread-4 (]: Writing injected SQL for node "test.querypilot.not_null_stg_geolocation_zip_prefix.1541960c7e"
+[0m09:47:55.956970 [debug] [Thread-4 (]: Began executing node test.querypilot.not_null_stg_geolocation_zip_prefix.1541960c7e
+[0m09:47:55.958679 [debug] [Thread-4 (]: Writing runtime sql for node "test.querypilot.not_null_stg_geolocation_zip_prefix.1541960c7e"
+[0m09:47:55.958679 [debug] [Thread-4 (]: Using postgres connection "test.querypilot.not_null_stg_geolocation_zip_prefix.1541960c7e"
+[0m09:47:55.963237 [debug] [Thread-4 (]: On test.querypilot.not_null_stg_geolocation_zip_prefix.1541960c7e: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.not_null_stg_geolocation_zip_prefix.1541960c7e"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select zip_prefix
+from "warehouse"."staging"."stg_geolocation"
+where zip_prefix is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:55.963237 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m09:47:55.979535 [debug] [Thread-3 (]: SQL status: SELECT 1 in 0.185 seconds
+[0m09:47:55.983023 [debug] [Thread-3 (]: On test.querypilot.not_null_stg_customers_customer_id.e2cfb1f9aa: ROLLBACK
+[0m09:47:55.986200 [debug] [Thread-3 (]: On test.querypilot.not_null_stg_customers_customer_id.e2cfb1f9aa: Close
+[0m09:47:55.986200 [info ] [Thread-3 (]: 11 of 29 PASS not_null_stg_customers_customer_id ............................... [[32mPASS[0m in 0.31s]
+[0m09:47:55.988228 [debug] [Thread-3 (]: Finished running node test.querypilot.not_null_stg_customers_customer_id.e2cfb1f9aa
+[0m09:47:55.988228 [debug] [Thread-3 (]: Began running node test.querypilot.unique_stg_geolocation_zip_prefix.9ee1031540
+[0m09:47:55.988228 [info ] [Thread-3 (]: 14 of 29 START test unique_stg_geolocation_zip_prefix .......................... [RUN]
+[0m09:47:55.988228 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly test.querypilot.not_null_stg_customers_customer_id.e2cfb1f9aa, now test.querypilot.unique_stg_geolocation_zip_prefix.9ee1031540)
+[0m09:47:55.988228 [debug] [Thread-3 (]: Began compiling node test.querypilot.unique_stg_geolocation_zip_prefix.9ee1031540
+[0m09:47:56.007920 [debug] [Thread-3 (]: Writing injected SQL for node "test.querypilot.unique_stg_geolocation_zip_prefix.9ee1031540"
+[0m09:47:56.011029 [debug] [Thread-3 (]: Began executing node test.querypilot.unique_stg_geolocation_zip_prefix.9ee1031540
+[0m09:47:56.014602 [debug] [Thread-3 (]: Writing runtime sql for node "test.querypilot.unique_stg_geolocation_zip_prefix.9ee1031540"
+[0m09:47:56.017161 [debug] [Thread-3 (]: Using postgres connection "test.querypilot.unique_stg_geolocation_zip_prefix.9ee1031540"
+[0m09:47:56.018758 [debug] [Thread-3 (]: On test.querypilot.unique_stg_geolocation_zip_prefix.9ee1031540: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.unique_stg_geolocation_zip_prefix.9ee1031540"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+select
+    zip_prefix as unique_field,
+    count(*) as n_records
+
+from "warehouse"."staging"."stg_geolocation"
+where zip_prefix is not null
+group by zip_prefix
+having count(*) > 1
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:56.019516 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m09:47:56.019516 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.227 seconds
+[0m09:47:56.022668 [debug] [Thread-2 (]: On test.querypilot.unique_stg_customers_customer_id.c7614daada: ROLLBACK
+[0m09:47:56.025871 [debug] [Thread-2 (]: On test.querypilot.unique_stg_customers_customer_id.c7614daada: Close
+[0m09:47:56.025871 [info ] [Thread-2 (]: 12 of 29 PASS unique_stg_customers_customer_id ................................. [[32mPASS[0m in 0.30s]
+[0m09:47:56.027921 [debug] [Thread-2 (]: Finished running node test.querypilot.unique_stg_customers_customer_id.c7614daada
+[0m09:47:56.028941 [debug] [Thread-2 (]: Began running node test.querypilot.accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5.9409f74301
+[0m09:47:56.028941 [info ] [Thread-2 (]: 15 of 29 START test accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5  [RUN]
+[0m09:47:56.028941 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.querypilot.unique_stg_customers_customer_id.c7614daada, now test.querypilot.accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5.9409f74301)
+[0m09:47:56.032169 [debug] [Thread-2 (]: Began compiling node test.querypilot.accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5.9409f74301
+[0m09:47:56.045669 [debug] [Thread-2 (]: Writing injected SQL for node "test.querypilot.accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5.9409f74301"
+[0m09:47:56.050547 [debug] [Thread-2 (]: Began executing node test.querypilot.accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5.9409f74301
+[0m09:47:56.052002 [debug] [Thread-2 (]: Writing runtime sql for node "test.querypilot.accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5.9409f74301"
+[0m09:47:56.056038 [debug] [Thread-2 (]: Using postgres connection "test.querypilot.accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5.9409f74301"
+[0m09:47:56.056038 [debug] [Thread-2 (]: On test.querypilot.accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5.9409f74301: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5.9409f74301"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+with all_values as (
+
+    select
+        review_score as value_field,
+        count(*) as n_records
+
+    from "warehouse"."staging"."stg_order_reviews"
+    group by review_score
+
+)
+
+select *
+from all_values
+where value_field not in (
+    1,2,3,4,5
+)
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:56.056038 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m09:47:56.252399 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.463 seconds
+[0m09:47:56.257167 [debug] [Thread-1 (]: On test.querypilot.dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number.bc8ba6d4ed: ROLLBACK
+[0m09:47:56.259230 [debug] [Thread-1 (]: On test.querypilot.dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number.bc8ba6d4ed: Close
+[0m09:47:56.261260 [info ] [Thread-1 (]: 10 of 29 PASS dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number  [[32mPASS[0m in 0.58s]
+[0m09:47:56.263270 [debug] [Thread-1 (]: Finished running node test.querypilot.dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number.bc8ba6d4ed
+[0m09:47:56.265947 [debug] [Thread-1 (]: Began running node test.querypilot.not_null_stg_order_reviews_order_id.bcae6ac049
+[0m09:47:56.266288 [info ] [Thread-1 (]: 16 of 29 START test not_null_stg_order_reviews_order_id ........................ [RUN]
+[0m09:47:56.269256 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.querypilot.dbt_utils_unique_combination_of_columns_stg_order_items_order_id__item_number.bc8ba6d4ed, now test.querypilot.not_null_stg_order_reviews_order_id.bcae6ac049)
+[0m09:47:56.269800 [debug] [Thread-1 (]: Began compiling node test.querypilot.not_null_stg_order_reviews_order_id.bcae6ac049
+[0m09:47:56.284104 [debug] [Thread-1 (]: Writing injected SQL for node "test.querypilot.not_null_stg_order_reviews_order_id.bcae6ac049"
+[0m09:47:56.288689 [debug] [Thread-1 (]: Began executing node test.querypilot.not_null_stg_order_reviews_order_id.bcae6ac049
+[0m09:47:56.291880 [debug] [Thread-1 (]: Writing runtime sql for node "test.querypilot.not_null_stg_order_reviews_order_id.bcae6ac049"
+[0m09:47:56.292920 [debug] [Thread-1 (]: Using postgres connection "test.querypilot.not_null_stg_order_reviews_order_id.bcae6ac049"
+[0m09:47:56.295619 [debug] [Thread-1 (]: On test.querypilot.not_null_stg_order_reviews_order_id.bcae6ac049: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.not_null_stg_order_reviews_order_id.bcae6ac049"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select order_id
+from "warehouse"."staging"."stg_order_reviews"
+where order_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:56.295619 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m09:47:56.437935 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.141 seconds
+[0m09:47:56.440734 [debug] [Thread-1 (]: On test.querypilot.not_null_stg_order_reviews_order_id.bcae6ac049: ROLLBACK
+[0m09:47:56.443476 [debug] [Thread-1 (]: On test.querypilot.not_null_stg_order_reviews_order_id.bcae6ac049: Close
+[0m09:47:56.446019 [info ] [Thread-1 (]: 16 of 29 PASS not_null_stg_order_reviews_order_id .............................. [[32mPASS[0m in 0.18s]
+[0m09:47:56.448611 [debug] [Thread-1 (]: Finished running node test.querypilot.not_null_stg_order_reviews_order_id.bcae6ac049
+[0m09:47:56.450323 [debug] [Thread-1 (]: Began running node test.querypilot.unique_stg_order_reviews_order_id.636516e325
+[0m09:47:56.451169 [info ] [Thread-1 (]: 17 of 29 START test unique_stg_order_reviews_order_id .......................... [RUN]
+[0m09:47:56.452685 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.querypilot.not_null_stg_order_reviews_order_id.bcae6ac049, now test.querypilot.unique_stg_order_reviews_order_id.636516e325)
+[0m09:47:56.452685 [debug] [Thread-1 (]: Began compiling node test.querypilot.unique_stg_order_reviews_order_id.636516e325
+[0m09:47:56.466472 [debug] [Thread-1 (]: Writing injected SQL for node "test.querypilot.unique_stg_order_reviews_order_id.636516e325"
+[0m09:47:56.469108 [debug] [Thread-1 (]: Began executing node test.querypilot.unique_stg_order_reviews_order_id.636516e325
+[0m09:47:56.473708 [debug] [Thread-1 (]: Writing runtime sql for node "test.querypilot.unique_stg_order_reviews_order_id.636516e325"
+[0m09:47:56.475732 [debug] [Thread-1 (]: Using postgres connection "test.querypilot.unique_stg_order_reviews_order_id.636516e325"
+[0m09:47:56.475732 [debug] [Thread-1 (]: On test.querypilot.unique_stg_order_reviews_order_id.636516e325: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.unique_stg_order_reviews_order_id.636516e325"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+select
+    order_id as unique_field,
+    count(*) as n_records
+
+from "warehouse"."staging"."stg_order_reviews"
+where order_id is not null
+group by order_id
+having count(*) > 1
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:56.475732 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m09:47:56.490696 [debug] [Thread-4 (]: SQL status: SELECT 1 in 0.528 seconds
+[0m09:47:56.490696 [debug] [Thread-4 (]: On test.querypilot.not_null_stg_geolocation_zip_prefix.1541960c7e: ROLLBACK
+[0m09:47:56.495975 [debug] [Thread-4 (]: On test.querypilot.not_null_stg_geolocation_zip_prefix.1541960c7e: Close
+[0m09:47:56.498784 [info ] [Thread-4 (]: 13 of 29 PASS not_null_stg_geolocation_zip_prefix .............................. [[32mPASS[0m in 0.56s]
+[0m09:47:56.500620 [debug] [Thread-4 (]: Finished running node test.querypilot.not_null_stg_geolocation_zip_prefix.1541960c7e
+[0m09:47:56.501254 [debug] [Thread-4 (]: Began running node test.querypilot.accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved.a06d34fe4c
+[0m09:47:56.502276 [info ] [Thread-4 (]: 18 of 29 START test accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved  [RUN]
+[0m09:47:56.504874 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly test.querypilot.not_null_stg_geolocation_zip_prefix.1541960c7e, now test.querypilot.accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved.a06d34fe4c)
+[0m09:47:56.505886 [debug] [Thread-4 (]: Began compiling node test.querypilot.accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved.a06d34fe4c
+[0m09:47:56.517973 [debug] [Thread-4 (]: Writing injected SQL for node "test.querypilot.accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved.a06d34fe4c"
+[0m09:47:56.520986 [debug] [Thread-4 (]: Began executing node test.querypilot.accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved.a06d34fe4c
+[0m09:47:56.523306 [debug] [Thread-4 (]: Writing runtime sql for node "test.querypilot.accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved.a06d34fe4c"
+[0m09:47:56.526442 [debug] [Thread-4 (]: Using postgres connection "test.querypilot.accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved.a06d34fe4c"
+[0m09:47:56.527474 [debug] [Thread-4 (]: On test.querypilot.accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved.a06d34fe4c: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved.a06d34fe4c"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+with all_values as (
+
+    select
+        order_status as value_field,
+        count(*) as n_records
+
+    from "warehouse"."staging"."stg_orders"
+    group by order_status
+
+)
+
+select *
+from all_values
+where value_field not in (
+    'delivered','shipped','canceled','unavailable','invoiced','processing','created','approved'
+)
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:56.527474 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m09:47:56.534032 [debug] [Thread-3 (]: SQL status: SELECT 1 in 0.514 seconds
+[0m09:47:56.537839 [debug] [Thread-3 (]: On test.querypilot.unique_stg_geolocation_zip_prefix.9ee1031540: ROLLBACK
+[0m09:47:56.539355 [debug] [Thread-3 (]: On test.querypilot.unique_stg_geolocation_zip_prefix.9ee1031540: Close
+[0m09:47:56.541981 [info ] [Thread-3 (]: 14 of 29 PASS unique_stg_geolocation_zip_prefix ................................ [[32mPASS[0m in 0.55s]
+[0m09:47:56.541981 [debug] [Thread-3 (]: Finished running node test.querypilot.unique_stg_geolocation_zip_prefix.9ee1031540
+[0m09:47:56.544594 [debug] [Thread-3 (]: Began running node test.querypilot.not_null_stg_orders_customer_id.af79d5e4b5
+[0m09:47:56.545748 [info ] [Thread-3 (]: 19 of 29 START test not_null_stg_orders_customer_id ............................ [RUN]
+[0m09:47:56.545748 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly test.querypilot.unique_stg_geolocation_zip_prefix.9ee1031540, now test.querypilot.not_null_stg_orders_customer_id.af79d5e4b5)
+[0m09:47:56.545748 [debug] [Thread-3 (]: Began compiling node test.querypilot.not_null_stg_orders_customer_id.af79d5e4b5
+[0m09:47:56.558144 [debug] [Thread-3 (]: Writing injected SQL for node "test.querypilot.not_null_stg_orders_customer_id.af79d5e4b5"
+[0m09:47:56.561072 [debug] [Thread-3 (]: Began executing node test.querypilot.not_null_stg_orders_customer_id.af79d5e4b5
+[0m09:47:56.561072 [debug] [Thread-3 (]: Writing runtime sql for node "test.querypilot.not_null_stg_orders_customer_id.af79d5e4b5"
+[0m09:47:56.566340 [debug] [Thread-3 (]: Using postgres connection "test.querypilot.not_null_stg_orders_customer_id.af79d5e4b5"
+[0m09:47:56.568355 [debug] [Thread-3 (]: On test.querypilot.not_null_stg_orders_customer_id.af79d5e4b5: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.not_null_stg_orders_customer_id.af79d5e4b5"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select customer_id
+from "warehouse"."staging"."stg_orders"
+where customer_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:56.569179 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m09:47:56.672054 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.613 seconds
+[0m09:47:56.674857 [debug] [Thread-2 (]: On test.querypilot.accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5.9409f74301: ROLLBACK
+[0m09:47:56.677211 [debug] [Thread-2 (]: On test.querypilot.accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5.9409f74301: Close
+[0m09:47:56.678790 [info ] [Thread-2 (]: 15 of 29 PASS accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5  [[32mPASS[0m in 0.65s]
+[0m09:47:56.680827 [debug] [Thread-2 (]: Finished running node test.querypilot.accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5.9409f74301
+[0m09:47:56.680827 [debug] [Thread-2 (]: Began running node test.querypilot.not_null_stg_orders_order_id.81cfe2fe64
+[0m09:47:56.683409 [info ] [Thread-2 (]: 20 of 29 START test not_null_stg_orders_order_id ............................... [RUN]
+[0m09:47:56.683409 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.querypilot.accepted_values_stg_order_reviews_review_score__False__1__2__3__4__5.9409f74301, now test.querypilot.not_null_stg_orders_order_id.81cfe2fe64)
+[0m09:47:56.685724 [debug] [Thread-2 (]: Began compiling node test.querypilot.not_null_stg_orders_order_id.81cfe2fe64
+[0m09:47:56.696163 [debug] [Thread-2 (]: Writing injected SQL for node "test.querypilot.not_null_stg_orders_order_id.81cfe2fe64"
+[0m09:47:56.698403 [debug] [Thread-2 (]: Began executing node test.querypilot.not_null_stg_orders_order_id.81cfe2fe64
+[0m09:47:56.701624 [debug] [Thread-2 (]: Writing runtime sql for node "test.querypilot.not_null_stg_orders_order_id.81cfe2fe64"
+[0m09:47:56.704368 [debug] [Thread-2 (]: Using postgres connection "test.querypilot.not_null_stg_orders_order_id.81cfe2fe64"
+[0m09:47:56.705456 [debug] [Thread-2 (]: On test.querypilot.not_null_stg_orders_order_id.81cfe2fe64: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.not_null_stg_orders_order_id.81cfe2fe64"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select order_id
+from "warehouse"."staging"."stg_orders"
+where order_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:56.705967 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m09:47:56.751550 [debug] [Thread-4 (]: SQL status: SELECT 1 in 0.224 seconds
+[0m09:47:56.755984 [debug] [Thread-4 (]: On test.querypilot.accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved.a06d34fe4c: ROLLBACK
+[0m09:47:56.755984 [debug] [Thread-3 (]: SQL status: SELECT 1 in 0.188 seconds
+[0m09:47:56.755984 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.051 seconds
+[0m09:47:56.759072 [debug] [Thread-3 (]: On test.querypilot.not_null_stg_orders_customer_id.af79d5e4b5: ROLLBACK
+[0m09:47:56.759072 [debug] [Thread-4 (]: On test.querypilot.accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved.a06d34fe4c: Close
+[0m09:47:56.761110 [debug] [Thread-2 (]: On test.querypilot.not_null_stg_orders_order_id.81cfe2fe64: ROLLBACK
+[0m09:47:56.763457 [debug] [Thread-2 (]: On test.querypilot.not_null_stg_orders_order_id.81cfe2fe64: Close
+[0m09:47:56.763457 [info ] [Thread-4 (]: 18 of 29 PASS accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved  [[32mPASS[0m in 0.26s]
+[0m09:47:56.765340 [debug] [Thread-3 (]: On test.querypilot.not_null_stg_orders_customer_id.af79d5e4b5: Close
+[0m09:47:56.767509 [debug] [Thread-4 (]: Finished running node test.querypilot.accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved.a06d34fe4c
+[0m09:47:56.770309 [debug] [Thread-4 (]: Began running node test.querypilot.relationships_stg_order_items_order_id__order_id__ref_stg_orders_.dbe9930c54
+[0m09:47:56.767509 [info ] [Thread-2 (]: 20 of 29 PASS not_null_stg_orders_order_id ..................................... [[32mPASS[0m in 0.08s]
+[0m09:47:56.773252 [debug] [Thread-2 (]: Finished running node test.querypilot.not_null_stg_orders_order_id.81cfe2fe64
+[0m09:47:56.772204 [info ] [Thread-3 (]: 19 of 29 PASS not_null_stg_orders_customer_id .................................. [[32mPASS[0m in 0.23s]
+[0m09:47:56.774296 [debug] [Thread-2 (]: Began running node test.querypilot.relationships_stg_orders_customer_id__customer_id__ref_stg_customers_.430bf21500
+[0m09:47:56.773252 [info ] [Thread-4 (]: 21 of 29 START test relationships_stg_order_items_order_id__order_id__ref_stg_orders_  [RUN]
+[0m09:47:56.775854 [debug] [Thread-3 (]: Finished running node test.querypilot.not_null_stg_orders_customer_id.af79d5e4b5
+[0m09:47:56.777411 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly test.querypilot.accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved.a06d34fe4c, now test.querypilot.relationships_stg_order_items_order_id__order_id__ref_stg_orders_.dbe9930c54)
+[0m09:47:56.776385 [info ] [Thread-2 (]: 22 of 29 START test relationships_stg_orders_customer_id__customer_id__ref_stg_customers_  [RUN]
+[0m09:47:56.777411 [debug] [Thread-3 (]: Began running node test.querypilot.unique_stg_orders_order_id.e3b841c71a
+[0m09:47:56.778447 [debug] [Thread-4 (]: Began compiling node test.querypilot.relationships_stg_order_items_order_id__order_id__ref_stg_orders_.dbe9930c54
+[0m09:47:56.779091 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.querypilot.not_null_stg_orders_order_id.81cfe2fe64, now test.querypilot.relationships_stg_orders_customer_id__customer_id__ref_stg_customers_.430bf21500)
+[0m09:47:56.779620 [info ] [Thread-3 (]: 23 of 29 START test unique_stg_orders_order_id ................................. [RUN]
+[0m09:47:56.796050 [debug] [Thread-4 (]: Writing injected SQL for node "test.querypilot.relationships_stg_order_items_order_id__order_id__ref_stg_orders_.dbe9930c54"
+[0m09:47:56.796050 [debug] [Thread-2 (]: Began compiling node test.querypilot.relationships_stg_orders_customer_id__customer_id__ref_stg_customers_.430bf21500
+[0m09:47:56.796050 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly test.querypilot.not_null_stg_orders_customer_id.af79d5e4b5, now test.querypilot.unique_stg_orders_order_id.e3b841c71a)
+[0m09:47:56.810996 [debug] [Thread-2 (]: Writing injected SQL for node "test.querypilot.relationships_stg_orders_customer_id__customer_id__ref_stg_customers_.430bf21500"
+[0m09:47:56.810996 [debug] [Thread-3 (]: Began compiling node test.querypilot.unique_stg_orders_order_id.e3b841c71a
+[0m09:47:56.819315 [debug] [Thread-3 (]: Writing injected SQL for node "test.querypilot.unique_stg_orders_order_id.e3b841c71a"
+[0m09:47:56.819315 [debug] [Thread-4 (]: Began executing node test.querypilot.relationships_stg_order_items_order_id__order_id__ref_stg_orders_.dbe9930c54
+[0m09:47:56.825604 [debug] [Thread-4 (]: Writing runtime sql for node "test.querypilot.relationships_stg_order_items_order_id__order_id__ref_stg_orders_.dbe9930c54"
+[0m09:47:56.825604 [debug] [Thread-3 (]: Began executing node test.querypilot.unique_stg_orders_order_id.e3b841c71a
+[0m09:47:56.825604 [debug] [Thread-2 (]: Began executing node test.querypilot.relationships_stg_orders_customer_id__customer_id__ref_stg_customers_.430bf21500
+[0m09:47:56.831998 [debug] [Thread-3 (]: Writing runtime sql for node "test.querypilot.unique_stg_orders_order_id.e3b841c71a"
+[0m09:47:56.834014 [debug] [Thread-2 (]: Writing runtime sql for node "test.querypilot.relationships_stg_orders_customer_id__customer_id__ref_stg_customers_.430bf21500"
+[0m09:47:56.836064 [debug] [Thread-4 (]: Using postgres connection "test.querypilot.relationships_stg_order_items_order_id__order_id__ref_stg_orders_.dbe9930c54"
+[0m09:47:56.836064 [debug] [Thread-4 (]: On test.querypilot.relationships_stg_order_items_order_id__order_id__ref_stg_orders_.dbe9930c54: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.relationships_stg_order_items_order_id__order_id__ref_stg_orders_.dbe9930c54"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+with child as (
+    select order_id as from_field
+    from "warehouse"."staging"."stg_order_items"
+    where order_id is not null
+),
+
+parent as (
+    select order_id as to_field
+    from "warehouse"."staging"."stg_orders"
+)
+
+select
+    from_field
+
+from child
+left join parent
+    on child.from_field = parent.to_field
+
+where parent.to_field is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:56.836064 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m09:47:56.839203 [debug] [Thread-3 (]: Using postgres connection "test.querypilot.unique_stg_orders_order_id.e3b841c71a"
+[0m09:47:56.839203 [debug] [Thread-3 (]: On test.querypilot.unique_stg_orders_order_id.e3b841c71a: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.unique_stg_orders_order_id.e3b841c71a"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+select
+    order_id as unique_field,
+    count(*) as n_records
+
+from "warehouse"."staging"."stg_orders"
+where order_id is not null
+group by order_id
+having count(*) > 1
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:56.840467 [debug] [Thread-2 (]: Using postgres connection "test.querypilot.relationships_stg_orders_customer_id__customer_id__ref_stg_customers_.430bf21500"
+[0m09:47:56.840467 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m09:47:56.840467 [debug] [Thread-2 (]: On test.querypilot.relationships_stg_orders_customer_id__customer_id__ref_stg_customers_.430bf21500: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.relationships_stg_orders_customer_id__customer_id__ref_stg_customers_.430bf21500"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+with child as (
+    select customer_id as from_field
+    from "warehouse"."staging"."stg_orders"
+    where customer_id is not null
+),
+
+parent as (
+    select customer_id as to_field
+    from "warehouse"."staging"."stg_customers"
+)
+
+select
+    from_field
+
+from child
+left join parent
+    on child.from_field = parent.to_field
+
+where parent.to_field is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:56.842511 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m09:47:56.955818 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.113 seconds
+[0m09:47:56.959427 [debug] [Thread-2 (]: On test.querypilot.relationships_stg_orders_customer_id__customer_id__ref_stg_customers_.430bf21500: ROLLBACK
+[0m09:47:56.960459 [debug] [Thread-2 (]: On test.querypilot.relationships_stg_orders_customer_id__customer_id__ref_stg_customers_.430bf21500: Close
+[0m09:47:56.960459 [info ] [Thread-2 (]: 22 of 29 PASS relationships_stg_orders_customer_id__customer_id__ref_stg_customers_  [[32mPASS[0m in 0.18s]
+[0m09:47:56.965602 [debug] [Thread-2 (]: Finished running node test.querypilot.relationships_stg_orders_customer_id__customer_id__ref_stg_customers_.430bf21500
+[0m09:47:56.966800 [debug] [Thread-2 (]: Began running node test.querypilot.not_null_stg_products_product_id.6373b0acf3
+[0m09:47:56.966800 [info ] [Thread-2 (]: 24 of 29 START test not_null_stg_products_product_id ........................... [RUN]
+[0m09:47:56.968815 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.querypilot.relationships_stg_orders_customer_id__customer_id__ref_stg_customers_.430bf21500, now test.querypilot.not_null_stg_products_product_id.6373b0acf3)
+[0m09:47:56.971557 [debug] [Thread-2 (]: Began compiling node test.querypilot.not_null_stg_products_product_id.6373b0acf3
+[0m09:47:56.982780 [debug] [Thread-2 (]: Writing injected SQL for node "test.querypilot.not_null_stg_products_product_id.6373b0acf3"
+[0m09:47:56.984026 [debug] [Thread-4 (]: SQL status: SELECT 1 in 0.147 seconds
+[0m09:47:56.988351 [debug] [Thread-4 (]: On test.querypilot.relationships_stg_order_items_order_id__order_id__ref_stg_orders_.dbe9930c54: ROLLBACK
+[0m09:47:56.990402 [debug] [Thread-4 (]: On test.querypilot.relationships_stg_order_items_order_id__order_id__ref_stg_orders_.dbe9930c54: Close
+[0m09:47:56.991443 [debug] [Thread-2 (]: Began executing node test.querypilot.not_null_stg_products_product_id.6373b0acf3
+[0m09:47:56.994534 [debug] [Thread-2 (]: Writing runtime sql for node "test.querypilot.not_null_stg_products_product_id.6373b0acf3"
+[0m09:47:56.996085 [debug] [Thread-3 (]: SQL status: SELECT 1 in 0.155 seconds
+[0m09:47:56.995557 [info ] [Thread-4 (]: 21 of 29 PASS relationships_stg_order_items_order_id__order_id__ref_stg_orders_  [[32mPASS[0m in 0.22s]
+[0m09:47:56.998348 [debug] [Thread-3 (]: On test.querypilot.unique_stg_orders_order_id.e3b841c71a: ROLLBACK
+[0m09:47:56.999401 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.521 seconds
+[0m09:47:57.000703 [debug] [Thread-4 (]: Finished running node test.querypilot.relationships_stg_order_items_order_id__order_id__ref_stg_orders_.dbe9930c54
+[0m09:47:57.004660 [debug] [Thread-1 (]: On test.querypilot.unique_stg_order_reviews_order_id.636516e325: ROLLBACK
+[0m09:47:57.005816 [debug] [Thread-3 (]: On test.querypilot.unique_stg_orders_order_id.e3b841c71a: Close
+[0m09:47:57.005816 [debug] [Thread-4 (]: Began running node test.querypilot.relationships_stg_order_items_product_id__product_id__ref_stg_products_.886a82c26c
+[0m09:47:57.005816 [debug] [Thread-2 (]: Using postgres connection "test.querypilot.not_null_stg_products_product_id.6373b0acf3"
+[0m09:47:57.005816 [debug] [Thread-2 (]: On test.querypilot.not_null_stg_products_product_id.6373b0acf3: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.not_null_stg_products_product_id.6373b0acf3"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select product_id
+from "warehouse"."staging"."stg_products"
+where product_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:57.005816 [debug] [Thread-1 (]: On test.querypilot.unique_stg_order_reviews_order_id.636516e325: Close
+[0m09:47:57.005816 [info ] [Thread-4 (]: 25 of 29 START test relationships_stg_order_items_product_id__product_id__ref_stg_products_  [RUN]
+[0m09:47:57.005816 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m09:47:57.005816 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly test.querypilot.relationships_stg_order_items_order_id__order_id__ref_stg_orders_.dbe9930c54, now test.querypilot.relationships_stg_order_items_product_id__product_id__ref_stg_products_.886a82c26c)
+[0m09:47:57.005816 [info ] [Thread-3 (]: 23 of 29 PASS unique_stg_orders_order_id ....................................... [[32mPASS[0m in 0.21s]
+[0m09:47:57.005816 [info ] [Thread-1 (]: 17 of 29 PASS unique_stg_order_reviews_order_id ................................ [[32mPASS[0m in 0.55s]
+[0m09:47:57.014058 [debug] [Thread-4 (]: Began compiling node test.querypilot.relationships_stg_order_items_product_id__product_id__ref_stg_products_.886a82c26c
+[0m09:47:57.015842 [debug] [Thread-3 (]: Finished running node test.querypilot.unique_stg_orders_order_id.e3b841c71a
+[0m09:47:57.016967 [debug] [Thread-1 (]: Finished running node test.querypilot.unique_stg_order_reviews_order_id.636516e325
+[0m09:47:57.029940 [debug] [Thread-4 (]: Writing injected SQL for node "test.querypilot.relationships_stg_order_items_product_id__product_id__ref_stg_products_.886a82c26c"
+[0m09:47:57.033002 [debug] [Thread-3 (]: Began running node test.querypilot.unique_stg_products_product_id.7d950a1467
+[0m09:47:57.033002 [debug] [Thread-1 (]: Began running node test.querypilot.not_null_stg_sellers_seller_id.35d0bce315
+[0m09:47:57.035137 [info ] [Thread-3 (]: 26 of 29 START test unique_stg_products_product_id ............................. [RUN]
+[0m09:47:57.036969 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly test.querypilot.unique_stg_orders_order_id.e3b841c71a, now test.querypilot.unique_stg_products_product_id.7d950a1467)
+[0m09:47:57.038003 [debug] [Thread-4 (]: Began executing node test.querypilot.relationships_stg_order_items_product_id__product_id__ref_stg_products_.886a82c26c
+[0m09:47:57.035652 [info ] [Thread-1 (]: 27 of 29 START test not_null_stg_sellers_seller_id ............................. [RUN]
+[0m09:47:57.038003 [debug] [Thread-3 (]: Began compiling node test.querypilot.unique_stg_products_product_id.7d950a1467
+[0m09:47:57.040982 [debug] [Thread-4 (]: Writing runtime sql for node "test.querypilot.relationships_stg_order_items_product_id__product_id__ref_stg_products_.886a82c26c"
+[0m09:47:57.040982 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.querypilot.unique_stg_order_reviews_order_id.636516e325, now test.querypilot.not_null_stg_sellers_seller_id.35d0bce315)
+[0m09:47:57.051964 [debug] [Thread-3 (]: Writing injected SQL for node "test.querypilot.unique_stg_products_product_id.7d950a1467"
+[0m09:47:57.051964 [debug] [Thread-1 (]: Began compiling node test.querypilot.not_null_stg_sellers_seller_id.35d0bce315
+[0m09:47:57.061824 [debug] [Thread-1 (]: Writing injected SQL for node "test.querypilot.not_null_stg_sellers_seller_id.35d0bce315"
+[0m09:47:57.061824 [debug] [Thread-4 (]: Using postgres connection "test.querypilot.relationships_stg_order_items_product_id__product_id__ref_stg_products_.886a82c26c"
+[0m09:47:57.061824 [debug] [Thread-4 (]: On test.querypilot.relationships_stg_order_items_product_id__product_id__ref_stg_products_.886a82c26c: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.relationships_stg_order_items_product_id__product_id__ref_stg_products_.886a82c26c"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+with child as (
+    select product_id as from_field
+    from "warehouse"."staging"."stg_order_items"
+    where product_id is not null
+),
+
+parent as (
+    select product_id as to_field
+    from "warehouse"."staging"."stg_products"
+)
+
+select
+    from_field
+
+from child
+left join parent
+    on child.from_field = parent.to_field
+
+where parent.to_field is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:57.065627 [debug] [Thread-3 (]: Began executing node test.querypilot.unique_stg_products_product_id.7d950a1467
+[0m09:47:57.066329 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m09:47:57.069403 [debug] [Thread-3 (]: Writing runtime sql for node "test.querypilot.unique_stg_products_product_id.7d950a1467"
+[0m09:47:57.069403 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.060 seconds
+[0m09:47:57.073169 [debug] [Thread-2 (]: On test.querypilot.not_null_stg_products_product_id.6373b0acf3: ROLLBACK
+[0m09:47:57.073169 [debug] [Thread-1 (]: Began executing node test.querypilot.not_null_stg_sellers_seller_id.35d0bce315
+[0m09:47:57.077694 [debug] [Thread-1 (]: Writing runtime sql for node "test.querypilot.not_null_stg_sellers_seller_id.35d0bce315"
+[0m09:47:57.077694 [debug] [Thread-2 (]: On test.querypilot.not_null_stg_products_product_id.6373b0acf3: Close
+[0m09:47:57.079710 [debug] [Thread-3 (]: Using postgres connection "test.querypilot.unique_stg_products_product_id.7d950a1467"
+[0m09:47:57.079710 [info ] [Thread-2 (]: 24 of 29 PASS not_null_stg_products_product_id ................................. [[32mPASS[0m in 0.11s]
+[0m09:47:57.079710 [debug] [Thread-3 (]: On test.querypilot.unique_stg_products_product_id.7d950a1467: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.unique_stg_products_product_id.7d950a1467"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+select
+    product_id as unique_field,
+    count(*) as n_records
+
+from "warehouse"."staging"."stg_products"
+where product_id is not null
+group by product_id
+having count(*) > 1
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:57.083656 [debug] [Thread-2 (]: Finished running node test.querypilot.not_null_stg_products_product_id.6373b0acf3
+[0m09:47:57.083656 [debug] [Thread-1 (]: Using postgres connection "test.querypilot.not_null_stg_sellers_seller_id.35d0bce315"
+[0m09:47:57.085675 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m09:47:57.086081 [debug] [Thread-2 (]: Began running node test.querypilot.relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_.3deaab6319
+[0m09:47:57.086081 [debug] [Thread-1 (]: On test.querypilot.not_null_stg_sellers_seller_id.35d0bce315: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.not_null_stg_sellers_seller_id.35d0bce315"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select seller_id
+from "warehouse"."staging"."stg_sellers"
+where seller_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:57.088290 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m09:47:57.088290 [info ] [Thread-2 (]: 28 of 29 START test relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_  [RUN]
+[0m09:47:57.089308 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.querypilot.not_null_stg_products_product_id.6373b0acf3, now test.querypilot.relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_.3deaab6319)
+[0m09:47:57.090347 [debug] [Thread-2 (]: Began compiling node test.querypilot.relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_.3deaab6319
+[0m09:47:57.107950 [debug] [Thread-2 (]: Writing injected SQL for node "test.querypilot.relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_.3deaab6319"
+[0m09:47:57.111468 [debug] [Thread-2 (]: Began executing node test.querypilot.relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_.3deaab6319
+[0m09:47:57.112504 [debug] [Thread-2 (]: Writing runtime sql for node "test.querypilot.relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_.3deaab6319"
+[0m09:47:57.117199 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.030 seconds
+[0m09:47:57.120965 [debug] [Thread-1 (]: On test.querypilot.not_null_stg_sellers_seller_id.35d0bce315: ROLLBACK
+[0m09:47:57.120965 [debug] [Thread-2 (]: Using postgres connection "test.querypilot.relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_.3deaab6319"
+[0m09:47:57.120965 [debug] [Thread-1 (]: On test.querypilot.not_null_stg_sellers_seller_id.35d0bce315: Close
+[0m09:47:57.120965 [debug] [Thread-2 (]: On test.querypilot.relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_.3deaab6319: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_.3deaab6319"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+with child as (
+    select seller_id as from_field
+    from "warehouse"."staging"."stg_order_items"
+    where seller_id is not null
+),
+
+parent as (
+    select seller_id as to_field
+    from "warehouse"."staging"."stg_sellers"
+)
+
+select
+    from_field
+
+from child
+left join parent
+    on child.from_field = parent.to_field
+
+where parent.to_field is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:57.120965 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m09:47:57.120965 [info ] [Thread-1 (]: 27 of 29 PASS not_null_stg_sellers_seller_id ................................... [[32mPASS[0m in 0.08s]
+[0m09:47:57.128964 [debug] [Thread-1 (]: Finished running node test.querypilot.not_null_stg_sellers_seller_id.35d0bce315
+[0m09:47:57.131003 [debug] [Thread-1 (]: Began running node test.querypilot.unique_stg_sellers_seller_id.cb2e34d4b8
+[0m09:47:57.131768 [info ] [Thread-1 (]: 29 of 29 START test unique_stg_sellers_seller_id ............................... [RUN]
+[0m09:47:57.133016 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.querypilot.not_null_stg_sellers_seller_id.35d0bce315, now test.querypilot.unique_stg_sellers_seller_id.cb2e34d4b8)
+[0m09:47:57.134055 [debug] [Thread-1 (]: Began compiling node test.querypilot.unique_stg_sellers_seller_id.cb2e34d4b8
+[0m09:47:57.145675 [debug] [Thread-1 (]: Writing injected SQL for node "test.querypilot.unique_stg_sellers_seller_id.cb2e34d4b8"
+[0m09:47:57.149705 [debug] [Thread-1 (]: Began executing node test.querypilot.unique_stg_sellers_seller_id.cb2e34d4b8
+[0m09:47:57.153838 [debug] [Thread-1 (]: Writing runtime sql for node "test.querypilot.unique_stg_sellers_seller_id.cb2e34d4b8"
+[0m09:47:57.157169 [debug] [Thread-1 (]: Using postgres connection "test.querypilot.unique_stg_sellers_seller_id.cb2e34d4b8"
+[0m09:47:57.159332 [debug] [Thread-1 (]: On test.querypilot.unique_stg_sellers_seller_id.cb2e34d4b8: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "querypilot", "target_name": "dev", "node_id": "test.querypilot.unique_stg_sellers_seller_id.cb2e34d4b8"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+select
+    seller_id as unique_field,
+    count(*) as n_records
+
+from "warehouse"."staging"."stg_sellers"
+where seller_id is not null
+group by seller_id
+having count(*) > 1
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m09:47:57.159332 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m09:47:57.169097 [debug] [Thread-3 (]: SQL status: SELECT 1 in 0.084 seconds
+[0m09:47:57.171137 [debug] [Thread-3 (]: On test.querypilot.unique_stg_products_product_id.7d950a1467: ROLLBACK
+[0m09:47:57.171137 [debug] [Thread-4 (]: SQL status: SELECT 1 in 0.108 seconds
+[0m09:47:57.176152 [debug] [Thread-4 (]: On test.querypilot.relationships_stg_order_items_product_id__product_id__ref_stg_products_.886a82c26c: ROLLBACK
+[0m09:47:57.177683 [debug] [Thread-3 (]: On test.querypilot.unique_stg_products_product_id.7d950a1467: Close
+[0m09:47:57.180884 [debug] [Thread-4 (]: On test.querypilot.relationships_stg_order_items_product_id__product_id__ref_stg_products_.886a82c26c: Close
+[0m09:47:57.179839 [info ] [Thread-3 (]: 26 of 29 PASS unique_stg_products_product_id ................................... [[32mPASS[0m in 0.14s]
+[0m09:47:57.185649 [debug] [Thread-3 (]: Finished running node test.querypilot.unique_stg_products_product_id.7d950a1467
+[0m09:47:57.183962 [info ] [Thread-4 (]: 25 of 29 PASS relationships_stg_order_items_product_id__product_id__ref_stg_products_  [[32mPASS[0m in 0.18s]
+[0m09:47:57.187396 [debug] [Thread-4 (]: Finished running node test.querypilot.relationships_stg_order_items_product_id__product_id__ref_stg_products_.886a82c26c
+[0m09:47:57.190526 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.063 seconds
+[0m09:47:57.191538 [debug] [Thread-2 (]: On test.querypilot.relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_.3deaab6319: ROLLBACK
+[0m09:47:57.194171 [debug] [Thread-2 (]: On test.querypilot.relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_.3deaab6319: Close
+[0m09:47:57.195200 [info ] [Thread-2 (]: 28 of 29 PASS relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_  [[32mPASS[0m in 0.11s]
+[0m09:47:57.196435 [debug] [Thread-2 (]: Finished running node test.querypilot.relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_.3deaab6319
+[0m09:47:57.199581 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.039 seconds
+[0m09:47:57.202802 [debug] [Thread-1 (]: On test.querypilot.unique_stg_sellers_seller_id.cb2e34d4b8: ROLLBACK
+[0m09:47:57.205497 [debug] [Thread-1 (]: On test.querypilot.unique_stg_sellers_seller_id.cb2e34d4b8: Close
+[0m09:47:57.206580 [info ] [Thread-1 (]: 29 of 29 PASS unique_stg_sellers_seller_id ..................................... [[32mPASS[0m in 0.07s]
+[0m09:47:57.207611 [debug] [Thread-1 (]: Finished running node test.querypilot.unique_stg_sellers_seller_id.cb2e34d4b8
+[0m09:47:57.210704 [debug] [MainThread]: On master: COMMIT
+[0m09:47:57.211375 [debug] [MainThread]: Using postgres connection "master"
+[0m09:47:57.211375 [debug] [MainThread]: On master: COMMIT
+[0m09:47:57.211911 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m09:47:57.238924 [debug] [MainThread]: SQL status: COMMIT in 0.027 seconds
+[0m09:47:57.238924 [debug] [MainThread]: On master: Close
+[0m09:47:57.240942 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m09:47:57.242578 [debug] [MainThread]: Connection 'list_warehouse' was properly closed.
+[0m09:47:57.243380 [debug] [MainThread]: Connection 'list_warehouse_staging' was properly closed.
+[0m09:47:57.243380 [debug] [MainThread]: Connection 'test.querypilot.unique_stg_sellers_seller_id.cb2e34d4b8' was properly closed.
+[0m09:47:57.243380 [debug] [MainThread]: Connection 'test.querypilot.relationships_stg_order_items_seller_id__seller_id__ref_stg_sellers_.3deaab6319' was properly closed.
+[0m09:47:57.243380 [debug] [MainThread]: Connection 'test.querypilot.unique_stg_products_product_id.7d950a1467' was properly closed.
+[0m09:47:57.245931 [debug] [MainThread]: Connection 'test.querypilot.relationships_stg_order_items_product_id__product_id__ref_stg_products_.886a82c26c' was properly closed.
+[0m09:47:57.245931 [info ] [MainThread]: 
+[0m09:47:57.245931 [info ] [MainThread]: Finished running 21 data tests, 8 view models in 0 hours 0 minutes and 2.76 seconds (2.76s).
+[0m09:47:57.252682 [debug] [MainThread]: Command end result
+[0m09:47:57.312040 [debug] [MainThread]: Wrote artifact WritableManifest to C:\dev\querypilot\data\dbt\target\manifest.json
+[0m09:47:57.317957 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\dev\querypilot\data\dbt\target\semantic_manifest.json
+[0m09:47:57.325677 [debug] [MainThread]: Wrote artifact OsiDocument to C:\dev\querypilot\data\dbt\target\osi_document.json
+[0m09:47:57.349714 [debug] [MainThread]: Wrote artifact RunExecutionResult to C:\dev\querypilot\data\dbt\target\run_results.json
+[0m09:47:57.349714 [info ] [MainThread]: 
+[0m09:47:57.351439 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m09:47:57.351439 [info ] [MainThread]: 
+[0m09:47:57.351439 [info ] [MainThread]: Done. PASS=29 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=29
+[0m09:47:57.356053 [debug] [MainThread]: Command `cli build` succeeded at 09:47:57.351439 after 9.51 seconds
+[0m09:47:57.356053 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021906EE7C20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021902182BA0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000219071D1820>]}
+[0m09:47:57.356785 [debug] [MainThread]: Flushing usage events
+[0m09:47:57.817006 [debug] [MainThread]: An error was encountered while trying to flush usage events

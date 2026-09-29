@@ -1,0 +1,15 @@
+version: 2
+sources:
+  - name: olist
+    schema: raw
+    description: Untouched Olist CSV loads (all columns text). Loaded by data/ingest/load_raw.py.
+    tables:
+      - name: orders
+      - name: customers
+      - name: order_items
+      - name: order_payments
+      - name: order_reviews
+      - name: products
+      - name: sellers
+      - name: geolocation
+      - name: category_translation

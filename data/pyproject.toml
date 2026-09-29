@@ -3,6 +3,8 @@ name = "qp-data"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
+    "dbt-core>=1.10",
+    "dbt-postgres>=1.9",
     "psycopg[binary]>=3.3.6",
     "python-dotenv>=1.2.3",
 ]
