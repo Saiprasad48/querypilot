@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     reader_password: str = ""
     embedding_model: str = "BAAI/bge-small-en-v1.5"
     embedding_cache_dir: Path = REPO_ROOT / ".cache" / "fastembed"
+    max_query_cost: float = 500_000.0  # explain_sql flags plans above this cost
     dbt_manifest_path: Path = REPO_ROOT / "data" / "dbt" / "target" / "manifest.json"
     metrics_path: Path = REPO_ROOT / "data" / "semantic" / "metrics.yml"
 
