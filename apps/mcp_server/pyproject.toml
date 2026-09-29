@@ -1,0 +1,35 @@
+[project]
+name = "qp-mcp"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Sai Prasad Reddy Kukudala", email = "kukudalasaiprasad@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "sqlglot>=30.20.0",
+]
+
+[project.scripts]
+qp-mcp = "qp_mcp:main"
+
+[build-system]
+requires = ["uv_build>=0.12.19,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.9",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
