@@ -1,8 +1,9 @@
-"""Vector index over the marts schema: tables, columns and business metrics.
+"""Vector + keyword index over the marts schema: tables, columns and business metrics.
 
-build: reads dbt manifest.json (descriptions), information_schema (types) and
-       metrics.yml, embeds each item locally with fastembed, stores in meta.schema_docs.
-search: embeds a question and returns the closest schema items by cosine similarity.
+build:  reads dbt manifest.json (descriptions), information_schema (types) and
+        metrics.yml; embeds each item locally with fastembed; stores everything in the
+        meta schema (schema_docs + metrics) so runtime tools only need the database.
+search: hybrid retrieval (pgvector cosine + Postgres full text) fused with RRF.
 """
 
 from __future__ import annotations
@@ -25,6 +26,8 @@ from pgvector.psycopg import register_vector
 from qp_mcp.config import settings
 
 EMBED_DIM = 384  # bge-small-en-v1.5
+RRF_K = 60  # standard Reciprocal Rank Fusion constant
+
 DDL = f"""
 CREATE TABLE IF NOT EXISTS meta.schema_docs (
     id          bigserial PRIMARY KEY,
@@ -36,6 +39,7 @@ CREATE TABLE IF NOT EXISTS meta.schema_docs (
     embedding   vector({EMBED_DIM}) NOT NULL,
     updated_at  timestamptz NOT NULL DEFAULT now()
 );
+ALTER TABLE meta.schema_docs ADD COLUMN IF NOT EXISTS description text;
 ALTER TABLE meta.schema_docs
     ADD COLUMN IF NOT EXISTS content_tsv tsvector
     GENERATED ALWAYS AS (to_tsvector('english', replace(replace(content, '_', ' '), '.', ' '))) STORED;
@@ -43,6 +47,16 @@ CREATE INDEX IF NOT EXISTS schema_docs_embedding_idx
     ON meta.schema_docs USING hnsw (embedding vector_cosine_ops);
 CREATE INDEX IF NOT EXISTS schema_docs_tsv_idx
     ON meta.schema_docs USING gin (content_tsv);
+CREATE TABLE IF NOT EXISTS meta.metrics (
+    name        text PRIMARY KEY,
+    label       text NOT NULL,
+    description text NOT NULL,
+    table_name  text NOT NULL,     -- e.g. marts.fct_orders
+    expression  text NOT NULL,     -- e.g. sum(payment_value)
+    filter      text,              -- e.g. order_status = 'delivered'
+    unit        text,
+    synonyms    text[] NOT NULL DEFAULT '{{}}'
+);
 """
 
 
@@ -53,6 +67,7 @@ class Doc:
     name: str | None
     data_type: str | None
     content: str
+    description: str | None = None
 
 
 @dataclass(frozen=True)
@@ -119,6 +134,7 @@ def build_docs(
     for table, cols in columns.items():
         node = models.get(table, {})
         col_meta = node.get("columns", {})
+        table_desc = _clean(node.get("description"))
         col_list = ", ".join(c for c, _ in cols)
         docs.append(
             Doc(
@@ -126,7 +142,8 @@ def build_docs(
                 table,
                 None,
                 None,
-                f"Table marts.{table}: {_clean(node.get('description'))} Columns: {col_list}.",
+                f"Table marts.{table}: {table_desc} Columns: {col_list}.",
+                table_desc,
             )
         )
         for col, dtype in cols:
@@ -138,48 +155,73 @@ def build_docs(
                     col,
                     dtype,
                     f"Column marts.{table}.{col} ({dtype}): {desc}".strip(),
+                    desc,
                 )
             )
     for m in metrics:
         table = m["table"].split(".")[-1]
         synonyms = ", ".join(m.get("synonyms", []))
+        desc = _clean(m["description"])
         docs.append(
             Doc(
                 "metric",
                 table,
                 m["name"],
                 None,
-                f"Metric {m['name']} ({m['label']}): {_clean(m['description'])} "
+                f"Metric {m['name']} ({m['label']}): {desc} "
                 f"Synonyms: {synonyms}. Computed on marts.{table}.",
+                desc,
             )
         )
     return docs
 
 
-def build_index() -> int:
+def build_index() -> tuple[int, int]:
+    metrics = load_metrics()
     with psycopg.connect(settings.admin_dsn) as conn:
         register_vector(conn)
         conn.execute(DDL)
-        docs = build_docs(load_manifest_models(), load_db_columns(conn), load_metrics())
+        docs = build_docs(load_manifest_models(), load_db_columns(conn), metrics)
         vectors = list(get_model().passage_embed([d.content for d in docs]))
         with conn.cursor() as cur:
             cur.execute("TRUNCATE meta.schema_docs")
             cur.executemany(
                 """
-                INSERT INTO meta.schema_docs (kind, table_name, name, data_type, content, embedding)
-                VALUES (%s, %s, %s, %s, %s, %s)
+                INSERT INTO meta.schema_docs
+                    (kind, table_name, name, data_type, description, content, embedding)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """,
                 [
-                    (d.kind, d.table_name, d.name, d.data_type, d.content, v)
+                    (d.kind, d.table_name, d.name, d.data_type, d.description, d.content, v)
                     for d, v in zip(docs, vectors, strict=True)
                 ],
             )
-    return len(docs)
+            cur.execute("TRUNCATE meta.metrics")
+            cur.executemany(
+                """
+                INSERT INTO meta.metrics
+                    (name, label, description, table_name, expression, filter, unit, synonyms)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                """,
+                [
+                    (
+                        m["name"],
+                        m["label"],
+                        _clean(m["description"]),
+                        m["table"],
+                        m["expression"],
+                        m.get("filter"),
+                        m.get("unit"),
+                        m.get("synonyms", []),
+                    )
+                    for m in metrics
+                ],
+            )
+    return len(docs), len(metrics)
 
 
 def _keyword_query(text: str) -> str:
     """Build an OR style tsquery from plain words, e.g. 'which | states | late'.
-
     Only letters are kept, so user input can never inject tsquery syntax.
     Postgres removes stop words and stems the rest ('states' -> 'state').
     """
@@ -187,12 +229,8 @@ def _keyword_query(text: str) -> str:
     return " | ".join(words)
 
 
-RRF_K = 60  # standard Reciprocal Rank Fusion constant
-
-
 def search(query: str, k: int = 12) -> list[Hit]:
     """Hybrid search: vector similarity + keyword match, merged with RRF.
-
     Runs as the read only role: this is what the agent calls at runtime.
     """
     qvec = next(iter(get_model().query_embed(query)))
@@ -215,8 +253,8 @@ def search(query: str, k: int = 12) -> list[Hit]:
                 LIMIT 40
             )
             SELECT d.kind, d.table_name, d.name, d.content,
-                   coalesce(1.0 / (%(rrf)s + vec.rnk), 0)
-                 + coalesce(1.0 / (%(rrf)s + kw.rnk), 0) AS score
+                (coalesce(1.0 / (%(rrf)s + vec.rnk), 0)
+                + coalesce(1.0 / (%(rrf)s + kw.rnk), 0))::float8 AS score
             FROM meta.schema_docs d
             LEFT JOIN vec ON vec.id = d.id
             LEFT JOIN kw  ON kw.id  = d.id
@@ -226,19 +264,22 @@ def search(query: str, k: int = 12) -> list[Hit]:
             """,
             params,
         ).fetchall()
-    return [Hit(*row) for row in rows]
+    return [
+        Hit(kind, table, name, content, float(score)) for kind, table, name, content, score in rows
+    ]
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(prog="qp-index", description="Schema vector index")
     sub = parser.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("build", help="Rebuild meta.schema_docs from dbt + metrics.yml")
+    sub.add_parser("build", help="Rebuild meta.schema_docs and meta.metrics")
     s = sub.add_parser("search", help="Find schema items relevant to a question")
     s.add_argument("query")
     s.add_argument("-k", type=int, default=8)
     args = parser.parse_args()
     if args.cmd == "build":
-        print(f"Indexed {build_index()} documents into meta.schema_docs")
+        n_docs, n_metrics = build_index()
+        print(f"Indexed {n_docs} documents and {n_metrics} metrics into the meta schema")
     else:
         for h in search(args.query, args.k):
             label = f"{h.table_name}.{h.name}" if h.name else h.table_name
