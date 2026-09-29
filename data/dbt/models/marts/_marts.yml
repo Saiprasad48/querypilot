@@ -1,0 +1,183 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: >
+      One row per order placed on the Olist marketplace (Brazil, Sep 2016 to Oct 2018).
+      Use this table for revenue, order counts, average order value, delivery performance,
+      review scores and anything by customer state or city. All money is in BRL.
+    columns:
+      - name: order_id
+        description: Unique order identifier.
+        data_tests: [unique, not_null]
+      - name: customer_id
+        description: The real customer who placed the order. Join to dim_customers.customer_id.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_id
+      - name: customer_city
+        description: Customer city in lowercase Portuguese, e.g. 'sao paulo', 'rio de janeiro'.
+      - name: customer_state
+        description: Two letter Brazilian state code of the customer, e.g. SP, RJ, MG.
+      - name: order_status
+        description: >
+          Lifecycle status: delivered, shipped, canceled, unavailable, invoiced, processing,
+          created, approved. Revenue metrics only count 'delivered'.
+      - name: is_delivered
+        description: True when order_status = 'delivered'.
+      - name: purchased_at
+        description: Timestamp the customer placed the order. Main time column for trends.
+      - name: purchase_date
+        description: Date part of purchased_at. Join to dim_date.date_day for week, month, quarter.
+      - name: delivered_at
+        description: Timestamp the order reached the customer. Null if not delivered.
+      - name: estimated_delivery_at
+        description: Delivery date promised to the customer at purchase time.
+      - name: item_count
+        description: Number of items in the order.
+      - name: seller_count
+        description: Number of distinct sellers fulfilling the order.
+      - name: items_value
+        description: Sum of item prices in BRL, excluding freight.
+      - name: freight_value
+        description: Total shipping cost charged in BRL.
+      - name: order_value
+        description: items_value + freight_value in BRL.
+      - name: payment_value
+        description: Total amount actually paid in BRL across all payment methods. Basis for revenue.
+      - name: main_payment_type
+        description: Payment method with the largest share of the order (credit_card, boleto, voucher, debit_card).
+      - name: max_installments
+        description: Highest number of installments used to pay for the order.
+      - name: review_score
+        description: Customer review score from 1 (worst) to 5 (best). Null if no review.
+      - name: delivery_days
+        description: Days from purchase to delivery, one decimal. Null if not delivered.
+      - name: is_late
+        description: True if delivered after the estimated delivery date. Null if not delivered.
+
+  - name: fct_order_items
+    description: >
+      One row per item sold. Use this for product category analysis, seller performance,
+      units sold, and price analysis. Category is already included (English names).
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [order_id, item_number]
+    columns:
+      - name: order_id
+        description: Order the item belongs to. Join to fct_orders.order_id.
+      - name: item_number
+        description: Position of the item within its order (1, 2, 3...).
+      - name: product_id
+        description: Product sold. Join to dim_products.product_id.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_products')
+                field: product_id
+      - name: seller_id
+        description: Seller who sold the item. Join to dim_sellers.seller_id.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_sellers')
+                field: seller_id
+      - name: category
+        description: Product category in English, e.g. bed_bath_table, health_beauty, sports_leisure.
+      - name: price
+        description: Item price in BRL excluding freight.
+      - name: freight_value
+        description: Freight charged for this item in BRL.
+      - name: item_total
+        description: price + freight_value in BRL.
+      - name: order_status
+        description: Status of the parent order. Filter to 'delivered' for sales figures.
+      - name: purchase_date
+        description: Date the parent order was placed.
+      - name: customer_state
+        description: Two letter state code of the buyer.
+      - name: seller_state
+        description: Two letter state code of the seller.
+
+  - name: fct_payments
+    description: >
+      One row per payment used on an order (an order can be split across methods).
+      Use this for payment method mix and installment analysis.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [order_id, payment_sequence]
+    columns:
+      - name: payment_type
+        description: credit_card, boleto (Brazilian bank slip), voucher, debit_card, or not_defined.
+      - name: installments
+        description: Number of monthly installments chosen by the customer.
+      - name: payment_value
+        description: Amount paid with this method in BRL.
+
+  - name: dim_customers
+    description: >
+      One row per real customer (a person), with lifetime stats. Use for customer counts,
+      repeat purchase analysis, and customer lifetime revenue.
+    columns:
+      - name: customer_id
+        description: Unique customer identifier (Olist customer_unique_id).
+        data_tests: [unique, not_null]
+      - name: city
+        description: City from the customer's most recent order.
+      - name: state
+        description: Two letter state code from the customer's most recent order.
+      - name: first_order_at
+        description: Timestamp of the customer's first order.
+      - name: last_order_at
+        description: Timestamp of the customer's latest order.
+      - name: order_count
+        description: Orders placed in any status.
+      - name: delivered_order_count
+        description: Orders that were delivered.
+      - name: lifetime_revenue
+        description: Total paid across delivered orders in BRL.
+      - name: is_repeat_customer
+        description: True if the customer has more than one delivered order.
+
+  - name: dim_products
+    description: One row per product with category and physical dimensions.
+    columns:
+      - name: product_id
+        data_tests: [unique, not_null]
+      - name: category
+        description: Category in English. 'unknown' when missing.
+      - name: category_pt
+        description: Original category name in Portuguese.
+      - name: weight_g
+        description: Product weight in grams.
+      - name: volume_cm3
+        description: Package volume in cubic centimeters.
+
+  - name: dim_sellers
+    description: One row per seller with location.
+    columns:
+      - name: seller_id
+        data_tests: [unique, not_null]
+      - name: state
+        description: Two letter state code of the seller.
+      - name: lat
+        description: Approximate latitude of the seller's zip code.
+      - name: lng
+        description: Approximate longitude of the seller's zip code.
+
+  - name: dim_date
+    description: Calendar table, one row per day from 2016 to 2018. Join on purchase_date = date_day.
+    columns:
+      - name: date_day
+        data_tests: [unique, not_null]
+      - name: month_start
+        description: First day of the month; use for monthly trends.
+      - name: week_start
+        description: Monday of the week; use for weekly trends.
+      - name: is_weekend
+        description: True on Saturday and Sunday.

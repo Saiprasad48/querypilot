@@ -1,0 +1,99 @@
+# Single source of truth for business metrics.
+# The agent must use these definitions instead of inventing its own formulas.
+# All money is BRL. Default time column: purchase_date.
+
+metrics:
+  - name: revenue
+    label: Revenue
+    description: Total amount paid by customers for delivered orders.
+    table: marts.fct_orders
+    expression: sum(payment_value)
+    filter: order_status = 'delivered'
+    unit: BRL
+    synonyms: [sales, gmv, income, turnover, total sales]
+
+  - name: order_count
+    label: Orders
+    description: Number of orders placed, any status.
+    table: marts.fct_orders
+    expression: count(*)
+    unit: orders
+    synonyms: [number of orders, order volume, purchases]
+
+  - name: delivered_orders
+    label: Delivered orders
+    description: Number of orders that reached the customer.
+    table: marts.fct_orders
+    expression: count(*)
+    filter: order_status = 'delivered'
+    unit: orders
+
+  - name: aov
+    label: Average order value
+    description: Average amount paid per delivered order.
+    table: marts.fct_orders
+    expression: sum(payment_value) / nullif(count(*), 0)
+    filter: order_status = 'delivered'
+    unit: BRL
+    synonyms: [average order value, average basket, average ticket, basket size]
+
+  - name: late_delivery_rate
+    label: Late delivery rate
+    description: Share of delivered orders that arrived after the promised date.
+    table: marts.fct_orders
+    expression: avg(case when is_late then 1.0 else 0.0 end)
+    filter: order_status = 'delivered' and delivered_at is not null
+    unit: ratio
+    synonyms: [late rate, delayed deliveries, on time rate (inverse)]
+
+  - name: avg_delivery_days
+    label: Average delivery time
+    description: Mean days from purchase to delivery for delivered orders.
+    table: marts.fct_orders
+    expression: avg(delivery_days)
+    filter: order_status = 'delivered'
+    unit: days
+    synonyms: [delivery time, shipping time, lead time]
+
+  - name: avg_review_score
+    label: Average review score
+    description: Mean customer review score (1 to 5) across reviewed orders.
+    table: marts.fct_orders
+    expression: avg(review_score)
+    filter: review_score is not null
+    unit: score
+    synonyms: [rating, satisfaction, csat, customer satisfaction]
+
+  - name: cancellation_rate
+    label: Cancellation rate
+    description: Share of all orders that were canceled.
+    table: marts.fct_orders
+    expression: avg(case when order_status = 'canceled' then 1.0 else 0.0 end)
+    unit: ratio
+
+  - name: freight_share
+    label: Freight share
+    description: Freight as a share of total order value for delivered orders.
+    table: marts.fct_orders
+    expression: sum(freight_value) / nullif(sum(order_value), 0)
+    filter: order_status = 'delivered'
+    unit: ratio
+    synonyms: [shipping cost share, freight ratio]
+
+  - name: items_sold
+    label: Items sold
+    description: Number of items in delivered orders.
+    table: marts.fct_order_items
+    expression: count(*)
+    filter: order_status = 'delivered'
+    unit: items
+    synonyms: [units sold, quantity sold]
+
+  - name: repeat_customer_rate
+    label: Repeat customer rate
+    description: Share of customers with at least one delivered order who came back for another.
+    table: marts.dim_customers
+    expression: avg(case when is_repeat_customer then 1.0 else 0.0 end)
+    filter: delivered_order_count > 0
+    unit: ratio
+    synonyms: [retention, returning customers, repeat purchase rate]
