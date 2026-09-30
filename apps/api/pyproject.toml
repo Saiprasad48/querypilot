@@ -1,0 +1,27 @@
+[project]
+name = "qp-api"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Sai Prasad Reddy Kukudala", email = "kukudalasaiprasad@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "langchain>=1.4.3",
+    "langchain-google-genai>=4.4.0",
+    "pydantic-settings>=2.15.0",
+]
+
+[project.scripts]
+qp-api = "qp_api:main"
+
+[build-system]
+requires = ["uv_build>=0.12.19,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.9",
+]
