@@ -14,14 +14,33 @@ from qp_api.agent.state import AgentState
 MAX_ATTEMPTS = 3  # first try + 2 repairs
 
 
+def new_turn(question: str) -> dict[str, Any]:
+    """Graph input for a new question in a thread: reset per turn fields, keep history."""
+    return {
+        "question": question,
+        "standalone_question": "",
+        "clarification": "",
+        "plan": "",
+        "sql": "",
+        "sql_executed": "",
+        "attempts": 0,
+        "error": None,
+        "columns": [],
+        "rows": [],
+        "answer": {},
+        "steps": [],
+        "usage": [],
+    }
+
+
 def _timed(name: str, fn: Callable[[AgentState], dict[str, Any]]):
-    """Wrap a node so every run records which node ran and how long it took."""
+    """Wrap a node so every turn records which node ran and how long it took."""
 
     def wrapper(state: AgentState) -> dict[str, Any]:
         started = time.perf_counter()
         update = fn(state)
         ms = round((time.perf_counter() - started) * 1000)
-        return {**update, "steps": [{"node": name, "ms": ms}]}
+        return {**update, "steps": [*state.get("steps", []), {"node": name, "ms": ms}]}
 
     return wrapper
 
