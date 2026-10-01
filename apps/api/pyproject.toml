@@ -10,11 +10,13 @@ requires-python = ">=3.12"
 dependencies = [
     "langchain>=1.4.3",
     "langchain-google-genai>=4.4.0",
+    "langgraph>=1.2.12",
     "pydantic-settings>=2.15.0",
+    "qp-mcp",
 ]
 
 [project.scripts]
-qp-api = "qp_api:main"
+qp-ask = "qp_api.agent.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.12.19,<0.13.0"]
@@ -25,3 +27,6 @@ dev = [
     "pytest>=9.1.1",
     "ruff>=0.16.9",
 ]
+
+[tool.uv.sources]
+qp-mcp = { path = "../mcp_server", editable = true }
