@@ -4,12 +4,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import time
 
 from qp_api.agent.graph import build_graph
 
 
 def main() -> None:
+    logging.getLogger("httpx").setLevel(logging.WARNING)
     parser = argparse.ArgumentParser(prog="qp-ask")
     parser.add_argument("question")
     args = parser.parse_args()
@@ -43,6 +45,10 @@ def main() -> None:
     tokens_in = sum(u["input_tokens"] for u in usage)
     tokens_out = sum(u["output_tokens"] for u in usage)
     print(f"\nLLM calls: {len(usage)}   tokens in/out: {tokens_in}/{tokens_out}")
+    for u in usage:
+        print(
+            f"  {u['call']:<11} {u['role']:<6} {u['model']:<28} in={u['input_tokens']} out={u['output_tokens']}"
+        )
     print(f"Steps: {[(s['node'], s['ms']) for s in final.get('steps', [])]}")
     print(f"Total time: {time.perf_counter() - started:.1f}s")
 

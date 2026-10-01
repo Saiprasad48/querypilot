@@ -8,7 +8,12 @@ from __future__ import annotations
 
 from typing import Any, Protocol
 
+from mcp.server.mcpserver.exceptions import ToolError
 from qp_mcp import server as mcp_tools
+
+
+class ToolCallError(Exception):
+    """A tool rejected the call. The message is written to be shown to the model for repair."""
 
 
 class Tools(Protocol):
@@ -18,10 +23,16 @@ class Tools(Protocol):
 
 class InProcessTools:
     def search_schema(self, question: str) -> dict[str, Any]:
-        return mcp_tools.search_schema(question)
+        try:
+            return mcp_tools.search_schema(question)
+        except ToolError as e:
+            raise ToolCallError(str(e)) from e
 
     def run_sql(self, sql: str) -> dict[str, Any]:
-        return mcp_tools.run_sql(sql)
+        try:
+            return mcp_tools.run_sql(sql)
+        except ToolError as e:
+            raise ToolCallError(str(e)) from e
 
 
 def format_schema(ctx: dict[str, Any]) -> str:

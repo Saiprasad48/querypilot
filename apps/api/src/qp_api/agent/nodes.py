@@ -3,54 +3,39 @@
 from __future__ import annotations
 
 import json
-from functools import lru_cache
 from typing import Any
 
-from langchain_core.language_models import BaseChatModel
 from pydantic import BaseModel
 from qp_mcp.sql_guard import UnsafeSQLError, guard_sql
 
 from qp_api.agent.prompts import ANALYST_SYSTEM, ROUTER_SYSTEM, SQL_SYSTEM
 from qp_api.agent.schemas import Analysis, RouteDecision, SQLDraft
 from qp_api.agent.state import AgentState
-from qp_api.agent.tools import InProcessTools, Tools, format_schema
-from qp_api.config import settings
-from qp_api.llm import get_chat_model
+from qp_api.agent.tools import InProcessTools, ToolCallError, Tools, format_schema
+from qp_api.llm import structured_chain
 
 tools: Tools = InProcessTools()
 
 
-@lru_cache(maxsize=1)
-def _fast() -> BaseChatModel:
-    return get_chat_model(settings.qp_model_fast)
-
-
-@lru_cache(maxsize=1)
-def _smart() -> BaseChatModel:
-    return get_chat_model(settings.qp_model_smart)
-
-
 def _structured(
-    model: BaseChatModel,
-    schema: type[BaseModel],
-    messages: list[tuple[str, str]],
-    call: str,
+    role: str, schema: type[BaseModel], messages: list[tuple[str, str]], call: str
 ) -> tuple[Any, dict[str, Any]]:
-    """Call a model with structured output and capture token usage."""
-    result = model.with_structured_output(schema, include_raw=True).invoke(messages)
+    """Call the model for `role` with structured output; record usage and the model used."""
+    result = structured_chain(role, schema).invoke(messages)
     parsed = result["parsed"]
     if parsed is None:
         raise ValueError(
             f"{call}: could not parse model output: {result.get('parsing_error')}"
         )
-    meta = result["raw"].usage_metadata or {}
-    usage = {
+    raw = result["raw"]
+    meta = raw.usage_metadata or {}
+    return parsed, {
         "call": call,
-        "model": getattr(model, "model", "unknown"),
+        "role": role,
+        "model": raw.response_metadata.get("model_name", "unknown"),
         "input_tokens": meta.get("input_tokens", 0),
         "output_tokens": meta.get("output_tokens", 0),
     }
-    return parsed, usage
 
 
 def _empty_answer(summary: str) -> dict[str, Any]:
@@ -65,7 +50,7 @@ def _empty_answer(summary: str) -> dict[str, Any]:
 
 def route(state: AgentState) -> dict[str, Any]:
     decision, usage = _structured(
-        _fast(),
+        "fast",
         RouteDecision,
         [("system", ROUTER_SYSTEM), ("human", state["question"])],
         "route",
@@ -102,8 +87,8 @@ def retrieve(state: AgentState) -> dict[str, Any]:
 
 def write_sql(state: AgentState) -> dict[str, Any]:
     is_repair = bool(state.get("error"))
-    # escalate to the smart model for complex questions and for every repair attempt
-    model = _smart() if state.get("complexity") == "complex" or is_repair else _fast()
+    # smart model (with fast fallback) for complex questions and for every repair attempt
+    role = "smart" if state.get("complexity") == "complex" or is_repair else "fast"
     human = f"Question: {state['question']}"
     if is_repair:
         human += (
@@ -111,7 +96,7 @@ def write_sql(state: AgentState) -> dict[str, Any]:
             f"failed with this error:\n{state['error']}\n\nWrite a corrected query."
         )
     draft, usage = _structured(
-        model,
+        role,
         SQLDraft,
         [("system", SQL_SYSTEM + state["schema_context"]), ("human", human)],
         "repair_sql" if is_repair else "write_sql",
@@ -135,7 +120,7 @@ def validate(state: AgentState) -> dict[str, Any]:
 def execute(state: AgentState) -> dict[str, Any]:
     try:
         result = tools.run_sql(state["sql"])
-    except Exception as e:  # tool errors carry a message written for repair
+    except ToolCallError as e:  # expected failures: guard, database error, timeout
         return {"error": str(e)}
     return {
         "sql_executed": result["sql_executed"],
@@ -161,7 +146,7 @@ def analyze(state: AgentState) -> dict[str, Any]:
         f"Result (JSON, first 50 rows):\n{result_json}"
     )
     analysis, usage = _structured(
-        _fast(), Analysis, [("system", ANALYST_SYSTEM), ("human", human)], "analyze"
+        "fast", Analysis, [("system", ANALYST_SYSTEM), ("human", human)], "analyze"
     )
     return {"answer": analysis.model_dump(), "usage": [usage]}
 
