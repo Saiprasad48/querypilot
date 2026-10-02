@@ -7,6 +7,7 @@ On failure:   ... -> error -> done
 from __future__ import annotations
 
 import logging
+import re
 from collections.abc import Iterator
 from typing import Any
 from uuid import uuid4
@@ -16,6 +17,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 from qp_api.agent.graph import new_turn
+from qp_api.ratelimit import rate_limiter
 from qp_api.sse import sse
 
 logger = logging.getLogger("qp_api")
@@ -75,13 +77,33 @@ def _run(graph: Any, question: str, thread_id: str) -> Iterator[str]:
         yield sse("error", {"message": "Something went wrong while answering. Please try again."})
     yield sse("done", {})
 
+_CLIENT_ID = re.compile(r"[A-Za-z0-9_-]{8,64}")
+
+def _client_id(request: Request) -> str:
+    """Prefer the browser's anonymous ID header; fall back to the IP address."""
+    header = request.headers.get("x-client-id", "")
+    if _CLIENT_ID.fullmatch(header):
+        return f"c:{header}"
+    return f"ip:{request.client.host if request.client else 'unknown'}"
+
 @router.post("/ask")
 def ask(req: AskRequest, request: Request) -> StreamingResponse:
+    limit = rate_limiter.hit(_client_id(request))
+    if not limit.allowed:
+        raise HTTPException(
+            status_code=429,
+            detail=f"Rate limit: {limit.reason}. Try again in {limit.retry_after_s} s.",
+            headers={"Retry-After": str(limit.retry_after_s)},
+        )
     thread_id = req.thread_id or str(uuid4())
     return StreamingResponse(
         _run(request.app.state.graph, req.question.strip(), thread_id),
         media_type="text/event-stream",
-        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+            "X-RateLimit-Remaining": str(limit.remaining_today),
+        },
     )
 
 @router.get("/threads/{thread_id}")

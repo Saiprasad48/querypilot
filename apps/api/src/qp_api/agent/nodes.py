@@ -13,6 +13,8 @@ from qp_api.agent.prompts import ANALYST_SYSTEM, ROUTER_SYSTEM, SQL_SYSTEM
 from qp_api.agent.schemas import Analysis, RouteDecision, SQLDraft
 from qp_api.agent.state import AgentState, Turn
 from qp_api.agent.tools import InProcessTools, ToolCallError, Tools, format_schema
+from qp_api.cache import cache_key, llm_cache
+from qp_api.config import settings
 from qp_api.llm import smart_breaker, structured_chain
 
 tools: Tools = InProcessTools()
@@ -22,8 +24,25 @@ HISTORY_TURNS = 3  # how many previous turns the model sees
 def _structured(
     role: str, schema: type[BaseModel], messages: list[tuple[str, str]], call: str
 ) -> tuple[Any, dict[str, Any]]:
-    """Call the model for `role` with structured output; record usage and the model used."""
+    """Call the model for `role` with structured output; cached in Redis; usage recorded."""
     requested = role
+    # The key covers everything that affects the output: prompt, schema, configured models.
+    key = cache_key(
+        requested,
+        schema.model_json_schema(),
+        settings.qp_model_fast,
+        settings.qp_model_smart,
+        messages,
+    )
+    if settings.llm_cache_enabled and (hit := llm_cache.get(key)):
+        return schema.model_validate(hit["parsed"]), {
+            "call": call,
+            "role": requested,
+            "model": hit["model"],
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "cached": True,
+        }
     if role == "smart" and not smart_breaker.allow():
         role = "fast"  # breaker open: skip the smart model entirely for now
     result = structured_chain(role, schema).invoke(messages)
@@ -34,6 +53,8 @@ def _structured(
     model_name = raw.response_metadata.get("model_name", "unknown")
     if role == "smart":
         smart_breaker.record(model_name)
+    if settings.llm_cache_enabled:
+        llm_cache.set(key, {"parsed": parsed.model_dump(), "model": model_name})
     meta = raw.usage_metadata or {}
     return parsed, {
         "call": call,
@@ -41,6 +62,7 @@ def _structured(
         "model": model_name,
         "input_tokens": meta.get("input_tokens", 0),
         "output_tokens": meta.get("output_tokens", 0),
+        "cached": False,
     }
 
 def _question(state: AgentState) -> str:

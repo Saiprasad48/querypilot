@@ -5,12 +5,13 @@ from __future__ import annotations
 import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from qp_mcp.schema_index import get_model
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from langgraph.checkpoint.postgres import PostgresSaver
 from psycopg.rows import dict_row
 from psycopg_pool import ConnectionPool
+from qp_mcp.schema_index import get_model
 
 from qp_api.agent.graph import build_graph
 from qp_api.config import settings
@@ -41,7 +42,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
     allow_methods=["GET", "POST"],
-    allow_headers=["Content-Type"],
+    allow_headers=["Content-Type", "X-Client-Id"],
+    expose_headers=["X-RateLimit-Remaining", "Retry-After"],
 )
 app.include_router(health.router)
 app.include_router(ask.router)
