@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from psycopg.conninfo import make_conninfo
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -19,6 +20,21 @@ class Settings(BaseSettings):
     google_api_key: SecretStr | None = None
     groq_api_key: SecretStr | None = None
     anthropic_api_key: SecretStr | None = None
-
+    # app database (conversation checkpoints)
+    postgres_host: str = "localhost"
+    postgres_port: int = 5432
+    app_db: str = "app"
+    app_db_user: str = "qp_app"
+    app_db_password: SecretStr = SecretStr("")
+    cors_origins: list[str] = ["http://localhost:3000"]
+    @property
+    def app_db_dsn(self) -> str:
+        return make_conninfo(
+            host=self.postgres_host,
+            port=self.postgres_port,
+            dbname=self.app_db,
+            user=self.app_db_user,
+            password=self.app_db_password.get_secret_value(),
+        )
 
 settings = Settings()
