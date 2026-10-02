@@ -40,5 +40,7 @@ class Analysis(BaseModel):
     chart: ChartSpec
     caveats: list[str] = Field(default_factory=list)
     followups: list[str] = Field(
-        default_factory=list, description="Up to 3 natural follow up questions."
+        default_factory=list,
+        description="Up to 3 natural follow up questions answerable with data from "
+        "Sep 2016 to Oct 2018.",
     )

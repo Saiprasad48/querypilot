@@ -52,9 +52,10 @@ def ask(graph: Any, question: str, config: dict[str, Any]) -> None:
         f"{sum(u['input_tokens'] for u in usage)}/{sum(u['output_tokens'] for u in usage)}"
     )
     for u in usage:
+        tag = " (cached)" if u.get("cached") else ""
         print(
-            f"  {u['call']:<11} {u['role']:<6} {u['model']:<28} "
-            f"in={u['input_tokens']} out={u['output_tokens']}"
+            f"  {u['call']:<11} {u['role']:<10} {u['model']:<28} "
+            f"in={u['input_tokens']} out={u['output_tokens']}{tag}"
         )
     print(f"Steps: {[(s['node'], s['ms']) for s in final.get('steps', [])]}")
     print(f"Total time: {time.perf_counter() - started:.1f}s")

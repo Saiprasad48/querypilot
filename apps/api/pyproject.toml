@@ -18,6 +18,7 @@ dependencies = [
     "psycopg[binary]>=3.3.6",
     "pydantic-settings>=2.15.0",
     "qp-mcp",
+    "redis>=8.1.0",
     "uvicorn[standard]>=0.54.0",
 ]
 
@@ -30,6 +31,7 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
+    "fakeredis>=2.39.0",
     "pytest>=9.1.1",
     "ruff>=0.16.9",
 ]
