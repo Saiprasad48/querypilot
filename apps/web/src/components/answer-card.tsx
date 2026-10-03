@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { Turn, Usage } from "@/lib/types";
+import { AnswerChart } from "@/components/answer-chart";
+import { planChart } from "@/lib/chart";
 
 function UsageLine({ usage }: { usage: Usage }) {
   const totalMs = usage.steps.reduce((sum, s) => sum + s.ms, 0);
@@ -48,11 +50,15 @@ export function AnswerCard({ turn, onFollowup, disabled }: Props) {
         )}
 
         {turn.table && turn.sql && (
-          <Tabs defaultValue="table">
+          <Tabs defaultValue={planChart(answer.chart, turn.table) ? "chart" : "table"}>
             <TabsList>
+              {planChart(answer.chart, turn.table) && <TabsTrigger value="chart">Chart</TabsTrigger>}
               <TabsTrigger value="table">Table</TabsTrigger>
               <TabsTrigger value="sql">SQL</TabsTrigger>
             </TabsList>
+            <TabsContent value="chart">
+              <AnswerChart spec={answer.chart} table={turn.table} />
+            </TabsContent>
             <TabsContent value="table">
               <ResultTableView table={turn.table} />
             </TabsContent>
