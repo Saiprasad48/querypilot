@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-
+import { ThemeToggle } from "@/components/theme-toggle";
 import { ChatInput } from "@/components/chat-input";
 import { TurnView } from "@/components/turn-view";
 import { Button } from "@/components/ui/button";
@@ -32,9 +32,12 @@ export default function Home() {
               AI data analyst for the Olist ecommerce dataset (2016 to 2018)
             </p>
           </div>
-          <Button variant="outline" size="sm" onClick={reset} disabled={turns.length === 0}>
-            New chat
-          </Button>
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            <Button variant="outline" size="sm" onClick={reset} disabled={turns.length === 0}>
+              New chat
+            </Button>
+          </div>
         </div>
       </header>
 
