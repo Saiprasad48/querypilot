@@ -14,7 +14,7 @@ class AgentState(TypedDict, total=False):
     question: str  # exactly what the user typed
     standalone_question: str  # rewritten by the router to include follow up context
     # route
-    intent: Literal["data_question", "write_request", "off_topic", "ambiguous"]
+    intent: Literal["data_question", "write_request", "off_topic", "ambiguous", "private_data"]
     complexity: Literal["simple", "complex"]
     clarification: str
     # retrieve

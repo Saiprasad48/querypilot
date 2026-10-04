@@ -41,16 +41,18 @@ def smart_model(**kwargs: Any) -> BaseChatModel:
     return get_chat_model(settings.qp_model_smart, **kwargs)
 
 @lru_cache(maxsize=32)
-def structured_chain(
-    role: Literal["fast", "smart"], schema: type[BaseModel]
-) -> Runnable:
-    """A model that returns `schema` (plus the raw message), with fallback for 'smart'.
-    smart: try the smart model once (no retries, short timeout); on ANY error
-           (429 quota, 503 overload, timeout) fall back to the fast model.
-    fast:  the fast model with a couple of retries.
+def structured_chain(role: Literal["fast", "smart"], schema: type[BaseModel]) -> Runnable:
+    """A model that returns `schema` (plus the raw message), with layered fallbacks.
+    fast:  fast model -> backup provider (if configured)
+    smart: smart model -> fast model -> backup provider
     """
-    fast = get_chat_model(settings.qp_model_fast, max_retries=2, timeout=60)
+    fast = get_chat_model(settings.qp_model_fast, max_retries=1, timeout=60)
     fast_chain = fast.with_structured_output(schema, include_raw=True)
+    if settings.qp_model_backup:
+        backup = get_chat_model(settings.qp_model_backup, max_retries=1, timeout=60)
+        fast_chain = fast_chain.with_fallbacks(
+            [backup.with_structured_output(schema, include_raw=True)]
+        )
     if role == "fast":
         return fast_chain
     smart = get_chat_model(settings.qp_model_smart, max_retries=0, timeout=60)

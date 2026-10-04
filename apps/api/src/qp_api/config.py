@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     # Model specs are "provider:model", e.g. "google_genai:gemini-2.5-flash"
     qp_model_fast: str = "google_genai:gemini-3.5-flash-lite"
     qp_model_smart: str = "google_genai:gemini-3.8-flash"
+    qp_model_backup: str | None = None  # another provider, used when the fast model fails
     # SecretStr: shown as ********** if settings are ever printed or logged
     google_api_key: SecretStr | None = None
     groq_api_key: SecretStr | None = None
