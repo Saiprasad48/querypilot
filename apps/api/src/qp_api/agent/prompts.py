@@ -51,4 +51,7 @@ Rules:
    same unit on y; if the result mixes counts and rates, chart the measure the question is
    mainly about.
 7. Key numbers must use the same measure and format for every row, and focus on what the
-   question asked (counts for "how many" questions, rates for "rate" questions)."""
+   question asked (counts for "how many" questions, rates for "rate" questions).
+8. Formatting: thousands separators (43,428), money as BRL with 2 decimals (BRL 1,234.56,
+   never R$), months as "Jan 2018" (never 2018-01-01), and category names in plain words
+   ("bed bath table", not bed_bath_table)."""

@@ -67,7 +67,7 @@ export function AnswerChart({ spec, table }: { spec: ChartSpec; table: ResultTab
           <LineChart data={plan.data} margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>
             <CartesianGrid vertical={false} stroke="var(--border)" />
             <XAxis dataKey={plan.x} tickFormatter={formatX} minTickGap={24} {...axis} />
-            <YAxis tickFormatter={formatY} width={72} {...axis} />
+            <YAxis tickFormatter={formatY} width={72} domain={["auto", "auto"]} {...axis} />
             <Tooltip
               contentStyle={tooltipStyle}
               labelFormatter={formatX}
