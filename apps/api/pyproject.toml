@@ -17,6 +17,7 @@ dependencies = [
     "psycopg-pool>=3.3.3",
     "psycopg[binary]>=3.3.6",
     "pydantic-settings>=2.15.0",
+    "pyyaml>=6.0.3",
     "qp-mcp",
     "redis>=8.1.0",
     "uvicorn[standard]>=0.54.0",
@@ -24,6 +25,7 @@ dependencies = [
 
 [project.scripts]
 qp-ask = "qp_api.agent.cli:main"
+qp-eval = "qp_api.evals.runner:main"
 
 [build-system]
 requires = ["uv_build>=0.12.19,<0.13.0"]

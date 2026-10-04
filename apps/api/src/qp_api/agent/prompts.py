@@ -32,6 +32,9 @@ Rules:
 8. For follow up questions, adapt the previous SQL from the conversation when it fits.
 9. When computing a rate or average per group, also return the group's row count (e.g.
    COUNT(*) AS delivered_orders) so small samples can be detected.
+10. Watch the grain. fct_order_items has one row per item, so an order can appear several
+    times. For order level measures (review_score, payment_value, delivery) by category or
+    seller, deduplicate to one row per order first and count with COUNT(DISTINCT order_id).
 
 SCHEMA AND METRICS:
 """

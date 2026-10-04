@@ -1,0 +1,111 @@
+{
+  "label": "smoke",
+  "timestamp": "2026-10-04T07:30:15+00:00",
+  "models": {
+    "fast": "google_genai:gemini-3.5-flash-lite",
+    "smart": "google_genai:gemini-3.8-flash"
+  },
+  "cache_enabled": false,
+  "summary": {
+    "n": 5,
+    "execution_accuracy": 1.0,
+    "valid_sql_rate": 1.0,
+    "by_difficulty": {
+      "easy": {
+        "n": 5,
+        "correct": 5,
+        "accuracy": 1.0
+      }
+    },
+    "latency_p50_s": 3.47,
+    "latency_p95_s": 6.16,
+    "avg_llm_calls": 3.0,
+    "avg_input_tokens": 2218,
+    "avg_output_tokens": 261,
+    "questions_with_repairs": 0,
+    "smart_calls_requested": 0,
+    "smart_calls_answered": 0
+  },
+  "results": [
+    {
+      "id": "e01",
+      "difficulty": "easy",
+      "question": "How many orders are in the dataset in total?",
+      "latency_s": 6.16,
+      "sql": "SELECT COUNT(*) AS order_count FROM marts.fct_orders LIMIT 500",
+      "attempts": 1,
+      "llm_calls": 3,
+      "input_tokens": 2166,
+      "output_tokens": 204,
+      "smart_requested": 0,
+      "smart_answered": 0,
+      "valid_sql": true,
+      "correct": true,
+      "reason": "match"
+    },
+    {
+      "id": "e02",
+      "difficulty": "easy",
+      "question": "How many orders were delivered in 2017?",
+      "latency_s": 3.95,
+      "sql": "SELECT COUNT(*) AS delivered_orders FROM marts.fct_orders WHERE order_status = 'delivered' AND purchase_date >= '2017-01-01' AND purchase_date < '2018-01-01' LIMIT 500",
+      "attempts": 1,
+      "llm_calls": 3,
+      "input_tokens": 2301,
+      "output_tokens": 338,
+      "smart_requested": 0,
+      "smart_answered": 0,
+      "valid_sql": true,
+      "correct": true,
+      "reason": "match"
+    },
+    {
+      "id": "e03",
+      "difficulty": "easy",
+      "question": "How many unique customers are there?",
+      "latency_s": 3.45,
+      "sql": "SELECT COUNT(*) AS unique_customers FROM marts.dim_customers LIMIT 500",
+      "attempts": 1,
+      "llm_calls": 3,
+      "input_tokens": 2194,
+      "output_tokens": 230,
+      "smart_requested": 0,
+      "smart_answered": 0,
+      "valid_sql": true,
+      "correct": true,
+      "reason": "match"
+    },
+    {
+      "id": "e04",
+      "difficulty": "easy",
+      "question": "How many sellers are on the marketplace?",
+      "latency_s": 3.26,
+      "sql": "SELECT COUNT(seller_id) AS total_sellers FROM marts.dim_sellers LIMIT 500",
+      "attempts": 1,
+      "llm_calls": 3,
+      "input_tokens": 2013,
+      "output_tokens": 252,
+      "smart_requested": 0,
+      "smart_answered": 0,
+      "valid_sql": true,
+      "correct": true,
+      "reason": "match"
+    },
+    {
+      "id": "e05",
+      "difficulty": "easy",
+      "question": "What is the total revenue from delivered orders?",
+      "latency_s": 3.47,
+      "sql": "SELECT ROUND(SUM(payment_value), 2) AS revenue FROM marts.fct_orders WHERE order_status = 'delivered' LIMIT 500",
+      "attempts": 1,
+      "llm_calls": 3,
+      "input_tokens": 2418,
+      "output_tokens": 283,
+      "smart_requested": 0,
+      "smart_answered": 0,
+      "valid_sql": true,
+      "correct": true,
+      "reason": "match"
+    }
+  ]
+}

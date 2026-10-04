@@ -63,8 +63,12 @@ models:
 
   - name: fct_order_items
     description: >
-      One row per item sold. Use this for product category analysis, seller performance,
-      units sold, and price analysis. Category is already included (English names).
+      One row per item sold (grain: order_id + item_number), so one order can appear several
+      times. Use this for product category analysis, seller performance, units sold and price
+      analysis. Category is already included (English names). For order level measures such as
+      review_score, payment_value or delivery, first reduce to one row per order
+      (SELECT DISTINCT order_id, category ...) and count orders with COUNT(DISTINCT order_id);
+      joining item rows directly to fct_orders counts multi item orders more than once.
     data_tests:
       - dbt_utils.unique_combination_of_columns:
           arguments:

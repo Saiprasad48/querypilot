@@ -1,0 +1,212 @@
+# Golden questions for QueryPilot execution accuracy.
+# Each reference SQL was verified against the warehouse. Metric definitions follow
+# data/semantic/metrics.yml (e.g. revenue = sum(payment_value) of delivered orders).
+
+questions:
+  # ---------- easy: one table, simple filters or aggregates ----------
+  - id: e01
+    difficulty: easy
+    question: How many orders are in the dataset in total?
+    sql: SELECT count(*) AS orders FROM marts.fct_orders
+
+  - id: e02
+    difficulty: easy
+    question: How many orders were delivered in 2017?
+    sql: |
+      SELECT count(*) AS delivered_orders FROM marts.fct_orders
+      WHERE order_status = 'delivered' AND purchase_date >= '2017-01-01' AND purchase_date < '2018-01-01'
+
+  - id: e03
+    difficulty: easy
+    question: How many unique customers are there?
+    sql: SELECT count(*) AS customers FROM marts.dim_customers
+
+  - id: e04
+    difficulty: easy
+    question: How many sellers are on the marketplace?
+    sql: SELECT count(*) AS sellers FROM marts.dim_sellers
+
+  - id: e05
+    difficulty: easy
+    question: What is the total revenue from delivered orders?
+    sql: SELECT sum(payment_value) AS revenue FROM marts.fct_orders WHERE order_status = 'delivered'
+
+  - id: e06
+    difficulty: easy
+    question: What is the average review score across all reviewed orders?
+    sql: SELECT avg(review_score) AS avg_review_score FROM marts.fct_orders WHERE review_score IS NOT NULL
+
+  - id: e07
+    difficulty: easy
+    question: How many orders were canceled?
+    sql: SELECT count(*) AS canceled_orders FROM marts.fct_orders WHERE order_status = 'canceled'
+
+  - id: e08
+    difficulty: easy
+    question: What is the cancellation rate across all orders?
+    sql: |
+      SELECT avg(CASE WHEN order_status = 'canceled' THEN 1.0 ELSE 0.0 END) AS cancellation_rate
+      FROM marts.fct_orders
+
+  - id: e09
+    difficulty: easy
+    question: How many products are in the catalog?
+    sql: SELECT count(*) AS products FROM marts.dim_products
+
+  - id: e10
+    difficulty: easy
+    question: What is the average delivery time in days for delivered orders?
+    sql: SELECT avg(delivery_days) AS avg_delivery_days FROM marts.fct_orders WHERE order_status = 'delivered'
+
+  - id: e11
+    difficulty: easy
+    question: What share of delivered orders arrived late?
+    sql: |
+      SELECT avg(CASE WHEN is_late THEN 1.0 ELSE 0.0 END) AS late_delivery_rate
+      FROM marts.fct_orders WHERE order_status = 'delivered' AND delivered_at IS NOT NULL
+
+  - id: e12
+    difficulty: easy
+    question: What was the average order value in 2018?
+    sql: |
+      SELECT sum(payment_value) / count(*) AS aov FROM marts.fct_orders
+      WHERE order_status = 'delivered' AND purchase_date >= '2018-01-01' AND purchase_date < '2019-01-01'
+
+  # ---------- medium: grouping, time buckets, joins ----------
+  - id: m01
+    difficulty: medium
+    question: What was the revenue from delivered orders in each year?
+    sql: |
+      SELECT extract(year FROM purchase_date) AS year, sum(payment_value) AS revenue
+      FROM marts.fct_orders WHERE order_status = 'delivered' GROUP BY 1
+
+  - id: m02
+    difficulty: medium
+    question: Which 5 customer states placed the most orders?
+    sql: |
+      SELECT customer_state, count(*) AS orders FROM marts.fct_orders
+      GROUP BY 1 ORDER BY 2 DESC LIMIT 5
+
+  - id: m03
+    difficulty: medium
+    question: Which 5 product categories generated the highest item revenue (sum of item prices) from delivered orders?
+    sql: |
+      SELECT category, sum(price) AS item_revenue FROM marts.fct_order_items
+      WHERE order_status = 'delivered' GROUP BY 1 ORDER BY 2 DESC LIMIT 5
+
+  - id: m04
+    difficulty: medium
+    question: How many payments were made with each payment type?
+    sql: SELECT payment_type, count(*) AS payments FROM marts.fct_payments GROUP BY 1
+
+  - id: m05
+    difficulty: medium
+    question: What is the average review score for late versus on time delivered orders?
+    sql: |
+      SELECT is_late, avg(review_score) AS avg_review_score FROM marts.fct_orders
+      WHERE order_status = 'delivered' AND is_late IS NOT NULL GROUP BY 1
+
+  - id: m06
+    difficulty: medium
+    question: How many orders were placed each month in 2017?
+    sql: |
+      SELECT date_trunc('month', purchase_date)::date AS month, count(*) AS orders
+      FROM marts.fct_orders WHERE purchase_date >= '2017-01-01' AND purchase_date < '2018-01-01'
+      GROUP BY 1
+
+  - id: m07
+    difficulty: medium
+    question: Which 5 states have the most sellers?
+    sql: SELECT state, count(*) AS sellers FROM marts.dim_sellers GROUP BY 1 ORDER BY 2 DESC LIMIT 5
+
+  - id: m08
+    difficulty: medium
+    question: Which 5 cities have the most customers?
+    sql: SELECT city, count(*) AS customers FROM marts.dim_customers GROUP BY 1 ORDER BY 2 DESC LIMIT 5
+
+  - id: m09
+    difficulty: medium
+    question: Which 5 customer states have the highest average freight value per delivered order?
+    sql: |
+      SELECT customer_state, avg(freight_value) AS avg_freight FROM marts.fct_orders
+      WHERE order_status = 'delivered' GROUP BY 1 ORDER BY 2 DESC LIMIT 5
+
+  - id: m10
+    difficulty: medium
+    question: What was the late delivery rate for delivered orders in each year?
+    sql: |
+      SELECT extract(year FROM purchase_date) AS year,
+             avg(CASE WHEN is_late THEN 1.0 ELSE 0.0 END) AS late_delivery_rate
+      FROM marts.fct_orders WHERE order_status = 'delivered' AND delivered_at IS NOT NULL GROUP BY 1
+
+  - id: m11
+    difficulty: medium
+    question: How many customers have more than one delivered order?
+    sql: SELECT count(*) AS repeat_customers FROM marts.dim_customers WHERE is_repeat_customer
+
+  - id: m12
+    difficulty: medium
+    question: What was the average number of items per delivered order in each year?
+    sql: |
+      SELECT extract(year FROM purchase_date) AS year, avg(item_count) AS avg_items
+      FROM marts.fct_orders WHERE order_status = 'delivered' GROUP BY 1
+
+  - id: m13
+    difficulty: medium
+    question: Which 5 product categories sold the most items in delivered orders in 2018?
+    sql: |
+      SELECT category, count(*) AS items_sold FROM marts.fct_order_items
+      WHERE order_status = 'delivered' AND purchase_date >= '2018-01-01' AND purchase_date < '2019-01-01'
+      GROUP BY 1 ORDER BY 2 DESC LIMIT 5
+
+  # ---------- hard: windows, filtered groups, multi step logic ----------
+  - id: h01
+    difficulty: hard
+    question: Which 5 customer states had the highest late delivery rate in 2018?
+    sql: |
+      SELECT customer_state, avg(CASE WHEN is_late THEN 1.0 ELSE 0.0 END) AS late_delivery_rate
+      FROM marts.fct_orders
+      WHERE order_status = 'delivered' AND delivered_at IS NOT NULL
+        AND purchase_date >= '2018-01-01' AND purchase_date < '2019-01-01'
+      GROUP BY 1 ORDER BY 2 DESC LIMIT 5
+
+  - id: h02
+    difficulty: hard
+    question: What was the month over month revenue growth rate for each month of 2018?
+    sql: |
+      WITH m AS (
+        SELECT date_trunc('month', purchase_date)::date AS month, sum(payment_value) AS revenue
+        FROM marts.fct_orders
+        WHERE order_status = 'delivered' AND purchase_date >= '2018-01-01' AND purchase_date < '2019-01-01'
+        GROUP BY 1
+      )
+      SELECT month, revenue / lag(revenue) OVER (ORDER BY month) - 1 AS mom_growth FROM m
+
+  - id: h03
+    difficulty: hard
+    question: Which 5 product categories have the highest average review score, among categories with at least 500 reviewed delivered orders?
+    sql: |
+      WITH oc AS (
+        SELECT DISTINCT order_id, category FROM marts.fct_order_items WHERE order_status = 'delivered'
+      )
+      SELECT oc.category, avg(o.review_score) AS avg_review_score
+      FROM oc JOIN marts.fct_orders o ON o.order_id = oc.order_id
+      WHERE o.review_score IS NOT NULL
+      GROUP BY 1 HAVING count(*) >= 500 ORDER BY 2 DESC LIMIT 5
+
+  - id: h04
+    difficulty: hard
+    question: What is the repeat customer rate?
+    sql: |
+      SELECT avg(CASE WHEN is_repeat_customer THEN 1.0 ELSE 0.0 END) AS repeat_customer_rate
+      FROM marts.dim_customers WHERE delivered_order_count > 0
+
+  - id: h05
+    difficulty: hard
+    question: What share of total delivered revenue comes from the top 1,000 customers by lifetime revenue?
+    sql: |
+      SELECT sum(lifetime_revenue) FILTER (WHERE rk <= 1000) / sum(lifetime_revenue) AS top_1000_share
+      FROM (
+        SELECT lifetime_revenue, row_number() OVER (ORDER BY lifetime_revenue DESC) AS rk
+        FROM marts.dim_customers
+      ) ranked
