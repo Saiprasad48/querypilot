@@ -1,0 +1,242 @@
+{
+  "label": "failures",
+  "timestamp": "2026-10-04T07:46:19+00:00",
+  "models": {
+    "fast": "google_genai:gemini-3.5-flash-lite",
+    "smart": "google_genai:gemini-3.8-flash"
+  },
+  "cache_enabled": false,
+  "summary": {
+    "n": 3,
+    "execution_accuracy": 0.333,
+    "valid_sql_rate": 1.0,
+    "by_difficulty": {
+      "medium": {
+        "n": 2,
+        "correct": 1,
+        "accuracy": 0.5
+      },
+      "hard": {
+        "n": 1,
+        "correct": 0,
+        "accuracy": 0.0
+      }
+    },
+    "latency_p50_s": 4.25,
+    "latency_p95_s": 7.1,
+    "avg_llm_calls": 3.0,
+    "avg_input_tokens": 2536,
+    "avg_output_tokens": 514,
+    "questions_with_repairs": 0,
+    "smart_calls_requested": 2,
+    "smart_calls_answered": 0
+  },
+  "results": [
+    {
+      "id": "m05",
+      "difficulty": "medium",
+      "question": "What is the average review score for late versus on time delivered orders?",
+      "latency_s": 7.1,
+      "sql": "SELECT is_late, AVG(review_score) AS avg_review_score, COUNT(*) AS delivered_orders FROM marts.fct_orders WHERE order_status = 'delivered' AND review_score IS NOT NULL AND is_late IS NOT NULL GROUP BY is_late ORDER BY is_late LIMIT 500",
+      "attempts": 1,
+      "llm_calls": 3,
+      "input_tokens": 2506,
+      "output_tokens": 339,
+      "smart_requested": 1,
+      "smart_answered": 0,
+      "valid_sql": true,
+      "correct": true,
+      "reason": "match"
+    },
+    {
+      "id": "m06",
+      "difficulty": "medium",
+      "question": "How many orders were placed each month in 2017?",
+      "latency_s": 3.98,
+      "sql": "SELECT TO_CHAR(purchase_date, 'YYYY-MM') AS order_month, COUNT(*) AS order_count FROM marts.fct_orders WHERE purchase_date >= '2017-01-01' AND purchase_date < '2018-01-01' GROUP BY TO_CHAR(purchase_date, 'YYYY-MM') ORDER BY order_month LIMIT 500",
+      "attempts": 1,
+      "llm_calls": 3,
+      "input_tokens": 2429,
+      "output_tokens": 625,
+      "smart_requested": 0,
+      "smart_answered": 0,
+      "valid_sql": true,
+      "correct": false,
+      "reason": "no result column matches expected column 'month'",
+      "expected": {
+        "columns": [
+          "month",
+          "orders"
+        ],
+        "rows": [
+          [
+            "2017-12-01",
+            5673
+          ],
+          [
+            "2017-04-01",
+            2404
+          ],
+          [
+            "2017-02-01",
+            1780
+          ],
+          [
+            "2017-05-01",
+            3700
+          ],
+          [
+            "2017-06-01",
+            3245
+          ],
+          [
+            "2017-11-01",
+            7544
+          ],
+          [
+            "2017-09-01",
+            4285
+          ],
+          [
+            "2017-01-01",
+            800
+          ],
+          [
+            "2017-10-01",
+            4631
+          ],
+          [
+            "2017-08-01",
+            4331
+          ]
+        ]
+      },
+      "got": {
+        "columns": [
+          "order_month",
+          "order_count"
+        ],
+        "rows": [
+          [
+            "2017-01",
+            800
+          ],
+          [
+            "2017-02",
+            1780
+          ],
+          [
+            "2017-03",
+            2682
+          ],
+          [
+            "2017-04",
+            2404
+          ],
+          [
+            "2017-05",
+            3700
+          ],
+          [
+            "2017-06",
+            3245
+          ],
+          [
+            "2017-07",
+            4026
+          ],
+          [
+            "2017-08",
+            4331
+          ],
+          [
+            "2017-09",
+            4285
+          ],
+          [
+            "2017-10",
+            4631
+          ]
+        ]
+      }
+    },
+    {
+      "id": "h03",
+      "difficulty": "hard",
+      "question": "Which 5 product categories have the highest average review score, among categories with at least 500 reviewed delivered orders?",
+      "latency_s": 4.25,
+      "sql": "SELECT i.category, ROUND(CAST(AVG(o.review_score) AS DECIMAL), 4) AS avg_review_score, COUNT(o.review_score) AS reviewed_order_count FROM marts.fct_order_items AS i INNER JOIN marts.fct_orders AS o ON i.order_id = o.order_id WHERE i.order_status = 'delivered' AND o.review_score IS NOT NULL GROUP BY i.category HAVING COUNT(o.review_score) >= 500 ORDER BY avg_review_score DESC LIMIT 5",
+      "attempts": 1,
+      "llm_calls": 3,
+      "input_tokens": 2674,
+      "output_tokens": 578,
+      "smart_requested": 1,
+      "smart_answered": 0,
+      "valid_sql": true,
+      "correct": false,
+      "reason": "no result column matches expected column 'category'",
+      "expected": {
+        "columns": [
+          "category",
+          "avg_review_score"
+        ],
+        "rows": [
+          [
+            "luggage_accessories",
+            4.370443349753694
+          ],
+          [
+            "stationery",
+            4.295424255886273
+          ],
+          [
+            "pet_shop",
+            4.273809523809524
+          ],
+          [
+            "perfumery",
+            4.261378413524057
+          ],
+          [
+            "small_appliances",
+            4.254966887417218
+          ]
+        ]
+      },
+      "got": {
+        "columns": [
+          "category",
+          "avg_review_score",
+          "reviewed_order_count"
+        ],
+        "rows": [
+          [
+            "books_general_interest",
+            4.5122,
+            533
+          ],
+          [
+            "luggage_accessories",
+            4.3523,
+            1073
+          ],
+          [
+            "stationery",
+            4.2464,
+            2451
+          ],
+          [
+            "small_appliances",
+            4.2236,
+            653
+          ],
+          [
+            "musical_instruments",
+            4.2217,
+            645
+          ]
+        ]
+      }
+    }
+  ]
+}

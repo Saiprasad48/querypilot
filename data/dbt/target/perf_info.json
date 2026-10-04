@@ -5,25 +5,25 @@
     "static_analysis_parsed_path_count": 1,
     "is_partial_parse_enabled": true,
     "is_static_analysis_enabled": true,
-    "read_files_elapsed": 0.06568319999496453,
-    "load_macros_elapsed": 0.0006785000005038455,
-    "parse_project_elapsed": 0.6024335999973118,
-    "patch_sources_elapsed": 3.149999974993989e-05,
-    "process_manifest_elapsed": 0.001978100000997074,
-    "load_all_elapsed": 0.9206940000003669,
+    "read_files_elapsed": 2.776495199999772,
+    "load_macros_elapsed": 0.0009361000265926123,
+    "parse_project_elapsed": 0.7304796000244096,
+    "patch_sources_elapsed": 3.1400006264448166e-05,
+    "process_manifest_elapsed": 0.0013081000070087612,
+    "load_all_elapsed": 3.8685571999521926,
     "projects": [
         {
             "project_name": "querypilot",
-            "elapsed": 0.6022001999954227,
+            "elapsed": 0.73028840002371,
             "parsers": [
                 {
                     "parser": "model",
-                    "elapsed": 0.3104165999975521,
+                    "elapsed": 0.38177790003828704,
                     "parsed_path_count": 1
                 },
                 {
                     "parser": "test",
-                    "elapsed": 0.2917617999992217,
+                    "elapsed": 0.3484924000222236,
                     "parsed_path_count": 1
                 }
             ],

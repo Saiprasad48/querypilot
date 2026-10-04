@@ -1,0 +1,68 @@
+{
+  "label": "fixes",
+  "timestamp": "2026-10-04T07:53:00+00:00",
+  "models": {
+    "fast": "google_genai:gemini-3.5-flash-lite",
+    "smart": "google_genai:gemini-3.8-flash"
+  },
+  "cache_enabled": false,
+  "summary": {
+    "n": 2,
+    "execution_accuracy": 1.0,
+    "valid_sql_rate": 1.0,
+    "by_difficulty": {
+      "medium": {
+        "n": 1,
+        "correct": 1,
+        "accuracy": 1.0
+      },
+      "hard": {
+        "n": 1,
+        "correct": 1,
+        "accuracy": 1.0
+      }
+    },
+    "latency_p50_s": 8.22,
+    "latency_p95_s": 10.0,
+    "avg_llm_calls": 3.0,
+    "avg_input_tokens": 2708,
+    "avg_output_tokens": 1328,
+    "questions_with_repairs": 0,
+    "smart_calls_requested": 1,
+    "smart_calls_answered": 1
+  },
+  "results": [
+    {
+      "id": "m06",
+      "difficulty": "medium",
+      "question": "How many orders were placed each month in 2017?",
+      "latency_s": 6.44,
+      "sql": "SELECT TO_CHAR(purchased_at, 'YYYY-MM') AS order_month, COUNT(*) AS order_count FROM marts.fct_orders WHERE purchase_date >= '2017-01-01' AND purchase_date < '2018-01-01' GROUP BY TO_CHAR(purchased_at, 'YYYY-MM') ORDER BY order_month LIMIT 500",
+      "attempts": 1,
+      "llm_calls": 3,
+      "input_tokens": 2580,
+      "output_tokens": 621,
+      "smart_requested": 0,
+      "smart_answered": 0,
+      "valid_sql": true,
+      "correct": true,
+      "reason": "match"
+    },
+    {
+      "id": "h03",
+      "difficulty": "hard",
+      "question": "Which 5 product categories have the highest average review score, among categories with at least 500 reviewed delivered orders?",
+      "latency_s": 10.0,
+      "sql": "WITH order_categories AS (SELECT DISTINCT order_id, category FROM marts.fct_order_items WHERE order_status = 'delivered' AND category IS NOT NULL) SELECT oc.category, COUNT(*) AS reviewed_delivered_orders, ROUND(CAST(AVG(o.review_score) AS DECIMAL), 2) AS avg_review_score FROM order_categories AS oc JOIN marts.fct_orders AS o ON oc.order_id = o.order_id WHERE o.order_status = 'delivered' AND o.review_score IS NOT NULL GROUP BY oc.category HAVING COUNT(*) >= 500 ORDER BY avg_review_score DESC, reviewed_delivered_orders DESC LIMIT 5",
+      "attempts": 1,
+      "llm_calls": 3,
+      "input_tokens": 2837,
+      "output_tokens": 2034,
+      "smart_requested": 1,
+      "smart_answered": 1,
+      "valid_sql": true,
+      "correct": true,
+      "reason": "match"
+    }
+  ]
+}
