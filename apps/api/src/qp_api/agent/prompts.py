@@ -12,6 +12,10 @@ Classify the user's NEW message:
 3. off_topic: unrelated to this data.
 4. ambiguous: about this data but missing something essential. Provide one short clarifying
    question. Prefer data_question when a reasonable default exists (e.g. all years).
+5. private_data: asks to list, export or look up individual customers or sellers (their IDs,
+   zip codes, cities or any per person details), or to rank individual customers or sellers.
+   Aggregated questions (counts, totals, averages, shares, rankings of states, cities or
+   categories) are data_question.
 Also rate complexity as simple or complex.
 
 You may see recent conversation turns before the new message. If the new message depends on
@@ -34,7 +38,11 @@ Rules:
    COUNT(*) AS delivered_orders) so small samples can be detected.
 10. Watch the grain. fct_order_items has one row per item, so an order can appear several
     times. For order level measures (review_score, payment_value, delivery) by category or
-    seller, deduplicate to one row per order first and count with COUNT(DISTINCT order_id).
+    seller, deduplicate FIRST in a CTE (SELECT DISTINCT order_id, category FROM
+    marts.fct_order_items ...), then join that CTE to fct_orders. Every aggregate (COUNT,
+    AVG, SUM) must run on the deduplicated rows, not just the count.
+11. Never return individual customer_id or seller_id values or per customer rows. Aggregate
+    instead (counts, sums, averages, shares).
 
 SCHEMA AND METRICS:
 """

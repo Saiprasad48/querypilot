@@ -34,12 +34,18 @@ def results_match(
     ref_rows: list[list[Any]],
     pred_columns: list[str],
     pred_rows: list[list[Any]],
+    only: list[str] | None = None,
 ) -> tuple[bool, str]:
+    """`only` limits which reference columns must match, for questions where a label column
+    may be validly formatted several ways (true/false vs 'late'/'on_time')."""
     if len(ref_rows) != len(pred_rows):
         return False, f"expected {len(ref_rows)} rows, got {len(pred_rows)}"
+
     predicted = [_column(pred_rows, i) for i in range(len(pred_columns))]
     used: set[int] = set()
     for j, name in enumerate(ref_columns):
+        if only and name not in only:
+            continue
         expected = _column(ref_rows, j)
         match = next(
             (i for i, values in enumerate(predicted) if i not in used and values == expected),

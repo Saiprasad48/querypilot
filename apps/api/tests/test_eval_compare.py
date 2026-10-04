@@ -32,3 +32,9 @@ def test_year_month_strings_match_first_day_of_month() -> None:
     ref = (["month", "orders"], [["2017-01-01", 800], ["2017-02-01", 1780]])
     pred = (["order_month", "order_count"], [["2017-02", 1780], ["2017-01", 800]])
     assert results_match(*ref, *pred)[0]
+
+def test_only_compares_declared_answer_columns() -> None:
+    ref = (["is_late", "score"], [[True, 2.27], [False, 4.29]])
+    pred = (["timing", "score"], [["late", 2.27], ["on_time", 4.29]])
+    assert not results_match(*ref, *pred)[0]  # strict: the label formats differ
+    assert results_match(*ref, *pred, only=["score"])[0]  # the answer itself is right

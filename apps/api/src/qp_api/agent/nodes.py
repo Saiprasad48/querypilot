@@ -145,6 +145,12 @@ def decline(state: AgentState) -> dict[str, Any]:
             "QueryPilot is read only, so I can't change data. I can analyze it instead, "
             "for example by counting or comparing those records."
         )
+    elif intent == "private_data":
+        text = (
+            "QueryPilot only shares aggregated statistics, not records about individual "
+            "customers or sellers. I can summarize them instead, for example customers per "
+            "city or the share of revenue from top customers."
+        )
     else:
         text = (
             "I can only answer questions about the Olist ecommerce data: orders, customers, "

@@ -102,6 +102,7 @@ questions:
   - id: m05
     difficulty: medium
     question: What is the average review score for late versus on time delivered orders?
+    compare_columns: [avg_review_score]
     sql: |
       SELECT is_late, avg(review_score) AS avg_review_score FROM marts.fct_orders
       WHERE order_status = 'delivered' AND is_late IS NOT NULL GROUP BY 1

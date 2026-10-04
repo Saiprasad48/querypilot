@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 
 
 class RouteDecision(BaseModel):
-    intent: Literal["data_question", "write_request", "off_topic", "ambiguous"]
+    intent: Literal["data_question", "write_request", "off_topic", "ambiguous", "private_data"]
     complexity: Literal["simple", "complex"] = Field(
         description="simple: one table with basic filters or aggregates. "
         "complex: joins, comparisons over time, rankings within groups, or several steps."
