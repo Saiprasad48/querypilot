@@ -4666,3 +4666,25 @@ having count(*) > 1
 [0m02:51:46.926486 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000211CC58FEF0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000211CD5E15B0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000211CD633E30>]}
 [0m02:51:46.926486 [debug] [MainThread]: Flushing usage events
 [0m02:51:47.266536 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m19:00:29.793527 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000170CACAF9B0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000170CA13A420>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000170CA13A600>]}
+
+
+============================== 19:00:29.806468 | 92fab3ae-59b9-434f-bf82-e0d1560f6aaf ==============================
+[0m19:00:29.806468 [info ] [MainThread]: Running with dbt=1.12.5
+[0m19:00:29.807206 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'maximum_seed_size_mib': '1', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'C:\\dev\\querypilot\\data\\dbt', 'invocation_command': 'dbt parse', 'hints_enabled': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'indirect_selection': 'eager', 'log_path': 'C:\\dev\\querypilot\\data\\dbt\\logs'}
+[0m19:00:30.380622 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '92fab3ae-59b9-434f-bf82-e0d1560f6aaf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000170CAC695B0>]}
+[0m19:00:30.450923 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '92fab3ae-59b9-434f-bf82-e0d1560f6aaf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000170CCF2F470>]}
+[0m19:00:30.450923 [info ] [MainThread]: Registered adapter: postgres=1.11.0
+[0m19:00:30.865421 [debug] [MainThread]: checksum: 0237b8ab76927b85037e2879ca8e27c231985de2cb417712530ea03dad166920, vars: {}, profile: querypilot, target: dev, version: 1.12.5
+[0m19:00:33.727396 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m19:00:33.727396 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m19:00:33.727396 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m19:00:33.747071 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '92fab3ae-59b9-434f-bf82-e0d1560f6aaf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000170CCF2C2C0>]}
+[0m19:00:33.752904 [info ] [MainThread]: Performance info: C:\dev\querypilot\data\dbt\target\perf_info.json
+[0m19:00:34.012525 [debug] [MainThread]: Wrote artifact WritableManifest to C:\dev\querypilot\data\dbt\target\manifest.json
+[0m19:00:34.036469 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\dev\querypilot\data\dbt\target\semantic_manifest.json
+[0m19:00:34.092141 [debug] [MainThread]: Wrote artifact OsiDocument to C:\dev\querypilot\data\dbt\target\osi_document.json
+[0m19:00:34.093091 [debug] [MainThread]: Command `cli parse` succeeded at 19:00:34.093091 after 4.57 seconds
+[0m19:00:34.095107 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000170CA13A420>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000170CD25EED0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000170CD3C4050>]}
+[0m19:00:34.095107 [debug] [MainThread]: Flushing usage events
+[0m19:00:34.501090 [debug] [MainThread]: An error was encountered while trying to flush usage events

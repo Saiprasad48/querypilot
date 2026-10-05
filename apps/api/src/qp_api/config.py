@@ -28,6 +28,7 @@ class Settings(BaseSettings):
     app_db_user: str = "qp_app"
     app_db_password: SecretStr = SecretStr("")
     cors_origins: list[str] = ["http://localhost:3000"]
+
     @property
     def app_db_dsn(self) -> str:
         return make_conninfo(
@@ -37,6 +38,7 @@ class Settings(BaseSettings):
             user=self.app_db_user,
             password=self.app_db_password.get_secret_value(),
         )
+
     # Redis: LLM cache and rate limits
     redis_url: str = "redis://localhost:6379/0"
     llm_cache_enabled: bool = True
@@ -44,5 +46,6 @@ class Settings(BaseSettings):
     rate_limit_per_minute: int = 5
     rate_limit_per_day: int = 25
     rate_limit_global_per_day: int = 400
+
 
 settings = Settings()

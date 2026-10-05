@@ -20,9 +20,7 @@ from qp_api.agent.graph import build_graph, new_turn
 def ask(graph: Any, question: str, config: dict[str, Any]) -> None:
     started = time.perf_counter()
     final: dict[str, Any] = {}
-    for mode, chunk in graph.stream(
-        new_turn(question), config, stream_mode=["updates", "values"]
-    ):
+    for mode, chunk in graph.stream(new_turn(question), config, stream_mode=["updates", "values"]):
         if mode == "updates":
             for node, update in chunk.items():
                 extra = f"  error: {update['error']}" if update.get("error") else ""
@@ -65,9 +63,7 @@ def main() -> None:
     logging.getLogger("httpx").setLevel(logging.WARNING)
     parser = argparse.ArgumentParser(prog="qp-ask")
     parser.add_argument("question", nargs="?", help="Ask one question and exit")
-    parser.add_argument(
-        "--chat", action="store_true", help="Interactive chat with memory"
-    )
+    parser.add_argument("--chat", action="store_true", help="Interactive chat with memory")
     args = parser.parse_args()
     graph = build_graph(checkpointer=InMemorySaver())
     config = {"configurable": {"thread_id": "cli"}}

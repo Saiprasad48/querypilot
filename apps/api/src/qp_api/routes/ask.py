@@ -24,9 +24,11 @@ logger = logging.getLogger("qp_api")
 router = APIRouter(prefix="/api", tags=["agent"])
 MAX_ROWS_TO_CLIENT = 200
 
+
 class AskRequest(BaseModel):
     question: str = Field(min_length=1, max_length=500)
     thread_id: str | None = Field(default=None, max_length=64)
+
 
 def _run(graph: Any, question: str, thread_id: str) -> Iterator[str]:
     config = {"configurable": {"thread_id": thread_id}}
@@ -41,7 +43,9 @@ def _run(graph: Any, question: str, thread_id: str) -> Iterator[str]:
                 continue
             for node, update in chunk.items():
                 step = (update.get("steps") or [{}])[-1]
-                yield sse("step", {"node": node, "ms": step.get("ms"), "error": update.get("error")})
+                yield sse(
+                    "step", {"node": node, "ms": step.get("ms"), "error": update.get("error")}
+                )
                 if node == "execute" and not update.get("error"):
                     rows = update["rows"]
                     yield sse("sql", {"sql": update["sql_executed"]})
@@ -77,7 +81,9 @@ def _run(graph: Any, question: str, thread_id: str) -> Iterator[str]:
         yield sse("error", {"message": "Something went wrong while answering. Please try again."})
     yield sse("done", {})
 
+
 _CLIENT_ID = re.compile(r"[A-Za-z0-9_-]{8,64}")
+
 
 def _client_id(request: Request) -> str:
     """Prefer the browser's anonymous ID header; fall back to the IP address."""
@@ -85,6 +91,7 @@ def _client_id(request: Request) -> str:
     if _CLIENT_ID.fullmatch(header):
         return f"c:{header}"
     return f"ip:{request.client.host if request.client else 'unknown'}"
+
 
 @router.post("/ask")
 def ask(req: AskRequest, request: Request) -> StreamingResponse:
@@ -105,6 +112,7 @@ def ask(req: AskRequest, request: Request) -> StreamingResponse:
             "X-RateLimit-Remaining": str(limit.remaining_today),
         },
     )
+
 
 @router.get("/threads/{thread_id}")
 def get_thread(thread_id: str, request: Request) -> dict[str, Any]:

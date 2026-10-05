@@ -1,33 +1,18 @@
 {
     "path_count": 205,
-    "parsed_path_count": 2,
-    "static_analysis_path_count": 1,
-    "static_analysis_parsed_path_count": 1,
+    "parsed_path_count": 0,
+    "static_analysis_path_count": 0,
+    "static_analysis_parsed_path_count": 0,
     "is_partial_parse_enabled": true,
     "is_static_analysis_enabled": true,
-    "read_files_elapsed": 2.776495199999772,
-    "load_macros_elapsed": 0.0009361000265926123,
-    "parse_project_elapsed": 0.7304796000244096,
-    "patch_sources_elapsed": 3.1400006264448166e-05,
-    "process_manifest_elapsed": 0.0013081000070087612,
-    "load_all_elapsed": 3.8685571999521926,
+    "read_files_elapsed": 2.69302260002587,
+    "load_all_elapsed": 2.9617165999952704,
     "projects": [
         {
             "project_name": "querypilot",
-            "elapsed": 0.73028840002371,
-            "parsers": [
-                {
-                    "parser": "model",
-                    "elapsed": 0.38177790003828704,
-                    "parsed_path_count": 1
-                },
-                {
-                    "parser": "test",
-                    "elapsed": 0.3484924000222236,
-                    "parsed_path_count": 1
-                }
-            ],
-            "parsed_path_count": 2
+            "elapsed": 0,
+            "parsers": [],
+            "parsed_path_count": 0
         },
         {
             "project_name": "dbt_postgres",

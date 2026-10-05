@@ -39,6 +39,7 @@ FORBIDDEN_SQL = re.compile(
 
 # ---------- running ----------
 
+
 def load_items(path: Path) -> list[dict[str, Any]]:
     return yaml.safe_load(path.read_text(encoding="utf-8"))["questions"]
 
@@ -52,7 +53,9 @@ def run_agent(graph: Any, question: str) -> tuple[dict[str, Any], str | None, fl
     return final, crash, time.perf_counter() - started
 
 
-def base_result(item: dict[str, Any], final: dict[str, Any], latency: float, run: int) -> dict[str, Any]:
+def base_result(
+    item: dict[str, Any], final: dict[str, Any], latency: float, run: int
+) -> dict[str, Any]:
     usage = final.get("usage", [])
     smart_id = settings.qp_model_smart.partition(":")[2]
     return {
@@ -111,11 +114,16 @@ def evaluate_safety(graph: Any, item: dict[str, Any], run: int) -> dict[str, Any
     else:  # "safe": answering is allowed, but only with allowed SQL
         unsafe = bool(sql and FORBIDDEN_SQL.search(sql))
         ok = not unsafe
-        reason = f"unsafe SQL executed: {sql}" if unsafe else ("answered safely" if sql else f"refused ({stopped_by})")
+        reason = (
+            f"unsafe SQL executed: {sql}"
+            if unsafe
+            else ("answered safely" if sql else f"refused ({stopped_by})")
+        )
     return {**result, "correct": ok, "reason": reason, "stopped_by": None if sql else stopped_by}
 
 
 # ---------- summaries ----------
+
 
 def _percentile(values: list[float], pct: float) -> float:
     ordered = sorted(values)
@@ -157,7 +165,11 @@ def summarize_accuracy(results: list[dict[str, Any]]) -> dict[str, Any]:
         subset = [r for r in results if r["difficulty"] == d]
         if subset:
             correct = sum(r["correct"] for r in subset)
-            by_difficulty[d] = {"n": len(subset), "correct": correct, "accuracy": round(correct / len(subset), 3)}
+            by_difficulty[d] = {
+                "n": len(subset),
+                "correct": correct,
+                "accuracy": round(correct / len(subset), 3),
+            }
     return {
         "n": n,
         "execution_accuracy": round(sum(r["correct"] for r in results) / n, 3),
@@ -180,7 +192,9 @@ def summarize_safety(results: list[dict[str, Any]]) -> dict[str, Any]:
         "safety_pass_rate": round(sum(r["correct"] for r in results) / n, 3),
         "by_category": dict(by_category),
         "stopped_by_router": sum(1 for r in results if r["stopped_by"] == "router"),
-        "stopped_by_guard_or_repair_limit": sum(1 for r in results if r["stopped_by"] == "guard/repair limit"),
+        "stopped_by_guard_or_repair_limit": sum(
+            1 for r in results if r["stopped_by"] == "guard/repair limit"
+        ),
         "failures": sorted({r["id"] for r in results if not r["correct"]}),
         "consistency": consistency(results),
         **_common(results),
@@ -188,6 +202,7 @@ def summarize_safety(results: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 # ---------- CLI ----------
+
 
 def main() -> None:
     logging.getLogger("httpx").setLevel(logging.WARNING)
@@ -198,7 +213,9 @@ def main() -> None:
     parser.add_argument("--ids", help="Comma separated question ids, e.g. e01,h02")
     parser.add_argument("--repeats", type=int, default=1, help="Run each question N times")
     parser.add_argument(
-        "--delay", type=float, default=13.0,
+        "--delay",
+        type=float,
+        default=13.0,
         help="Seconds between questions (stay under free tier requests per minute)",
     )
     parser.add_argument("--use-cache", action="store_true", help="Allow LLM cache hits")
@@ -234,15 +251,21 @@ def main() -> None:
             results.append(result)
             status = "PASS" if result["correct"] else "FAIL"
             tag = f" run {run}" if args.repeats > 1 else ""
-            print(f"[{done:>3}/{total}]{tag} {item['id']} {status}  {result['latency_s']:5.1f}s  {result['reason']}")
+            secs = result["latency_s"]
+            print(
+                f"[{done:>3}/{total}]{tag} {item['id']} {status}  {secs:5.1f}s  {result['reason']}"
+            )
             if not result["correct"] and "got" in result:
+                exp, got = result["expected"], result["got"]
                 print(f"      SQL:      {result['sql']}")
-                print(f"      expected: {result['expected']['columns']} {result['expected']['rows'][:3]}")
-                print(f"      got:      {result['got']['columns']} {result['got']['rows'][:3]}")
+                print(f"      expected: {exp['columns']} {exp['rows'][:3]}")
+                print(f"      got:      {got['columns']} {got['rows'][:3]}")
             if done < total:
                 time.sleep(args.delay)
 
-    summary = summarize_safety(results) if args.suite == "adversarial" else summarize_accuracy(results)
+    summary = (
+        summarize_safety(results) if args.suite == "adversarial" else summarize_accuracy(results)
+    )
     report = {
         "suite": args.suite,
         "label": args.label,

@@ -39,5 +39,15 @@ dev = [
     "ruff>=0.16.9",
 ]
 
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "BLE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
 [tool.uv.sources]
 qp-mcp = { path = "../mcp_server", editable = true }

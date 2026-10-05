@@ -16,8 +16,5 @@ with urllib.request.urlopen(request) as response:
 print(f"{'MODEL ID (use this in .env)':<40} DISPLAY NAME")
 for m in models:
     model_id = m["name"].removeprefix("models/")
-    if (
-        "generateContent" in m.get("supportedGenerationMethods", [])
-        and "flash" in model_id
-    ):
+    if "generateContent" in m.get("supportedGenerationMethods", []) and "flash" in model_id:
         print(f"{model_id:<40} {m.get('displayName', '')}")

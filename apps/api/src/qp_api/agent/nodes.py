@@ -20,6 +20,7 @@ from qp_api.llm import smart_breaker, structured_chain
 tools: Tools = InProcessTools()
 HISTORY_TURNS = 3  # how many previous turns the model sees
 
+
 # ---------- helpers ----------
 def _structured(
     role: str, schema: type[BaseModel], messages: list[tuple[str, str]], call: str
@@ -65,9 +66,11 @@ def _structured(
         "cached": False,
     }
 
+
 def _question(state: AgentState) -> str:
     """The question every step should work on: the rewritten one if available."""
     return state.get("standalone_question") or state["question"]
+
 
 def history_text(state: AgentState) -> str:
     """Recent turns as prompt text, or an empty string for the first question."""
@@ -82,11 +85,14 @@ def history_text(state: AgentState) -> str:
         lines.append(f"Answer: {t['summary']}")
     return "\n".join(lines) + "\n\n"
 
+
 def _add_usage(state: AgentState, usage: dict[str, Any]) -> list[dict[str, Any]]:
     return [*state.get("usage", []), usage]
 
+
 def _remember(state: AgentState, summary: str, sql: str = "") -> list[Turn]:
     return [{"question": _question(state), "sql": sql, "summary": summary}]
+
 
 def _empty_answer(summary: str) -> dict[str, Any]:
     return {
@@ -97,9 +103,11 @@ def _empty_answer(summary: str) -> dict[str, Any]:
         "followups": [],
     }
 
+
 SMALL_SAMPLE = 30
 _COUNT_COLUMN = re.compile(r"(count|orders|customers|items|reviews|_n$|^n_|num_)")
 _RATE_COLUMN = re.compile(r"(rate|avg|average|share|ratio|pct|percent|mean)")
+
 
 def small_sample_caveats(columns: list[str], rows: list[list[Any]]) -> list[str]:
     """Deterministic caveats for groups whose rate or average rests on fewer than 30 records.
@@ -116,11 +124,16 @@ def small_sample_caveats(columns: list[str], rows: list[list[Any]]) -> list[str]
     for row in rows:
         for i in count_idx:
             value = row[i]
-            if isinstance(value, int | float) and not isinstance(value, bool) and value < SMALL_SAMPLE:
+            if (
+                isinstance(value, int | float)
+                and not isinstance(value, bool)
+                and value < SMALL_SAMPLE
+            ):
                 label = row[label_idx] if label_idx is not None else "One group"
                 noun = columns[i].replace("_", " ")
                 caveats.append(f"{label} is based on only {int(value)} {noun}, a small sample.")
     return caveats
+
 
 # ---------- nodes ----------
 def route(state: AgentState) -> dict[str, Any]:
@@ -135,6 +148,7 @@ def route(state: AgentState) -> dict[str, Any]:
         "standalone_question": decision.standalone_question or state["question"],
         "usage": _add_usage(state, usage),
     }
+
 
 def decline(state: AgentState) -> dict[str, Any]:
     intent = state.get("intent")
@@ -158,9 +172,11 @@ def decline(state: AgentState) -> dict[str, Any]:
         )
     return {"answer": _empty_answer(text), "history": _remember(state, text)}
 
+
 def retrieve(state: AgentState) -> dict[str, Any]:
     ctx = tools.search_schema(_question(state))
     return {"schema_context": format_schema(ctx), "attempts": 0, "error": None}
+
 
 def write_sql(state: AgentState) -> dict[str, Any]:
     is_repair = bool(state.get("error"))
@@ -185,12 +201,14 @@ def write_sql(state: AgentState) -> dict[str, Any]:
         "usage": _add_usage(state, usage),
     }
 
+
 def validate(state: AgentState) -> dict[str, Any]:
     try:
         guarded = guard_sql(state["sql"])
     except UnsafeSQLError as e:
         return {"error": f"SQL guard rejected the query: {e}"}
     return {"sql": guarded.sql, "error": None}
+
 
 def execute(state: AgentState) -> dict[str, Any]:
     try:
@@ -203,6 +221,7 @@ def execute(state: AgentState) -> dict[str, Any]:
         "rows": result["rows"],
         "error": None,
     }
+
 
 def analyze(state: AgentState) -> dict[str, Any]:
     rows = state.get("rows", [])
@@ -229,6 +248,7 @@ def analyze(state: AgentState) -> dict[str, Any]:
         "usage": _add_usage(state, usage),
         "history": _remember(state, analysis.summary, state["sql_executed"]),
     }
+
 
 def fail(state: AgentState) -> dict[str, Any]:
     text = (
