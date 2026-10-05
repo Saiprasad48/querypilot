@@ -42,7 +42,9 @@ CREATE TABLE IF NOT EXISTS meta.schema_docs (
 ALTER TABLE meta.schema_docs ADD COLUMN IF NOT EXISTS description text;
 ALTER TABLE meta.schema_docs
     ADD COLUMN IF NOT EXISTS content_tsv tsvector
-    GENERATED ALWAYS AS (to_tsvector('english', replace(replace(content, '_', ' '), '.', ' '))) STORED;
+    GENERATED ALWAYS AS (
+            to_tsvector('english', replace(replace(content, '_', ' '), '.', ' '))
+    ) STORED;
 CREATE INDEX IF NOT EXISTS schema_docs_embedding_idx
     ON meta.schema_docs USING hnsw (embedding vector_cosine_ops);
 CREATE INDEX IF NOT EXISTS schema_docs_tsv_idx

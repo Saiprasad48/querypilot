@@ -17,12 +17,14 @@ from qp_api.config import settings
 
 logger = logging.getLogger("qp_api")
 
+
 @dataclass(frozen=True)
 class RateLimitResult:
     allowed: bool
     remaining_today: int
     retry_after_s: int = 0
     reason: str = ""
+
 
 class RateLimiter:
     def __init__(
@@ -36,9 +38,11 @@ class RateLimiter:
         self.per_minute = per_minute or settings.rate_limit_per_minute
         self.per_day = per_day or settings.rate_limit_per_day
         self.global_per_day = global_per_day or settings.rate_limit_global_per_day
+
     @property
     def client(self) -> redis.Redis:
         return self._client or get_redis()
+
     def hit(self, client_id: str, now: float | None = None) -> RateLimitResult:
         """Count one question for `client_id` and say whether it is allowed."""
         now = time.time() if now is None else now
@@ -46,7 +50,13 @@ class RateLimiter:
         until_minute_end = 60 - int(now % 60)
         until_midnight_utc = 86400 - int(now % 86400)
         windows = [
-            (f"rl:{client_id}:m:{int(now // 60)}", self.per_minute, 60, until_minute_end, "per minute"),
+            (
+                f"rl:{client_id}:m:{int(now // 60)}",
+                self.per_minute,
+                60,
+                until_minute_end,
+                "per minute",
+            ),
             (f"rl:{client_id}:d:{day}", self.per_day, 86400, until_midnight_utc, "daily"),
             (f"rl:global:d:{day}", self.global_per_day, 86400, until_midnight_utc, "global daily"),
         ]
@@ -66,5 +76,6 @@ class RateLimiter:
                     False, remaining, retry_after, f"{label} limit of {limit} questions reached"
                 )
         return RateLimitResult(True, remaining)
+
 
 rate_limiter = RateLimiter()

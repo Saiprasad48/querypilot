@@ -26,6 +26,6 @@ for label, extra in VARIANTS:
             f"{label:<22} {time.perf_counter() - started:5.1f}s  "
             f"out={meta.get('output_tokens')} reasoning={reasoning}"
         )
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001  (diagnostic script: report any failure)
         print(f"{label:<22} ERROR {type(e).__name__}: {str(e)[:250]}")
     time.sleep(5)  # stay gentle with free tier rate limits

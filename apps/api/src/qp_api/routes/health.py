@@ -8,10 +8,12 @@ from qp_mcp.config import settings as warehouse_settings
 
 router = APIRouter(tags=["health"])
 
+
 @router.get("/healthz")
 def healthz() -> dict[str, str]:
     """Liveness: the process is up. Never touches dependencies."""
     return {"status": "ok"}
+
 
 @router.get("/readyz")
 def readyz(request: Request, response: Response) -> dict[str, Any]:

@@ -16,6 +16,7 @@ from typing import Any
 _DATE = re.compile(r"^\d{4}-\d{2}-\d{2}")
 _MONTH = re.compile(r"^\d{4}-\d{2}$")
 
+
 def normalize(value: Any) -> Any:
     if value is None or isinstance(value, bool):
         return value
@@ -26,8 +27,10 @@ def normalize(value: Any) -> Any:
         return f"{text}-01"  # "2017-01" means the same month as "2017-01-01"
     return text[:10] if _DATE.match(text) else text.lower()
 
+
 def _column(rows: list[list[Any]], index: int) -> list[Any]:
     return sorted((normalize(r[index]) for r in rows), key=repr)
+
 
 def results_match(
     ref_columns: list[str],

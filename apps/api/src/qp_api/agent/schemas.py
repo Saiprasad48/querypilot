@@ -20,15 +20,18 @@ class RouteDecision(BaseModel):
         "conversation history if it is a follow up. Copy it unchanged if already standalone.",
     )
 
+
 class SQLDraft(BaseModel):
     plan: str = Field(description="2 to 4 short steps describing the approach.")
     sql: str = Field(description="One PostgreSQL SELECT query over marts tables.")
+
 
 class ChartSpec(BaseModel):
     type: Literal["bar", "line", "number", "table"]
     x: str | None = Field(default=None, description="Result column for the x axis.")
     y: list[str] = Field(default_factory=list, description="Result columns to plot.")
     title: str = ""
+
 
 class Analysis(BaseModel):
     summary: str = Field(

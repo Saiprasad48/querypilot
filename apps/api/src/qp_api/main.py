@@ -20,6 +20,7 @@ from qp_api.routes import ask, health
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 logging.getLogger("httpx").setLevel(logging.WARNING)
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     # A pool lets concurrent requests save checkpoints without sharing one connection.
@@ -36,6 +37,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     app.state.graph = build_graph(checkpointer=checkpointer)
     yield
     pool.close()
+
 
 app = FastAPI(title="QueryPilot API", version="0.1.0", lifespan=lifespan)
 app.add_middleware(

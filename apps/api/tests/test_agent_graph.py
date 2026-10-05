@@ -28,9 +28,7 @@ def test_format_schema_includes_columns_and_metrics() -> None:
             {
                 "table": "marts.fct_orders",
                 "description": "One row per order.",
-                "columns": [
-                    {"name": "order_id", "type": "text", "description": "Order id."}
-                ],
+                "columns": [{"name": "order_id", "type": "text", "description": "Order id."}],
             }
         ],
         "metrics": [
@@ -55,20 +53,19 @@ def test_new_turn_resets_per_turn_fields_but_not_history() -> None:
 
 
 def test_history_text_shows_recent_turns_only() -> None:
-    history = [
-        {"question": f"q{i}", "sql": f"SELECT {i}", "summary": f"a{i}"}
-        for i in range(5)
-    ]
+    history = [{"question": f"q{i}", "sql": f"SELECT {i}", "summary": f"a{i}"} for i in range(5)]
     text = history_text({"history": history})
     assert "q4" in text and "q2" in text
     assert "q1" not in text  # only the last 3 turns
     assert history_text({}) == ""
+
 
 def test_small_sample_caveat_flags_only_small_groups() -> None:
     columns = ["customer_state", "delivered_orders", "late_delivery_rate"]
     rows = [["AL", 198, 0.2071], ["RR", 18, 0.1667], ["PI", 258, 0.1667]]
     caveats = small_sample_caveats(columns, rows)
     assert caveats == ["RR is based on only 18 delivered orders, a small sample."]
+
 
 def test_no_caveat_for_single_totals_or_results_without_rates() -> None:
     assert small_sample_caveats(["orders"], [[12]]) == []

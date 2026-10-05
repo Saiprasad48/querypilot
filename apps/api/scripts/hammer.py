@@ -1,4 +1,5 @@
 """Send several questions quickly from one client ID to see the rate limit kick in."""
+
 import httpx
 
 for i in range(1, 8):

@@ -80,9 +80,7 @@ def build_graph(checkpointer: Any = None):
     g.add_conditional_edges("route", after_route, ["retrieve", "decline"])
     g.add_edge("retrieve", "write_sql")
     g.add_edge("write_sql", "validate")
-    g.add_conditional_edges(
-        "validate", after_validate, ["execute", "write_sql", "fail"]
-    )
+    g.add_conditional_edges("validate", after_validate, ["execute", "write_sql", "fail"])
     g.add_conditional_edges("execute", after_execute, ["analyze", "write_sql", "fail"])
     g.add_edge("analyze", END)
     g.add_edge("decline", END)
