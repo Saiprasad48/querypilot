@@ -15,7 +15,7 @@ from qp_api.agent.state import AgentState, Turn
 from qp_api.agent.tools import InProcessTools, ToolCallError, Tools, format_schema
 from qp_api.cache import cache_key, llm_cache
 from qp_api.config import settings
-from qp_api.llm import smart_breaker, structured_chain
+from qp_api.llm import breakers, failed_tiers, structured_chain, tier_ids
 
 tools: Tools = InProcessTools()
 HISTORY_TURNS = 3  # how many previous turns the model sees
@@ -44,16 +44,20 @@ def _structured(
             "output_tokens": 0,
             "cached": True,
         }
-    if role == "smart" and not smart_breaker.allow():
-        role = "fast"  # breaker open: skip the smart model entirely for now
+    # Skip tiers whose breaker is open (they failed recently)
+    if role == "smart" and not breakers["smart"].allow():
+        role = "fast"
+    if role == "fast" and settings.qp_model_backup and not breakers["fast"].allow():
+        role = "backup"
     result = structured_chain(role, schema).invoke(messages)
     parsed = result["parsed"]
     if parsed is None:
         raise ValueError(f"{call}: could not parse model output: {result.get('parsing_error')}")
     raw = result["raw"]
     model_name = raw.response_metadata.get("model_name", "unknown")
-    if role == "smart":
-        smart_breaker.record(model_name)
+    for tier in failed_tiers(role, model_name, tier_ids()):
+        if tier in breakers:
+            breakers[tier].trip()
     if settings.llm_cache_enabled:
         llm_cache.set(key, {"parsed": parsed.model_dump(), "model": model_name})
     meta = raw.usage_metadata or {}
