@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import psycopg
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
@@ -19,10 +20,18 @@ from qp_api.routes import ask, health
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 logging.getLogger("httpx").setLevel(logging.WARNING)
+logger = logging.getLogger("qp_api")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    # Fail fast with the real database error instead of a vague pool timeout.
+    logger.info(
+        "Checking app database %s at %s:%s as %s",
+        settings.app_db, settings.postgres_host, settings.postgres_port, settings.app_db_user,
+    )
+    with psycopg.connect(settings.app_db_dsn, connect_timeout=10) as conn:
+        conn.execute("SELECT 1")
     # A pool lets concurrent requests save checkpoints without sharing one connection.
     get_model()  # load the embedding model now, not during the first user's request
     pool = ConnectionPool(
