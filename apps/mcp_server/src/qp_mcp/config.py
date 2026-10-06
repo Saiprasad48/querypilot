@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=ENV_FILE, extra="ignore")
     postgres_sslmode: str = "prefer"
     postgres_host: str = "localhost"
-    postgres_port: int = 5432
+    postgres_port: int = 5433
     warehouse_db: str = "warehouse"
     # admin: used only by offline jobs (index builder). Never used by the agent.
     postgres_user: str = "qp_admin"

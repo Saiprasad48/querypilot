@@ -1,0 +1,20 @@
+# secrets: never inside an image
+.env
+.env.*
+
+# local environments and caches
+**/.venv
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+.cache
+
+# not needed by the API
+apps/web
+data
+evals
+docs
+infra
+.github
+.git
+**/node_modules

@@ -42,24 +42,73 @@ def smart_model(**kwargs: Any) -> BaseChatModel:
     return get_chat_model(settings.qp_model_smart, **kwargs)
 
 
+Tier = Literal["smart", "fast", "backup"]
+CHAINS: dict[str, tuple[str, ...]] = {
+    "smart": ("smart", "fast", "backup"),
+    "fast": ("fast", "backup"),
+    "backup": ("backup",),
+}
+
+
 @lru_cache(maxsize=32)
-def structured_chain(role: Literal["fast", "smart"], schema: type[BaseModel]) -> Runnable:
+def structured_chain(role: Tier, schema: type[BaseModel]) -> Runnable:
     """A model that returns `schema` (plus the raw message), with layered fallbacks.
-    fast:  fast model -> backup provider (if configured)
-    smart: smart model -> fast model -> backup provider
+    smart: smart -> fast -> backup;  fast: fast -> backup;  backup: backup only.
     """
-    fast = get_chat_model(settings.qp_model_fast, max_retries=1, timeout=60)
-    fast_chain = fast.with_structured_output(schema, include_raw=True)
-    if settings.qp_model_backup:
-        backup = get_chat_model(settings.qp_model_backup, max_retries=1, timeout=60)
-        fast_chain = fast_chain.with_fallbacks(
-            [backup.with_structured_output(schema, include_raw=True)]
-        )
+
+    def build(spec: str, retries: int) -> Runnable:
+        model = get_chat_model(spec, max_retries=retries, timeout=60)
+        return model.with_structured_output(schema, include_raw=True)
+
+    backup = build(settings.qp_model_backup, 1) if settings.qp_model_backup else None
+    if role == "backup":
+        if backup is None:
+            raise ValueError("No backup model configured (QP_MODEL_BACKUP)")
+        return backup
+    fast = build(settings.qp_model_fast, 1)
+    if backup is not None:
+        fast = fast.with_fallbacks([backup])
     if role == "fast":
-        return fast_chain
-    smart = get_chat_model(settings.qp_model_smart, max_retries=0, timeout=60)
-    smart_chain = smart.with_structured_output(schema, include_raw=True)
-    return smart_chain.with_fallbacks([fast_chain])
+        return fast
+    return build(settings.qp_model_smart, 0).with_fallbacks([fast])
+
+
+def tier_ids() -> dict[str, str]:
+    """Model id per tier, without the provider prefix."""
+    return {
+        "smart": settings.qp_model_smart.partition(":")[2],
+        "fast": settings.qp_model_fast.partition(":")[2],
+        "backup": (settings.qp_model_backup or "").partition(":")[2],
+    }
+
+
+def failed_tiers(role: str, answered_model: str, ids: dict[str, str]) -> list[str]:
+    """Tiers that were tried and failed before `answered_model` answered.
+    If the answering model is unknown, nothing is marked as failed.
+    """
+    failed: list[str] = []
+    for tier in CHAINS[role]:
+        if ids.get(tier) and answered_model.endswith(ids[tier]):
+            return failed
+        failed.append(tier)
+    return []
+
+
+class ModelBreaker:
+    """Circuit breaker for one model tier: after a failure, skip it for `cooldown_s`."""
+
+    def __init__(self, cooldown_s: float = 300) -> None:
+        self.cooldown_s = cooldown_s
+        self._open_until = 0.0
+
+    def allow(self, now: float | None = None) -> bool:
+        return (time.monotonic() if now is None else now) >= self._open_until
+
+    def trip(self, now: float | None = None) -> None:
+        self._open_until = (time.monotonic() if now is None else now) + self.cooldown_s
+
+
+breakers: dict[str, ModelBreaker] = {"smart": ModelBreaker(), "fast": ModelBreaker()}
 
 
 class SmartModelBreaker:
