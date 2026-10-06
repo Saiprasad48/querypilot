@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from psycopg.conninfo import make_conninfo
@@ -9,10 +10,12 @@ from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
+ENV_FILE = os.environ.get("QP_ENV_FILE") or REPO_ROOT / ".env"
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=REPO_ROOT / ".env", extra="ignore")
+    model_config = SettingsConfigDict(env_file=ENV_FILE, extra="ignore")
+    postgres_sslmode: str = "prefer"
     # Model specs are "provider:model", e.g. "google_genai:gemini-2.5-flash"
     qp_model_fast: str = "google_genai:gemini-3.5-flash-lite"
     qp_model_smart: str = "google_genai:gemini-3.8-flash"
@@ -37,6 +40,7 @@ class Settings(BaseSettings):
             dbname=self.app_db,
             user=self.app_db_user,
             password=self.app_db_password.get_secret_value(),
+            sslmode=self.postgres_sslmode,
         )
 
     # Redis: LLM cache and rate limits

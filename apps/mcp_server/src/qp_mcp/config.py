@@ -2,16 +2,19 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from psycopg.conninfo import make_conninfo
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
+ENV_FILE = os.environ.get("QP_ENV_FILE") or REPO_ROOT / ".env"
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=REPO_ROOT / ".env", extra="ignore")
+    model_config = SettingsConfigDict(env_file=ENV_FILE, extra="ignore")
+    postgres_sslmode: str = "prefer"
     postgres_host: str = "localhost"
     postgres_port: int = 5432
     warehouse_db: str = "warehouse"
@@ -35,6 +38,7 @@ class Settings(BaseSettings):
             dbname=self.warehouse_db,
             user=self.postgres_user,
             password=self.postgres_password,
+            sslmode=self.postgres_sslmode,
         )
 
     @property
@@ -47,6 +51,7 @@ class Settings(BaseSettings):
             dbname=self.warehouse_db,
             user=self.reader_user,
             password=self.reader_password,
+            sslmode=self.postgres_sslmode,
             options="-c search_path=marts,public",
         )
 

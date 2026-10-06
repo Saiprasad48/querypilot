@@ -35,14 +35,15 @@ TABLES: dict[str, str] = {
 }
 
 def conninfo() -> str:
-    """Build the admin connection string from .env."""
-    load_dotenv(ROOT / ".env")
+    """Build the admin connection string from QP_ENV_FILE (if set) or the repo .env."""
+    load_dotenv(os.getenv("QP_ENV_FILE") or ROOT / ".env")
     return psycopg.conninfo.make_conninfo(
         host=os.getenv("POSTGRES_HOST", "localhost"),
-        port=os.getenv("POSTGRES_PORT", "5432"),
+        port=os.getenv("POSTGRES_PORT", "5433"),
         dbname=os.getenv("WAREHOUSE_DB", "warehouse"),
         user=os.environ["POSTGRES_USER"],
         password=os.environ["POSTGRES_PASSWORD"],
+        sslmode=os.getenv("POSTGRES_SSLMODE", "prefer"),
     )
 
 def clean_name(name: str) -> str:
