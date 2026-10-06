@@ -14,7 +14,7 @@ from dbt.cli.main import dbtRunner
 ROOT = Path(__file__).resolve().parents[1]
 DBT_DIR = Path(__file__).resolve().parent / "dbt"
 # override=True: values in .env win over any variable already set in Windows
-load_dotenv(ROOT / ".env", override=True)
+load_dotenv(os.getenv("QP_ENV_FILE") or ROOT / ".env", override=True)
 os.chdir(DBT_DIR)  # dbt finds dbt_project.yml and profiles.yml here
 result = dbtRunner().invoke(sys.argv[1:])
 sys.exit(0 if result.success else 1)
