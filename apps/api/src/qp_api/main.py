@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import logging
-import psycopg
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
+import psycopg
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from langgraph.checkpoint.postgres import PostgresSaver
@@ -28,7 +28,10 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     # Fail fast with the real database error instead of a vague pool timeout.
     logger.info(
         "Checking app database %s at %s:%s as %s",
-        settings.app_db, settings.postgres_host, settings.postgres_port, settings.app_db_user,
+        settings.app_db,
+        settings.postgres_host,
+        settings.postgres_port,
+        settings.app_db_user,
     )
     with psycopg.connect(settings.app_db_dsn, connect_timeout=10) as conn:
         conn.execute("SELECT 1")

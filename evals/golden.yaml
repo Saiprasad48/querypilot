@@ -211,3 +211,13 @@ questions:
         SELECT lifetime_revenue, row_number() OVER (ORDER BY lifetime_revenue DESC) AS rk
         FROM marts.dim_customers
       ) ranked
+
+  - id: h06
+    difficulty: hard
+    question: Which 5 customer states had the lowest late delivery rate in 2018?
+    sql: |
+      SELECT customer_state, avg(CASE WHEN is_late THEN 1.0 ELSE 0.0 END) AS late_delivery_rate
+      FROM marts.fct_orders
+      WHERE order_status = 'delivered' AND delivered_at IS NOT NULL
+        AND purchase_date >= '2018-01-01' AND purchase_date < '2019-01-01'
+      GROUP BY 1 ORDER BY 2 ASC LIMIT 5

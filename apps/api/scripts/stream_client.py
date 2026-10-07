@@ -1,24 +1,34 @@
 """Call POST /api/ask and print each SSE event as it arrives.
 
-Usage: uv run python scripts/stream_client.py "question" [thread_id]
+Usage:
+    uv run python scripts/stream_client.py "question" [thread_id]
+Set QP_API_URL to target a deployed API (defaults to the local server).
 """
 
 import json
+import os
 import sys
 import time
 
 import httpx
 
+API_URL = os.getenv("QP_API_URL", "http://127.0.0.1:8000").rstrip("/")
 question = sys.argv[1]
 thread_id = sys.argv[2] if len(sys.argv) > 2 else None
+
+print(f"Calling {API_URL}/api/ask")
 started = time.perf_counter()
 
 with httpx.stream(
     "POST",
-    "http://127.0.0.1:8000/api/ask",
+    f"{API_URL}/api/ask",
     json={"question": question, "thread_id": thread_id},
     timeout=120,
 ) as response:
+    if response.status_code != 200:
+        response.read()
+        print(f"HTTP {response.status_code}: {response.text}")
+        sys.exit(1)
     event = ""
     for line in response.iter_lines():
         if line.startswith("event: "):

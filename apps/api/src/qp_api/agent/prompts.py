@@ -43,6 +43,8 @@ Rules:
     AVG, SUM) must run on the deduplicated rows, not just the count.
 11. Never return individual customer_id or seller_id values or per customer rows. Aggregate
     instead (counts, sums, averages, shares).
+12. Never add filters the question did not ask for, such as a minimum number of orders.
+    Small samples are flagged automatically; answer exactly what was asked.
 
 SCHEMA AND METRICS:
 """
