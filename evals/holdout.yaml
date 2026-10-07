@@ -1,0 +1,73 @@
+# Held out questions: NEVER used to tune prompts or docs. Report results as is.
+# Every reference SQL was verified against the warehouse.
+
+questions:
+  - id: ho01
+    difficulty: easy
+    question: How many orders were delivered in 2018?
+    sql: |
+      SELECT count(*) AS delivered_orders FROM marts.fct_orders
+      WHERE order_status = 'delivered' AND purchase_date >= '2018-01-01' AND purchase_date < '2019-01-01'
+
+  - id: ho02
+    difficulty: easy
+    question: What was the total freight value charged on delivered orders?
+    sql: SELECT sum(freight_value) AS total_freight FROM marts.fct_orders WHERE order_status = 'delivered'
+
+  - id: ho03
+    difficulty: easy
+    question: How many orders used a voucher as at least one of their payment methods?
+    sql: SELECT count(DISTINCT order_id) AS orders FROM marts.fct_payments WHERE payment_type = 'voucher'
+
+  - id: ho04
+    difficulty: medium
+    question: Which 5 seller states sold the most items in delivered orders?
+    sql: |
+      SELECT seller_state, count(*) AS items_sold FROM marts.fct_order_items
+      WHERE order_status = 'delivered' GROUP BY 1 ORDER BY 2 DESC LIMIT 5
+
+  - id: ho05
+    difficulty: medium
+    question: What was the average review score in each year?
+    sql: |
+      SELECT extract(year FROM purchase_date) AS year, avg(review_score) AS avg_review_score
+      FROM marts.fct_orders WHERE review_score IS NOT NULL GROUP BY 1
+
+  - id: ho06
+    difficulty: medium
+    question: How many delivered orders were placed on weekends versus weekdays?
+    compare_columns: [orders]
+    sql: |
+      SELECT d.is_weekend, count(*) AS orders
+      FROM marts.fct_orders o JOIN marts.dim_date d ON d.date_day = o.purchase_date
+      WHERE o.order_status = 'delivered' GROUP BY 1
+
+  - id: ho07
+    difficulty: medium
+    question: What is the average number of installments for credit card payments?
+    sql: SELECT avg(installments) AS avg_installments FROM marts.fct_payments WHERE payment_type = 'credit_card'
+
+  - id: ho08
+    difficulty: hard
+    question: Which 5 product categories had the highest average freight per item in delivered orders, among categories with at least 1,000 items sold?
+    sql: |
+      SELECT category, avg(freight_value) AS avg_freight FROM marts.fct_order_items
+      WHERE order_status = 'delivered' GROUP BY 1 HAVING count(*) >= 1000 ORDER BY 2 DESC LIMIT 5
+
+  - id: ho09
+    difficulty: hard
+    question: Which month of 2017 had the highest revenue from delivered orders?
+    compare_columns: [month]
+    sql: |
+      SELECT date_trunc('month', purchase_date)::date AS month, sum(payment_value) AS revenue
+      FROM marts.fct_orders
+      WHERE order_status = 'delivered' AND purchase_date >= '2017-01-01' AND purchase_date < '2018-01-01'
+      GROUP BY 1 ORDER BY 2 DESC LIMIT 1
+
+  - id: ho10
+    difficulty: hard
+    question: What share of delivered revenue in 2018 came from customers in the state of SP?
+    sql: |
+      SELECT sum(payment_value) FILTER (WHERE customer_state = 'SP') / sum(payment_value) AS sp_share
+      FROM marts.fct_orders
+      WHERE order_status = 'delivered' AND purchase_date >= '2018-01-01' AND purchase_date < '2019-01-01'

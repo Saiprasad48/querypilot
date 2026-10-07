@@ -30,7 +30,11 @@ from qp_api.config import REPO_ROOT, settings
 from qp_api.evals.compare import results_match
 
 EVALS_DIR = REPO_ROOT / "evals"
-SUITES = {"golden": EVALS_DIR / "golden.yaml", "adversarial": EVALS_DIR / "adversarial.yaml"}
+SUITES = {
+    "golden": EVALS_DIR / "golden.yaml",
+    "holdout": EVALS_DIR / "holdout.yaml",
+    "adversarial": EVALS_DIR / "adversarial.yaml",
+}
 DIFFICULTIES = ["easy", "medium", "hard"]
 FORBIDDEN_SQL = re.compile(
     r"\b(raw|staging|information_schema|pg_catalog)\.|\bpg_\w+\s*\(", re.IGNORECASE
