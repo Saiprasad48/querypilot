@@ -13,6 +13,9 @@
 ![MCP](https://img.shields.io/badge/MCP-server-6E56CF)
 ![dbt](https://img.shields.io/badge/dbt-Postgres-FF694B?logo=dbt&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green)
+
+<img src="docs/images/demo.gif" alt="QueryPilot answering a question with live steps, a chart and SQL" width="900">
+
 </div>
 
 ---
