@@ -1,2 +1,51 @@
-.cache/
+
+.env.*
+!.env.example
+
+# ---------- Python ----------
 __pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.coverage
+htmlcov/
+
+# ---------- Node / Next.js / Vercel ----------
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+.vercel/
+coverage/
+npm-debug.log*
+pnpm-debug.log*
+
+# ---------- Data (datasets stay local, never in git) ----------
+data/raw/
+*.csv
+*.parquet
+*.duckdb
+
+# ---------- dbt (generated on every run) ----------
+data/dbt/target/
+data/dbt/logs/
+data/dbt/dbt_packages/
+
+# ---------- Embedding model cache (downloaded, about 70 MB) ----------
+.cache/
+
+# ---------- Logs ----------
+*.log
+logs/
+
+# ---------- OS and editors ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
